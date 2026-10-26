@@ -1,0 +1,151 @@
+/* Compact dataset cards, shown when the component is 64rem wide or less. */
+.mhu-cube__compact-card { display: none; }
+
+@container mhu-cube-host (max-width: 64rem) {
+  .mhu-cube__compact-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid var(--_outline-variant);
+    background: var(--_surface-container-lowest);
+  }
+  /* A square image with a transparent background, on the primary container fill. */
+  .mhu-cube__compact-media {
+    display: block;
+    flex: none;
+    width: min(100%, 14rem);
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--_primary-container);
+  }
+  .mhu-cube__compact-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    transition: transform 200ms ease;
+  }
+  .mhu-cube__compact-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    width: 100%;
+    max-width: 14rem;
+  }
+  /* Time and space, each after a small primary square. */
+  .mhu-cube__compact-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin: 0;
+  }
+  .mhu-cube__compact-fact { display: flex; align-items: center; gap: 0.25rem; }
+  .mhu-cube__compact-fact::before {
+    content: "";
+    flex: none;
+    width: 0.25rem;
+    height: 0.25rem;
+    background: var(--_primary);
+  }
+  .mhu-cube__compact-fact dd {
+    margin: 0;
+    color: var(--_on-surface-variant);
+    font-family: var(--mat-sys-label-small-font, Roboto, Arial, sans-serif);
+    font-size: var(--mat-sys-label-small-size, 0.6875rem);
+    font-weight: 600;
+    line-height: var(--mat-sys-label-small-line-height, 1rem);
+    letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
+    white-space: nowrap;
+  }
+  .mhu-cube__compact-heading {
+    margin: 0;
+    color: var(--_on-surface);
+    font-family: var(--mat-sys-title-medium-font, Roboto, Arial, sans-serif);
+    font-size: var(--mat-sys-title-medium-size, 1rem);
+    font-weight: 600;
+    line-height: var(--mat-sys-title-medium-line-height, 1.5rem);
+    letter-spacing: var(--mat-sys-title-medium-tracking, 0.009375rem);
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+  .mhu-cube__compact-link { color: inherit; text-decoration: none; }
+  .mhu-cube__compact-badge {
+    align-self: flex-start;
+    margin: 0;
+    padding: 0.125rem 0.5rem;
+    background: var(--_primary-container);
+    color: var(--_on-primary-container);
+    font-family: var(--mat-sys-label-small-font, Roboto, Arial, sans-serif);
+    font-size: var(--mat-sys-label-small-size, 0.6875rem);
+    font-weight: 600;
+    line-height: var(--mat-sys-label-small-line-height, 1rem);
+    letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
+    text-transform: uppercase;
+  }
+  /* Remaining metadata below a divider, such as corresponding authors with one name per line. */
+  .mhu-cube__compact-details {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--_outline-variant);
+    color: var(--_on-surface-variant);
+  }
+  .mhu-cube__compact-details-row { display: grid; gap: 0.125rem; min-width: 0; }
+  .mhu-cube__compact-details dt {
+    font-family: var(--mat-sys-title-small-font, Roboto, Arial, sans-serif);
+    font-size: var(--mat-sys-title-small-size, 0.875rem);
+    font-weight: 600;
+    line-height: var(--mat-sys-title-small-line-height, 1.25rem);
+    letter-spacing: var(--mat-sys-title-small-tracking, 0.00625rem);
+    text-wrap: balance;
+  }
+  .mhu-cube__compact-details dd {
+    margin: 0;
+    font-family: var(--mat-sys-body-medium-font, Roboto, Arial, sans-serif);
+    font-size: var(--mat-sys-body-medium-size, 0.875rem);
+    font-weight: var(--mat-sys-body-medium-weight, 400);
+    line-height: var(--mat-sys-body-medium-line-height, 1.25rem);
+    letter-spacing: var(--mat-sys-body-medium-tracking, 0.015625rem);
+    overflow-wrap: anywhere;
+  }
+  .mhu-cube__compact-card .mhu-cube__details-unavailable {
+    margin: 0;
+    font-size: var(--mat-sys-body-medium-size, 0.875rem);
+    line-height: var(--mat-sys-body-medium-line-height, 1.25rem);
+  }
+
+  /* Touch screens: the title link stretches over the whole card, so pressing anywhere opens the metadata page. */
+  .mhu-cube__compact-link::after { content: ""; position: absolute; inset: 0; }
+  .mhu-cube__compact-link:active::after { background: color-mix(in srgb, var(--_on-surface) 10%, transparent); }
+  .mhu-cube__compact-link:focus-visible { outline: none; }
+  .mhu-cube__compact-link:focus-visible::after { outline: 3px solid var(--_focus); outline-offset: -3px; }
+}
+
+/* Mouse and trackpad: only the image and the organ name open the metadata page. The image grows and the name
+   underlines on hover. */
+@media (hover: hover) and (pointer: fine) {
+  .mhu-cube__compact-link::after { content: none; }
+  .mhu-cube__compact-link:hover { text-decoration: underline; text-underline-offset: 0.15em; }
+  .mhu-cube__compact-link:focus-visible { outline: 3px solid var(--_focus); outline-offset: 2px; }
+  .mhu-cube__compact-media:hover .mhu-cube__compact-image { transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mhu-cube__compact-image { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .mhu-cube__compact-card, .mhu-cube__compact-details { border-color: CanvasText; }
+  .mhu-cube__compact-media, .mhu-cube__compact-badge { border: 1px solid CanvasText; }
+  .mhu-cube__compact-fact::before { forced-color-adjust: none; background: CanvasText; }
+  .mhu-cube__compact-link:focus-visible, .mhu-cube__compact-link:focus-visible::after { outline-color: Highlight; }
+}

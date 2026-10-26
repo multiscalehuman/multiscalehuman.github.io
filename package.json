@@ -1,0 +1,28 @@
+{
+  "name": "multiscalehuman.github.io",
+  "version": "0.1.0",
+  "description": "Multiscale Human site and its mhu-cube dataset visualization component.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:embed": "vite build --config vite.embed.config.ts && tsc -p packages/mhu-cube/tsconfig.build.json && sass packages/mhu-cube/src/mhu-cube.scss packages/mhu-cube/dist/mhu-cube.css",
+    "test": "node --experimental-strip-types --test tests/mhu-cube-validation.test.mjs tests/mhu-cube-projection.test.mjs tests/mhu-cube-details-transition.test.mjs tests/mhu-cube-styles.test.mjs",
+    "test:browser": "vite --config vite.browser-test.config.ts",
+    "test:browser:build": "vite build --config vite.browser-test.config.ts",
+    "test:embed": "node tests/embed-import.test.mjs",
+    "test:package": "npm pack ./packages/mhu-cube --dry-run --json",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.1"
+  }
+}

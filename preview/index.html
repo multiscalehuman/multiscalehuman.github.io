@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>mhu-cube preview</title>
+    <link rel="stylesheet" href="./styles.scss" />
+  </head>
+  <body>
+    <main>
+      <h1 class="visually-hidden">mhu-cube preview</h1>
+      <div id="mhu-cube-preview" class="mhu-cube-preview">
+        <mhu-cube label="Organ imaging datasets"></mhu-cube>
+      </div>
+
+      <section class="metadata-preview" aria-labelledby="metadata-heading">
+        <h2 id="metadata-heading">Preview metadata destinations</h2>
+        <p>These anchors stand in for the separate metadata pages in the host application.</p>
+        <div id="metadata-destinations" class="metadata-preview__grid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
