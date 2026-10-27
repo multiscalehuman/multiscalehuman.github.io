@@ -50,6 +50,7 @@ For the interactive browser checks, run `npm run test:browser` and open the URL 
 | [`packages/mhu-cube`](packages/mhu-cube) | Component source (TypeScript and SCSS), handoff guide, and license |
 | [`preview`](preview) | Preview page and example datasets; its `styles.scss` shows the SCSS integration |
 | [`tests`](tests) | Node tests for validation, layout, styles, and copy, plus the browser harness |
+| [`CLAUDE.md`](CLAUDE.md) | Guidance for Claude Code in this repository |
 
 ## License
 
