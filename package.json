@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "build:embed": "vite build --config vite.embed.config.ts && tsc -p packages/mhu-cube/tsconfig.build.json && sass packages/mhu-cube/src/mhu-cube.scss packages/mhu-cube/dist/mhu-cube.css",
-    "test": "node --experimental-strip-types --test tests/mhu-cube-validation.test.mjs tests/mhu-cube-projection.test.mjs tests/mhu-cube-details-transition.test.mjs tests/mhu-cube-styles.test.mjs",
+    "test": "node --experimental-strip-types --experimental-test-coverage --test-coverage-include=\"packages/mhu-cube/src/**\" --test-coverage-lines=85 --test-coverage-branches=85 --test-coverage-functions=85 --test tests/mhu-cube-validation.test.mjs tests/mhu-cube-projection.test.mjs tests/mhu-cube-details-transition.test.mjs tests/mhu-cube-styles.test.mjs tests/mhu-cube-copy.test.mjs",
     "test:browser": "vite --config vite.browser-test.config.ts",
     "test:browser:build": "vite build --config vite.browser-test.config.ts",
     "test:embed": "node tests/embed-import.test.mjs",

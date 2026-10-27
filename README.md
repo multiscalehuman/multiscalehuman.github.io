@@ -37,6 +37,8 @@ npm run test:browser:build
 npm run test:package
 ```
 
+`npm test` runs the Node tests. It fails if they cover less than 85% of the lines, branches, or functions in the source modules Node can load: validation, projection, the details transition, and the copy. Node has no DOM, so the browser harness checks the element, its cards, and its SVG drawing.
+
 `npm run build:embed` writes the package's `dist/` folder: the ESM module, compiled CSS, source maps, and TypeScript declarations. `dist/` is build output and isn't committed.
 
 For the interactive browser checks, run `npm run test:browser` and open the URL it prints.
@@ -47,7 +49,7 @@ For the interactive browser checks, run `npm run test:browser` and open the URL 
 | --- | --- |
 | [`packages/mhu-cube`](packages/mhu-cube) | Component source (TypeScript and SCSS), handoff guide, and license |
 | [`preview`](preview) | Preview page and example datasets; its `styles.scss` shows the SCSS integration |
-| [`tests`](tests) | Node tests for validation, layout, and styles, plus the browser harness |
+| [`tests`](tests) | Node tests for validation, layout, styles, and copy, plus the browser harness |
 
 ## License
 

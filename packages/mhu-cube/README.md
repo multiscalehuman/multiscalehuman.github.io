@@ -12,7 +12,7 @@ When its container is wider than `64rem`, the component keeps its introduction v
 - The package is marked `private` to prevent accidental registry publication. The receiving team can remove that flag if it chooses an internal registry delivery workflow.
 - This repository uses Vite to build the ESM file and run the preview page, and Sass to compile the stylesheet. The Angular team may keep these builds or compile the source with its preferred tooling.
 - The package itself has no dependencies. The repository's toolchain uses `sass` as a development dependency to compile the stylesheet.
-- Automated Node tests cover validation, time mapping, lane layout, paint order, package imports, critical style rules, and that the SCSS compiles.
+- Automated Node tests cover validation, time mapping, lane layout, paint order, package imports, critical style rules, that the SCSS compiles, and that the intro copy follows its rules. `npm test` fails below 85% line, branch, or function coverage of the source modules Node can load: validation, projection, the details transition, and the copy. The element, card, and SVG modules need a DOM, so only the browser harness checks them.
 - The browser interaction and responsive test harness is compiled in CI, but is not yet executed by a headless browser. Run it manually before release and replace or supplement it with the team's browser test framework. One check currently fails in the harness: it renders with system fonts instead of Roboto, which makes the “Time (years)” title slightly wider than its `6rem` gutter.
 - Integration has not yet been verified inside the destination Angular application.
 
@@ -359,6 +359,8 @@ The introduction copy is managed in `src/mhu-cube-copy.ts`. `heading` appears be
 The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The preview titles use a consistent organ, space, and time sequence so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
 
 The structured copy includes the desktop `heading` and `visualization` copy, a `compactHeading`, and a `compactDescription`. `eyebrow` and `compactDescription` are optional, and when absent they leave no empty element; `eyebrow` currently reads “Explore”.
+
+Tests read the expected text from `src/mhu-cube-copy.ts`, so editing the copy doesn't require test changes. `tests/mhu-cube-copy.test.mjs` checks the copy's rules instead: every string has text and single spacing, the desktop heading has at most 28 characters, and when both descriptions state counts, they match. The browser harness also checks that the desktop heading fits its column.
 
 The copy is an internal handoff configuration, not a public custom-element property. The receiving team can keep it internal or expose host-provided copy if reuse requires that flexibility.
 

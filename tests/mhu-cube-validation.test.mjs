@@ -190,6 +190,29 @@ test("isSafeMetadataHref allows web destinations and rejects executable schemes"
   assert.equal(isSafeMetadataHref("https://example.org/metadata"), true);
   assert.equal(isSafeMetadataHref("javascript:alert(1)"), false);
   assert.equal(isSafeMetadataHref("data:text/html,test"), false);
+  assert.equal(isSafeMetadataHref("http://"), false, "Unparseable URLs are unsafe.");
+});
+
+test("validateAxes rejects malformed axes and empty or non-text categories", () => {
+  const malformed = validateAxes(null);
+  assert.deepEqual(codes(malformed), ["axes.invalid"]);
+  assert.equal(canPlotAxes(malformed.value), false);
+
+  const result = validateAxes({ time: "always", space: { label: "Space", values: [] }, organ: { label: "Organ", values: ["Liver", 3] } });
+  assert.deepEqual(codes(result), ["axis.invalid", "axis.values.invalid", "axis.value.invalid"]);
+  assert.deepEqual(result.value.space.values, []);
+  assert.deepEqual(result.value.organ.values, []);
+  assert.equal(canPlotAxes(result.value), false);
+
+  assert.deepEqual(codes(validateAxes({ ...validAxes, space: undefined })), ["axis.invalid"]);
+});
+
+test("validateItems rejects a non-list and excludes non-object datasets, metadata, and positions", () => {
+  assert.deepEqual(codes(validateItems({}, axes)), ["items.invalid"]);
+
+  const result = validateItems(["dataset", { id: "current", label: "Current", href: "#current", status: "current", metadata: "Liver", position: "Liver" }], axes);
+  assert.deepEqual(codes(result), ["item.invalid", "item.metadata.invalid", "item.position.invalid"]);
+  assert.deepEqual(result.value, [{ id: "current", label: "Current", href: "#current", status: "current" }]);
 });
 
 test("validateCompactMetadata keeps trimmed unique names and falls back to every entry", () => {
