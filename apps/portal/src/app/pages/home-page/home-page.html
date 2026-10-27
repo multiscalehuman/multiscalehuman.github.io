@@ -1,2 +1,12 @@
 <h1 class="title">CIFAR MacMillan Multiscale Human Data Portal</h1>
 <p class="tagline">Explore data across scales, time, and organs.</p>
+
+<section class="space-time-organ-graph">
+  <mhu-cube
+    label="Organ imaging datasets"
+    [axes]="axes"
+    [items]="datasets"
+    [hoverMetadata]="hoverMetadata"
+    [compactMetadata]="compactMetadata"
+  />
+</section>
