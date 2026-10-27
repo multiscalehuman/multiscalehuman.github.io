@@ -1,0 +1,9 @@
+{
+  "extends": "@atlasng/tsconfig/angular.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {}
+  },
+  "exclude": ["node_modules", "tmp"]
+}

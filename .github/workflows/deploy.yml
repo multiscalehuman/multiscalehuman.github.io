@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  HUSKY: 0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci --no-audit
+
+      - run: npx nx build portal --configuration=production
+
+      # GitHub Pages serves 404.html for unknown paths, so a copy of index.html lets the Angular router handle deep links.
+      - name: Prepare SPA fallback
+        run: |
+          cp dist/apps/portal/browser/index.html dist/apps/portal/browser/404.html
+          touch dist/apps/portal/browser/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/apps/portal/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
