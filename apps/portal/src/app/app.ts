@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterOutlet } from '@angular/router';
 import { AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
@@ -6,7 +6,7 @@ import { AnyLink } from '@atlasng/common';
 import { CookieBanner, CookieBannerPrivacyPolicy } from '@atlasng/design-system/cookie-banner';
 import { Footer } from '@atlasng/design-system/footer';
 import { TextLink } from '@atlasng/design-system/links/text-link';
-import { CookieModal, CookieModalData } from '@atlasng/labs/cookie-modal';
+import { CookieModal, CookieModalData, CookieModalResult } from '@atlasng/labs/cookie-modal';
 import { SkipToContentButton } from '@atlasng/labs/skip-to-content-button';
 import { SOCIAL_MEDIA_IDS } from './social-media';
 
@@ -30,8 +30,8 @@ export class App {
   protected readonly logo = 'assets/logos/cifar.svg';
   /** Social media buttons shown in the footer. */
   protected readonly socialMediaIds = SOCIAL_MEDIA_IDS;
-  /** Whether the visitor has already chosen cookie preferences. While false, the cookie banner is shown. */
-  protected readonly preferencesSet = signal(this.permissionsManager.syncFromStorage());
+  /** Whether the visitor has made a cookie consent decision. While false, the cookie banner is shown. */
+  protected readonly hasDecision = this.permissionsManager.hasDecision;
 
   /** Navigates to the privacy policy page. */
   protected openPrivacyPolicy(): void {
@@ -40,30 +40,27 @@ export class App {
 
   /** Opens the cookie preferences modal and saves the visitor's choices when they confirm. */
   protected openPrivacyPreferences(): void {
-    const ref = this.dialog.open(CookieModal, {
+    const ref = this.dialog.open<CookieModal, CookieModalData, CookieModalResult>(CookieModal, {
       data: {
         logoSrc: this.logo,
         permissions: this.permissionsManager.permissions(),
-      } satisfies CookieModalData,
+      },
     });
 
     ref.afterClosed().subscribe((value) => {
       if (value) {
         this.permissionsManager.setPermissions(value);
-        this.preferencesSet.set(true);
       }
     });
   }
 
-  /** Grants every cookie category and hides the banner. */
+  /** Grants every cookie category. */
   protected allowAllCookies(): void {
     this.permissionsManager.setFullPermissions();
-    this.preferencesSet.set(true);
   }
 
-  /** Grants only the necessary cookies and hides the banner. */
+  /** Grants only the necessary cookies. */
   protected allowNecessaryCookies(): void {
     this.permissionsManager.setDefaultPermissions();
-    this.preferencesSet.set(true);
   }
 }

@@ -1,4 +1,4 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { provideRouter, Router } from '@angular/router';
 import { AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
@@ -10,13 +10,15 @@ import { App } from './app';
 describe('App', () => {
   const permissions = { necessary: true, preferences: true, analytics: true, marketing: false };
 
-  async function setup(options: { preferencesSet?: boolean; dialogResult?: unknown } = {}) {
+  async function setup(options: { hasDecision?: boolean; dialogResult?: unknown } = {}) {
+    const hasDecision = signal(options.hasDecision ?? false);
+    const decide = () => hasDecision.set(true);
     const permissionsManager = {
-      syncFromStorage: vi.fn(() => options.preferencesSet ?? false),
+      hasDecision: hasDecision.asReadonly(),
       permissions: vi.fn(() => permissions),
-      setPermissions: vi.fn(),
-      setFullPermissions: vi.fn(),
-      setDefaultPermissions: vi.fn(),
+      setPermissions: vi.fn(decide),
+      setFullPermissions: vi.fn(decide),
+      setDefaultPermissions: vi.fn(decide),
     };
     const dialog = {
       open: vi.fn(() => ({ afterClosed: () => of(options.dialogResult) })),
@@ -31,20 +33,35 @@ describe('App', () => {
       ],
     });
 
-    return { ...result, permissionsManager, dialog, router: result.fixture.debugElement.injector.get(Router) };
+    return {
+      ...result,
+      hasDecision,
+      permissionsManager,
+      dialog,
+      router: result.fixture.debugElement.injector.get(Router),
+    };
   }
 
   it('renders the main content landmark and the footer', async () => {
-    await setup({ preferencesSet: true });
+    await setup({ hasDecision: true });
 
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content');
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });
 
   it('hides the cookie banner when preferences are already stored', async () => {
-    await setup({ preferencesSet: true });
+    await setup({ hasDecision: true });
 
     expect(screen.queryByRole('button', { name: /customize/i })).not.toBeInTheDocument();
+  });
+
+  it('shows the cookie banner again when the decision is cleared elsewhere', async () => {
+    const { fixture, hasDecision } = await setup({ hasDecision: true });
+
+    hasDecision.set(false);
+    await fixture.whenStable();
+
+    expect(screen.getByRole('button', { name: /customize/i })).toBeInTheDocument();
   });
 
   it('accepts all cookies and hides the banner', async () => {
@@ -90,7 +107,7 @@ describe('App', () => {
   });
 
   it('navigates to the privacy policy', async () => {
-    const { fixture, router } = await setup({ preferencesSet: true });
+    const { fixture, router } = await setup({ hasDecision: true });
     const navigate = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     const app = fixture.componentInstance as unknown as { openPrivacyPolicy(): void };
 

@@ -13,7 +13,7 @@
   (openPrivacyPreferences)="openPrivacyPreferences()"
 />
 
-@if (!preferencesSet()) {
+@if (!hasDecision()) {
   <ang-cookie-banner
     (allowAll)="allowAllCookies()"
     (allowNecessary)="allowNecessaryCookies()"

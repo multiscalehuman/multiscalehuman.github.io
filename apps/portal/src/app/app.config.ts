@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-import { provideAnalytics } from '@atlasng/analytics';
+import { provideAnalytics, withGlobalErrorHandler } from '@atlasng/analytics';
 import { withDefaultBackend } from '@atlasng/analytics/default-backend';
 import { provideLinkHandler, withRouterHandler } from '@atlasng/common';
 import { provideSocialMediaButtons } from '@atlasng/design-system/buttons/social-media-button';
@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideSocialMediaButtons(SOCIAL_MEDIA_DEFS),
     provideAnalytics(
       { appName: 'multiscalehuman-portal' },
+      withGlobalErrorHandler(),
       withDefaultBackend({
         endpoint: 'https://api.atlasng.dev/t',
       }),
