@@ -15,7 +15,9 @@ These tasks remain after the Nx + AtlasNG workspace setup. Each one needs a deci
 - [ ] Confirm the footer text: organization `CIFAR`, link `https://cifar.ca/`, and the copyright line.
 - [ ] Supply a favicon. `apps/portal/public/favicon.ico` is still the Nx default.
 - [ ] The CIFAR logo (`apps/portal/public/assets/logos/cifar.svg`) was exported from the Figma footer. Approve it or replace it with the official asset.
-- [ ] Check the theme in `apps/portal/src/styles/` against the design. The palettes were generated from the Figma scheme colors. The fonts are Nunito Sans and Metropolis, which match the AtlasNG HRA theme. Corners are square. Only a light theme exists, because the Figma file has no dark variables.
+- [ ] Keep the theme in `apps/portal/src/styles/` in sync with the Multiscale Human theme in AtlasNG ([cns-iu/AtlasNG#201](https://github.com/cns-iu/AtlasNG/pull/201)). The token JSON (`styles/tokens/`) and the generated `_palettes`, `_shape`, and `_typography` partials are copies from that PR. After the designer changes the tokens, regenerate them in AtlasNG and copy them over again.
+- [ ] Ask the designer about the primary palette tones 25, 35, 50, 60, 70, 95, 98, and 99 in `palette.tokens.json`. They are blue (for example `#2F5E89`), while the rest of the primary palette is red.
+- [ ] Review dark mode with the designer. The portal follows the visitor's light or dark preference. The CIFAR logo is red on both backgrounds, so it may need a dark-mode variant.
 - [ ] Decide whether the site needs a global header. The Figma "Branded Header/CIFAR" layer is hidden on both pages, so no `ang-header-shell` was added.
 - [ ] Write the privacy policy. `/privacy-policy` is a placeholder.
 

@@ -1,14 +1,18 @@
-// The CIFAR design uses square corners, so every Figma 'Corner/*' variable is 0.
+// Copied from AtlasNG (cns-iu/AtlasNG#201, libs/internal/storybook/src/themes/mhu/).
+// AtlasNG generates this file with tools/scripts/generate-shape-scss.mjs, so update the tokens and regenerate there
+// instead of editing it here.
+
+// Shape overrides come from ./tokens/shape.tokens.json
 $shape-overrides: (
   corner-extra-large: 0,
-  corner-extra-large-top: 0,
+  corner-extra-large-top: 0 0 0 0,
   corner-extra-small: 0,
-  corner-extra-small-top: 0,
+  corner-extra-small-top: 0 0 0 0,
   corner-full: 0,
   corner-large: 0,
-  corner-large-end: 0,
-  corner-large-start: 0,
-  corner-large-top: 0,
+  corner-large-end: 0 0 0 0,
+  corner-large-start: 0 0 0 0,
+  corner-large-top: 0 0 0 0,
   corner-medium: 0,
   corner-none: 0,
   corner-small: 0,

@@ -15,12 +15,28 @@
   "nx": {
     "includedScripts": []
   },
-  "allowScripts": {
-    "@parcel/watcher": true,
-    "@swc/core": true,
-    "esbuild": true,
-    "nx": true,
-    "unrs-resolver": true
+  "prettier": "@atlasng/prettier-config",
+  "dependencies": {
+    "@angular/cdk": "^22.2.4",
+    "@angular/common": "^22.2.3",
+    "@angular/compiler": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/forms": "^22.2.3",
+    "@angular/material": "^22.2.4",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/router": "^22.2.3",
+    "@atlasng/analytics": "^0.0.9",
+    "@atlasng/common": "^0.0.9",
+    "@atlasng/core": "^0.0.9",
+    "@atlasng/design-system": "^0.0.9",
+    "@atlasng/labs": "^0.0.9",
+    "@fontsource-variable/material-symbols-rounded": "^5.3.9",
+    "@fontsource-variable/roboto": "^5.3.0",
+    "@fontsource-variable/roboto-mono": "^5.3.0",
+    "analytics": "^0.8.19",
+    "ngx-scrollbar": "^19.1.5",
+    "qs": "^6.17.0",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@angular-devkit/core": "^22.2.4",
@@ -66,27 +82,11 @@
     "typescript-eslint": "^8.72.1",
     "vitest": "^4.0.8"
   },
-  "prettier": "@atlasng/prettier-config",
-  "dependencies": {
-    "@angular/cdk": "^22.2.4",
-    "@angular/common": "^22.2.3",
-    "@angular/compiler": "^22.2.3",
-    "@angular/core": "^22.2.3",
-    "@angular/forms": "^22.2.3",
-    "@angular/material": "^22.2.4",
-    "@angular/platform-browser": "^22.2.3",
-    "@angular/router": "^22.2.3",
-    "@atlasng/analytics": "^0.0.9",
-    "@atlasng/common": "^0.0.9",
-    "@atlasng/core": "^0.0.9",
-    "@atlasng/design-system": "^0.0.9",
-    "@atlasng/labs": "^0.0.9",
-    "@fontsource-variable/material-symbols-rounded": "^5.3.9",
-    "@fontsource-variable/nunito-sans": "^5.3.0",
-    "@fontsource/metropolis": "^5.3.0",
-    "analytics": "^0.8.19",
-    "ngx-scrollbar": "^19.1.5",
-    "qs": "^6.17.0",
-    "rxjs": "^7.8.2"
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "@swc/core": true,
+    "esbuild": true,
+    "nx": true,
+    "unrs-resolver": true
   }
 }

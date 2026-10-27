@@ -5,27 +5,25 @@
 @use './styles/theme' as theme;
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
   @include mat.theme(
     (
       color: (
-        theme-type: light,
+        theme-type: color-scheme,
         primary: theme.$primary-palette,
         tertiary: theme.$tertiary-palette,
       ),
       typography: theme.$typography,
     ),
-    $overrides: map.merge(map.merge(theme.$typography-overrides, theme.$shape-overrides), theme.$color-overrides)
+    $overrides: map.merge(theme.$typography-overrides, theme.$shape-overrides)
   );
 
   @each $name, $palette in theme.$ext-palettes {
-    @include ds.ext-level-colors($name, $palette, light);
+    @include ds.ext-level-colors($name, $palette, color-scheme);
   }
 
   @include ds.mat-all-defaults;
-
-  --mhu-brand-color: #{theme.$brand-color};
 }
 
 // In the Figma design the footer sits on the page surface, not on surface-variant.
