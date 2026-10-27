@@ -6,10 +6,10 @@ The workspace uses Nx 23 and Angular 22, with npm as the package manager. It bui
 
 ## Layout
 
-| Path           | Contents                                                       |
-| -------------- | -------------------------------------------------------------- |
-| `apps/portal/` | The portal application                                         |
-| `libs/`        | Shared libraries, such as the planned `mhu-cube` web component |
+| Path             | Contents                                                                                      |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `apps/portal/`   | The portal application                                                                        |
+| `libs/mhu-cube/` | The `<mhu-cube>` web component, the Space Time Organ Graph ([guide](libs/mhu-cube/README.md)) |
 
 ## Getting started
 

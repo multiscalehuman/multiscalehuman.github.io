@@ -1,52 +1,48 @@
-# MHU cube handoff package
+# mhu-cube
 
-`<mhu-cube>` is an accessible, responsive web component for comparing Multiscale Human Portal organ-imaging datasets and opening their metadata. It was prototyped in a separate repository and handed off to this one.
+`<mhu-cube>`, the Space Time Organ Graph, is an accessible, responsive web component for comparing Multiscale Human Portal organ-imaging datasets and opening their metadata. It was prototyped in a separate repository and is now an Nx library in this workspace; the portal renders it on its home page.
 
 When its container is wider than `64rem`, the component keeps its introduction visible beside a perspective canvas that plots each dataset by **space** (spatial scale), **time** (donor age, vertical), and **organ** (alphabetical), and reveals the selected dataset card beneath that introduction. At `64rem` and below, it replaces the canvas and selection workflow with direct [dataset cards](#dataset-cards), as many per row as fit at the designed card width (about `16rem`).
 
-## Handoff status
+## Status
 
-- The distributable is standards-based ESM with TypeScript declarations, plus the component stylesheet as SCSS source and prebuilt CSS.
+- The element is a framework-neutral custom element with no runtime dependencies. It doesn't import Angular, so it can also be used outside the portal.
 - The element renders into the light DOM, so the page includes its stylesheet and the site's own stylesheets can restyle its parts. See [Styles](#styles).
-- It has no runtime dependencies and does not require Vite in a consuming application.
-- The package is marked `private` to prevent accidental registry publication. The receiving team can remove that flag if it chooses an internal registry delivery workflow.
-- This repository uses Vite to build the ESM file and run the preview page, and Sass to compile the stylesheet. The Angular team may keep these builds or compile the source with its preferred tooling.
-- The package itself has no dependencies. The repository's toolchain uses `sass` as a development dependency to compile the stylesheet.
-- Automated Node tests cover validation, time mapping, lane layout, paint order, package imports, critical style rules, that the SCSS compiles, and that the intro copy follows its rules. `npm test` fails below 85% line, branch, or function coverage of the source modules Node can load: validation, projection, the details transition, and the copy. The element, card, and SVG modules need a DOM, so only the browser harness checks them.
-- The browser interaction and responsive test harness is compiled in CI, but is not yet executed by a headless browser. Run it manually before release and replace or supplement it with the team's browser test framework. One check currently fails in the harness: it renders with system fonts instead of Roboto, which makes the “Time (years)” title slightly wider than its `6rem` gutter.
-- Integration has not yet been verified inside the destination Angular application.
+- Vitest specs run in jsdom and cover validation, projection, the details transition, the copy rules, the stylesheet rules, and the element's rendering, accessibility, keyboard, and event behavior. The workspace requires 85% coverage.
+- jsdom has no layout, so geometry, computed styles, hit testing, and responsive behavior are checked by a [manual browser harness](#development). It isn't run in CI. One harness check currently fails: the harness renders with system fonts instead of Roboto, which makes the “Time (years)” title slightly wider than its `6rem` gutter.
+- The portal shows sample datasets with placeholder metadata links until dataset metadata pages exist.
 
-## Package contents
+## Library contents
 
 ```text
-packages/mhu-cube/
-├── dist/                  # Prebuilt ESM and CSS, source maps, and TypeScript declarations
-├── src/                   # Framework-independent custom element source and SCSS
+libs/mhu-cube/
+├── harness/            # Manual browser harness for layout and interaction checks
+├── src/
+│   ├── index.ts        # Public exports
+│   └── lib/            # Custom element source, SCSS, and Vitest specs
 ├── LICENSE
+├── ng-package.json     # Library build configuration
 ├── package.json
-├── README.md
-└── tsconfig.build.json    # Declaration-only build used by this repository
+└── project.json        # Nx targets: build, test, lint, and harness
 ```
 
-The package intentionally contains no `dependencies` or `devDependencies`. The repository root owns the preview and build toolchain.
-
-`dist/mhu-cube.js` is the required, framework-neutral runtime bundle, and `dist/mhu-cube.css` is the compiled stylesheet for pages that don't build SCSS. The root declaration files (`index.d.ts`, `mhu-cube.d.ts`, `types.d.ts`, and `validation.d.ts`) support TypeScript and Angular. JavaScript and declaration maps are optional debugging aids; declarations for internal source modules are harmless compiler output rather than additional public entry points. `dist` is build output and is not committed: run `npm run build:embed` to create it after changing package source, and don't edit it by hand.
+`npx nx build mhu-cube` writes the library to `dist/libs/mhu-cube`: ES modules, TypeScript declarations, and the SCSS source under `styles/`. `dist` is build output and is not committed. The portal doesn't use that build; it imports the source through the `@mhu/mhu-cube` TypeScript path.
 
 ### Source responsibilities
 
-| Source                          | Responsibility                                                                                                                           |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/index.ts`                  | Supported package exports.                                                                                                               |
-| `src/mhu-cube.ts`               | Custom-element lifecycle, state, rendering coordination, and events.                                                                     |
-| `src/mhu-cube-cards.ts`         | Intro, preview-card, selected-card, and compact-card markup.                                                                             |
-| `src/mhu-cube-visualization.ts` | SVG frame with time and floor guides, blocks with floor shadows and age markers, axis labels, and accessible visualization descriptions. |
-| `src/projection.ts`             | Framework-independent projection, category spacing, time mapping, lane layout, and paint order.                                          |
-| `src/validation.ts`             | Runtime normalization, alphabetical organ order, URL safety, and validation issues.                                                      |
-| `src/mhu-cube-copy.ts`          | Editable introduction copy.                                                                                                              |
-| `src/mhu-cube.scss`             | Stylesheet entry. Loads the partials below in cascade order.                                                                             |
-| `src/_mhu-cube-core.scss`       | Responsive layout, visualization, and state styling.                                                                                     |
-| `src/_mhu-cube-data.scss`       | Dimension key and dataset-detail presentation.                                                                                           |
-| `src/_mhu-cube-cards.scss`      | Compact dataset cards, including their touch and mouse interactions.                                                                     |
+| Source                              | Responsibility                                                                                                                           |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.ts`                      | Supported package exports.                                                                                                               |
+| `src/lib/mhu-cube.ts`               | Custom-element lifecycle, state, rendering coordination, and events.                                                                     |
+| `src/lib/mhu-cube-cards.ts`         | Intro, preview-card, selected-card, and compact-card markup.                                                                             |
+| `src/lib/mhu-cube-visualization.ts` | SVG frame with time and floor guides, blocks with floor shadows and age markers, axis labels, and accessible visualization descriptions. |
+| `src/lib/projection.ts`             | Framework-independent projection, category spacing, time mapping, lane layout, and paint order.                                          |
+| `src/lib/validation.ts`             | Runtime normalization, alphabetical organ order, URL safety, and validation issues.                                                      |
+| `src/lib/mhu-cube-copy.ts`          | Editable introduction copy.                                                                                                              |
+| `src/lib/mhu-cube.scss`             | Stylesheet entry. Loads the partials below in cascade order.                                                                             |
+| `src/lib/_mhu-cube-core.scss`       | Responsive layout, visualization, and state styling.                                                                                     |
+| `src/lib/_mhu-cube-data.scss`       | Dimension key and dataset-detail presentation.                                                                                           |
+| `src/lib/_mhu-cube-cards.scss`      | Compact dataset cards, including their touch and mouse interactions.                                                                     |
 
 ## Acknowledgment
 
@@ -54,36 +50,38 @@ The `mhu-cube` interaction and visual design were inspired by the original metac
 
 ## Angular integration
 
-Add the package to the Angular workspace using the team's normal internal-package or local-package process. Then register the element once in browser startup code:
+The portal shows the complete integration. It registers the element once at startup in [`app.config.ts`](../../apps/portal/src/app/app.config.ts):
 
 ```ts
+import { provideAppInitializer } from '@angular/core';
 import { defineMhuCube } from '@mhu/mhu-cube';
 
-defineMhuCube();
+export const appConfig: ApplicationConfig = {
+  providers: [provideAppInitializer(defineMhuCube) /* … */],
+};
 ```
 
-`defineMhuCube()` is idempotent and safely returns when `customElements` is unavailable during server rendering. It must also run in the browser before Angular creates `<mhu-cube>`.
+`defineMhuCube()` is idempotent and safely returns when `customElements` is unavailable during server rendering. It must run in the browser before Angular creates `<mhu-cube>`.
 
-Include the component stylesheet once in the application's global styles, before any rules that adjust it. With SCSS, `@use` the package entry; the package exports it under the `sass` condition, which Angular and Vite resolve:
+The portal's global [`styles.scss`](../../apps/portal/src/styles.scss) includes the component stylesheet once, before any rules that adjust it:
 
 ```scss
-// src/styles.scss
-@use '@mhu/mhu-cube';
+@use '../../../libs/mhu-cube/src/lib/mhu-cube';
 ```
 
-Without SCSS, add `dist/mhu-cube.css` to the global styles instead (for example in the `styles` array of `angular.json`). See [Styles](#styles) for overriding the component from the site's stylesheets.
+See [Styles](#styles) for overriding the component from the site's stylesheets.
 
-Allow the custom element in the Angular component or module that owns the integration, following Angular's [`CUSTOM_ELEMENTS_SCHEMA` guidance](https://angular.dev/guide/components/advanced-configuration#custom-element-schemas):
+The component that renders the element allows it with Angular's [`CUSTOM_ELEMENTS_SCHEMA`](https://angular.dev/guide/components/advanced-configuration#custom-element-schemas), as the portal's [home page](../../apps/portal/src/app/pages/home-page/home-page.ts) does:
 
 ```ts
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-  selector: 'app-dataset-browser',
-  templateUrl: './dataset-browser.component.html',
+  selector: 'mhu-dataset-browser',
+  templateUrl: './dataset-browser.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DatasetBrowserComponent {}
+export class DatasetBrowser {}
 ```
 
 Bind arrays and objects as DOM properties, not serialized HTML attributes:
@@ -96,14 +94,14 @@ Bind arrays and objects as DOM properties, not serialized HTML attributes:
   [selectedId]="selectedId"
   (mhu-cube-selection-change)="handleSelection($event)"
   (mhu-cube-validation)="handleValidation($event)"
-></mhu-cube>
+/>
 ```
 
 Angular commonly assigns bound properties synchronously. The component coalesces those assignments into one render and one final validation event, so setting `items` before `axes` does not expose a transient unknown-value warning.
 
 ### Optional Angular wrapper
 
-The custom element works in Angular as-is. If the team prefers typed Angular inputs and outputs over `CUSTOM_ELEMENTS_SCHEMA` in feature templates, a thin wrapper can own the element. This sketch is a starting point, not a shipped file; the package adds no Angular dependency:
+The custom element works in Angular as-is. If the team prefers typed Angular inputs and outputs over `CUSTOM_ELEMENTS_SCHEMA` in feature templates, a thin wrapper can own the element. This sketch is a starting point, not a shipped file; the library adds no Angular dependency:
 
 ```ts
 import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from '@angular/core';
@@ -118,7 +116,7 @@ import {
 defineMhuCube();
 
 @Component({
-  selector: 'app-mhu-cube',
+  selector: 'mhu-cube-graph',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <mhu-cube
@@ -130,10 +128,10 @@ defineMhuCube();
       [hoverMetadata]="hoverMetadata()"
       (mhu-cube-selection-change)="selectionChange.emit($event.detail)"
       (mhu-cube-validation)="validation.emit($event.detail)"
-    ></mhu-cube>
+    />
   `,
 })
-export class MhuCubeComponent {
+export class MhuCubeGraph {
   readonly label = input('Organ imaging datasets');
   readonly axes = input.required<MhuCubeAxes>();
   readonly items = input.required<MhuCubeItem[]>();
@@ -341,28 +339,28 @@ The element renders into the light DOM rather than a shadow root, so its markup 
 
 - Prefer the custom properties above and the Angular Material system tokens for color and type; they need no knowledge of the component's markup.
 - To adjust anything else, add rules after the component stylesheet and scope them under the element, for example `mhu-cube .mhu-cube__intro-heading { … }`. The extra element selector outranks the component's own single-class rules.
-- The `mhu-cube__*` classes follow BEM naming. They are stable for this handoff but are not a versioned API, so keep overrides few and deliberate.
+- The `mhu-cube__*` classes follow BEM naming. They are stable but are not a versioned API, so keep overrides few and deliberate.
 - Every component rule is scoped to `mhu-cube` or a `mhu-cube__*` class, so the stylesheet never styles the rest of the page. In the other direction, the site's global element rules, such as for `button`, `a`, or `h2`, also reach the component wherever it doesn't set that property itself.
 
-The current handoff intentionally has no quantitative color scale. Block height encodes the dataset's time range; block fill communicates interaction and availability states only, so consuming applications should not imply a data value from its intensity.
+The component intentionally has no quantitative color scale. Block height encodes the dataset's time range; block fill communicates interaction and availability states only, so consuming applications should not imply a data value from its intensity.
 
 ### Typography
 
 The component consumes Angular Material system typography properties when the host defines them and uses matching Material 3 fallbacks otherwise. Every eyebrow, such as “Explore” above the heading and “Selected dataset” on the details card, uses one eyebrow style, `.mhu-cube__eyebrow`: `label-medium` with the approved 600 weight, uppercase, in the primary color. The desktop introduction uses `headline-large` for the heading, `body-large` for the dimension key, and `body-medium` for the attribution. Its lead paragraph matches AtlasNG's content paragraph (`ang-content-paragraph`): `body-large` scaled by `--ang-content-paragraph-size-multiplier` and `--ang-content-paragraph-line-height-multiplier`, 17/16 by default, so 17px on a 25.5px line with the Multiscale Human theme. The compact introduction uses `headline-medium` for the heading and `body-large` for its description. Introduction headings use their role-specific weight tokens with an approved 600-weight fallback, while dimension-key headers, eyebrows, and axis titles use the approved 600-weight treatment. Other roles defer to their M3 weight tokens, while the selected-dataset heading and stat terms retain their approved 500-weight treatment. Compact card titles, facts, and metadata labels use the card design's 600 weight. The desktop intro and selected-card column does not create an independent scroll region.
 
-The host application owns font loading. The Roboto files used by this repository belong to the preview page and are not runtime dependencies of the web component.
+The host application owns font loading; the portal loads Roboto. Fonts are not runtime dependencies of the web component.
 
 ### Intro copy
 
-The introduction copy is managed in `src/mhu-cube-copy.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the preview data, so update both when the data changes.
+The introduction copy is managed in `src/lib/mhu-cube-copy.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the sample data, so update both when the data changes.
 
-The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The preview titles use a consistent organ, space, and time sequence, like the metadata page titles, so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
+The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The sample dataset titles use a consistent organ, space, and time sequence, like the metadata page titles, so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
 
 The structured copy includes the desktop `heading` and `visualization` copy, a `compactHeading`, and a `compactDescription`. `eyebrow` and `compactDescription` are optional, and when absent they leave no empty element; `eyebrow` currently reads “Explore”.
 
-Tests read the expected text from `src/mhu-cube-copy.ts`, so editing the copy doesn't require test changes. `tests/mhu-cube-copy.test.mjs` checks the copy's rules instead: every string has text and single spacing, the desktop heading has at most 28 characters, and when both descriptions state counts, they match. The browser harness also checks that the desktop heading fits its column.
+Tests read the expected text from `src/lib/mhu-cube-copy.ts`, so editing the copy doesn't require test changes. `mhu-cube-copy.spec.ts` checks the copy's rules instead: every string has text and single spacing, the desktop heading has at most 28 characters, and when both descriptions state counts, they match. The browser harness also checks that the desktop heading fits its column.
 
-The copy is an internal handoff configuration, not a public custom-element property. The receiving team can keep it internal or expose host-provided copy if reuse requires that flexibility.
+The copy is internal configuration, not a public custom-element property. It can be exposed as host-provided copy if reuse requires that flexibility.
 
 ## Accessibility behavior
 
@@ -376,42 +374,37 @@ The copy is an internal handoff configuration, not a public custom-element prope
 - Reduced-motion and Windows forced-colors preferences are supported.
 - Axis text has an equivalent screen-reader summary; decorative SVG geometry is hidden from assistive technology.
 
-These measures improve accessibility but are not a claim of formal WCAG conformance. The receiving team should test the component with its supported browser and assistive-technology matrix after Angular integration.
+These measures improve accessibility but are not a claim of formal WCAG conformance. Test the component with the supported browser and assistive-technology matrix before release.
 
-## Repository preview and validation
+## Development
 
-From the repository root, after installing the locked development dependencies with `npm ci`:
-
-```bash
-npm run dev
-```
-
-Open `/preview/` for the component preview. Its `preview/styles.scss` shows the integration: it `@use`s the component stylesheet first, then adds the page's own rules. Narrow the window below `64rem` to see the dataset cards, and use the browser's device emulation to try the touch interaction.
-
-The example configuration plots donor age from 0 to 100 years and displays its space categories as `100 µm` and `100 mm`. These are preview data rather than hard-coded component defaults, and the preview uses them consistently in the axes, dataset headings, metadata, and accessible descriptions. Its two Liver · 100 µm datasets (age 45 and ages 7–47) demonstrate lanes, and the infant Thymus dataset demonstrates a time label, the inward shift at the axis floor, a card image, and two corresponding authors. The preview labels a single author “Corresponding author” and several “Corresponding authors”, and sets `compactMetadata` to both names. `hoverMetadata` is set to space, time, organ, and sex. So the selected dataset card shows everything, the hover card leaves out the authors, and the compact cards show only the authors. Every preview dataset has a square image in `preview/images/`, mapped to its dataset ID in `preview/main.ts`. The preview follows the operating system's light or dark setting.
-
-Run the validation commands:
+Run the portal to see the component with the sample datasets:
 
 ```bash
-npm run typecheck
-npm test
-npm run build:embed
-npm run test:embed
-npm run test:browser:build
-npm run test:package
+npx nx serve portal
 ```
 
-For manual browser checks, run `npm run test:browser` and open the local URL it prints. A passing harness changes the document title to `PASS — MHU cube browser tests`. Check keyboard use, zoom, light/dark themes, forced colors, widths on both sides of `64rem`, and the compact cards with both a mouse and a touch screen. Because hit testing relies on SVG `pointer-events`, also confirm clicks and hover cards in Firefox and Safari, and that lane blocks just above `64rem` remain comfortable pointer targets.
+Open `http://localhost:4200`. Narrow the window below `64rem` to see the dataset cards, and use the browser's device emulation to try the touch interaction.
 
-## Rebuilding or replacing the toolchain
+The sample datasets live in [`apps/portal/src/app/datasets/sample-datasets.ts`](../../apps/portal/src/app/datasets/sample-datasets.ts), and their square images are in `apps/portal/public/assets/datasets/`. They plot donor age from 0 to 100 years and display the space categories as `100 µm` and `100 mm`. These are sample data rather than hard-coded component defaults, and they use those values consistently in the axes, dataset headings, metadata, and accessible descriptions. The two Liver · 100 µm datasets (age 45 and ages 7–47) demonstrate lanes, and the infant Thymus dataset demonstrates a time label, the inward shift at the axis floor, a card image, and two corresponding authors. A single author is labeled “Corresponding author” and several “Corresponding authors”, and `compactMetadata` is set to both names. `hoverMetadata` is set to space, time, organ, and sex. So the selected dataset card shows everything, the hover card leaves out the authors, and the compact cards show only the authors.
 
-The built `dist/mhu-cube.js` is the consumable module. It does not import Vite, React, Angular, or any other package at runtime, and it carries no styles; `dist/mhu-cube.css` is the compiled stylesheet.
+Validate the library:
 
-This repository bundles the TypeScript with Vite and compiles the stylesheet with Sass. Neither tool is part of the component contract. A team rebuilding from `src/` needs only a TypeScript compiler or bundler and any Sass compiler; Angular's build can compile `src/mhu-cube.scss` directly as a global stylesheet. Public properties, events, DOM structure and class names, and CSS custom properties should remain unchanged.
+```bash
+npx nx test mhu-cube
+npx nx lint mhu-cube
+npx nx build mhu-cube
+```
 
-Before accepting the handoff, the developer team should decide:
+jsdom can't check layout, so after changing the element, card, SVG, or style modules, also run the manual browser harness:
 
-1. Whether to consume the prebuilt local package or migrate the source into its Angular workspace.
-2. Where dataset configuration and metadata URLs will be owned.
-3. Which automated browser runner will execute the included behavioral scenarios.
-4. Which supported-browser and assistive-technology matrix is required for release.
+```bash
+npx nx harness mhu-cube
+```
+
+Open the URL it prints. A passing harness changes the document title to `PASS — MHU cube browser tests`. Check keyboard use, zoom, light/dark themes, forced colors, widths on both sides of `64rem`, and the compact cards with both a mouse and a touch screen. Because hit testing relies on SVG `pointer-events`, also confirm clicks and hover cards in Firefox and Safari, and that lane blocks just above `64rem` remain comfortable pointer targets.
+
+## Open questions
+
+1. Where dataset configuration and metadata URLs will come from once the metadata pages exist.
+2. Which supported-browser and assistive-technology matrix is required for release.
