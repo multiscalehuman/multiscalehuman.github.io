@@ -1,6 +1,6 @@
 # MHU cube handoff package
 
-`<mhu-cube>` is an accessible, responsive web component for comparing Multiscale Human Portal organ-imaging datasets and opening their metadata. It was designed and prototyped in [LibbyUX/metacube](https://github.com/LibbyUX/metacube) and handed off to this repository.
+`<mhu-cube>` is an accessible, responsive web component for comparing Multiscale Human Portal organ-imaging datasets and opening their metadata. It was prototyped in a separate repository and handed off to this one.
 
 When its container is wider than `64rem`, the component keeps its introduction visible beside a perspective canvas that plots each dataset by **time** (donor age, vertical), **space** (spatial scale), and **organ** (alphabetical), and reveals the selected dataset card beneath that introduction. At `64rem` and below, it replaces the canvas and selection workflow with direct [dataset cards](#dataset-cards), as many per row as fit at the designed card width (about `16rem`).
 
