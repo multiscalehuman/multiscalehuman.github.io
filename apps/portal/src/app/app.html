@@ -1,0 +1,24 @@
+<ang-skip-to-content-button anchorId="main-content" />
+
+<main id="main-content" class="page-content" tabindex="-1">
+  <router-outlet />
+</main>
+
+<ang-footer
+  organization="CIFAR"
+  organizationLink="https://cifar.ca/"
+  [logoImage]="logo"
+  [socials]="socialMediaIds"
+  (openPrivacyPolicy)="openPrivacyPolicy()"
+  (openPrivacyPreferences)="openPrivacyPreferences()"
+/>
+
+@if (!preferencesSet()) {
+  <ang-cookie-banner
+    (allowAll)="allowAllCookies()"
+    (allowNecessary)="allowNecessaryCookies()"
+    (customize)="openPrivacyPreferences()"
+  >
+    <a angCookieBannerPrivacyPolicy angTextLink angAnyLink="/privacy-policy" target="_blank">Privacy policy</a>
+  </ang-cookie-banner>
+}

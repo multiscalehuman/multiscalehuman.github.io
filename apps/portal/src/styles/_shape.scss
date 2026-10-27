@@ -1,0 +1,15 @@
+// The CIFAR design uses square corners, so every Figma 'Corner/*' variable is 0.
+$shape-overrides: (
+  corner-extra-large: 0,
+  corner-extra-large-top: 0,
+  corner-extra-small: 0,
+  corner-extra-small-top: 0,
+  corner-full: 0,
+  corner-large: 0,
+  corner-large-end: 0,
+  corner-large-start: 0,
+  corner-large-top: 0,
+  corner-medium: 0,
+  corner-none: 0,
+  corner-small: 0,
+);
