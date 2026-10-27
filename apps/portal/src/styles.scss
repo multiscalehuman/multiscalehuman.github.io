@@ -1,0 +1,44 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '@atlasng/design-system' as ds;
+@use './styles/fonts' as fonts;
+@use './styles/theme' as theme;
+
+:root {
+  color-scheme: light dark;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: color-scheme,
+        primary: theme.$primary-palette,
+        tertiary: theme.$tertiary-palette,
+      ),
+      typography: theme.$typography,
+    ),
+    $overrides: map.merge(theme.$typography-overrides, theme.$shape-overrides)
+  );
+
+  @each $name, $palette in theme.$ext-palettes {
+    @include ds.ext-level-colors($name, $palette, color-scheme);
+  }
+
+  @include ds.mat-all-defaults;
+}
+
+// In the Figma design the footer sits on the page surface, not on surface-variant.
+ang-footer {
+  @include ds.footer-overrides(
+    (
+      background-color: var(--mat-sys-surface),
+    )
+  );
+}
+
+body {
+  margin: 0;
+  min-width: 20rem;
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+  font: var(--mat-sys-body-large);
+}
