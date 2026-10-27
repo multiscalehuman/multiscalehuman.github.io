@@ -48,10 +48,11 @@ test("public typography follows Material 3 roles with limited semibold overrides
   assert.match(styles, /mhu-cube__intro-heading[\s\S]*?--mat-sys-headline-large-size, 2rem[\s\S]*?--mat-sys-headline-large-weight, 600[\s\S]*?white-space: nowrap/);
   assert.match(styles, /mhu-cube__intro-heading[\s\S]*?--mat-sys-headline-medium-size, 1\.75rem[\s\S]*?--mat-sys-headline-medium-weight, 600[\s\S]*?white-space: normal/);
   assert.match(styles, /mhu-cube__axis-title[\s\S]*?font-weight: 600/);
-  assert.match(styles, /mhu-cube__intro-eyebrow,[\s\S]*?mhu-cube__details-eyebrow[\s\S]*?font-weight: 600/);
+  assert.match(styles, /\.mhu-cube__eyebrow \{[\s\S]*?color: var\(--_primary\);[\s\S]*?--mat-sys-label-medium-size, 0\.75rem[\s\S]*?font-weight: 600;[\s\S]*?--mat-sys-label-medium-line-height, 1rem[\s\S]*?text-transform: uppercase;/);
+  // Every eyebrow shares that one style, so the per-eyebrow classes set only spacing.
+  assert.doesNotMatch(styles, /\.mhu-cube__(intro|details)-eyebrow[^{]*\{[^}]*(font|line-height|letter-spacing|color|text-transform)/);
   assert.match(styles, /mhu-cube__details-heading[\s\S]*?--mat-sys-title-large-size, 1\.375rem[\s\S]*?font-weight: 500/);
   assert.match(dataStyles, /mhu-cube__details-metadata \{[\s\S]*?--mat-sys-body-medium-size, 0\.875rem/);
-  assert.match(styles, /mhu-cube__intro-eyebrow \{[\s\S]*?--mat-sys-label-large-size, 0\.875rem/);
   assert.match(styles, /mhu-cube__intro-visualization \{[\s\S]*?--mat-sys-body-large-size, 1rem/);
   assert.match(styles, /\.mhu-cube__intro-summary \{ font-size: 1\.125rem; line-height: 1\.75rem; letter-spacing: 0; \}/);
   assert.match(styles, /\.mhu-cube__intro-summary-compact \{[\s\S]*?--mat-sys-body-large-size, 1rem[\s\S]*?--mat-sys-body-large-line-height, 1\.5rem/);

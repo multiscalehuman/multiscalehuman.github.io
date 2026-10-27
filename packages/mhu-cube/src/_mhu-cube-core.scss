@@ -385,22 +385,19 @@ mhu-cube * { box-sizing: border-box; }
   height: 100%;
   min-height: 0;
 }
-.mhu-cube__intro-eyebrow,
-.mhu-cube__details-eyebrow {
-  margin: 0 0 0.5rem;
+/* The eyebrow style, a short uppercase label above a heading. Each eyebrow's own class sets only its spacing. */
+.mhu-cube__eyebrow {
+  margin: 0;
   color: var(--_primary);
-  font-family: var(--mat-sys-label-small-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-label-small-size, 0.6875rem);
+  font-family: var(--mat-sys-label-medium-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-label-medium-size, 0.75rem);
   font-weight: 600;
-  line-height: var(--mat-sys-label-small-line-height, 1rem);
-  letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
+  line-height: var(--mat-sys-label-medium-line-height, 1rem);
+  letter-spacing: var(--mat-sys-label-medium-tracking, 0.03125rem);
   text-transform: uppercase;
 }
-.mhu-cube__intro-eyebrow {
-  font-size: var(--mat-sys-label-large-size, 0.875rem);
-  line-height: var(--mat-sys-label-large-line-height, 1.25rem);
-  letter-spacing: var(--mat-sys-label-large-tracking, 0.00625rem);
-}
+.mhu-cube__intro-eyebrow,
+.mhu-cube__details-eyebrow { margin: 0 0 0.5rem; }
 .mhu-cube__intro-heading {
   margin: 0;
   font-family: var(--mat-sys-headline-large-font, Roboto, Arial, sans-serif);

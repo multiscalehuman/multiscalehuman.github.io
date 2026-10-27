@@ -34,7 +34,7 @@ export function createIntro(details: HTMLElement) {
   intro.className = "mhu-cube__intro";
   if (MHU_CUBE_INTRO_COPY.eyebrow) {
     const eyebrow = document.createElement("p");
-    eyebrow.className = "mhu-cube__intro-eyebrow";
+    eyebrow.className = "mhu-cube__eyebrow mhu-cube__intro-eyebrow";
     eyebrow.textContent = MHU_CUBE_INTRO_COPY.eyebrow;
     intro.append(eyebrow);
   }
@@ -248,7 +248,7 @@ export function updateDetails(details: HTMLElement, item: MhuCubeItem | null, he
   header.className = "mhu-cube__details-header";
   const title = document.createElement("div");
   const eyebrow = document.createElement("p");
-  eyebrow.className = "mhu-cube__details-eyebrow";
+  eyebrow.className = "mhu-cube__eyebrow mhu-cube__details-eyebrow";
   eyebrow.textContent = "Selected dataset";
   const heading = document.createElement("h3");
   heading.className = "mhu-cube__details-heading";
