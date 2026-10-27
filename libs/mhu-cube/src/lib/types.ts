@@ -1,5 +1,5 @@
 /** A dataset's availability in the metadata experience. */
-export type MhuCubeItemStatus = "available" | "current" | "unavailable";
+export type MhuCubeItemStatus = 'available' | 'current' | 'unavailable';
 
 /** A donor-age span in time-axis units. A single age uses the same start and end. */
 export interface MhuCubeTimeRange {
@@ -79,7 +79,7 @@ export interface MhuCubeSelectionDetail {
   item: MhuCubeItem | null;
 }
 
-export type MhuCubeValidationSeverity = "error" | "warning";
+export type MhuCubeValidationSeverity = 'error' | 'warning';
 
 /** One actionable problem found while normalizing component input. */
 export interface MhuCubeValidationIssue {

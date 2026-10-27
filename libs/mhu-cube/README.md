@@ -34,19 +34,19 @@ The package intentionally contains no `dependencies` or `devDependencies`. The r
 
 ### Source responsibilities
 
-| Source | Responsibility |
-| --- | --- |
-| `src/index.ts` | Supported package exports. |
-| `src/mhu-cube.ts` | Custom-element lifecycle, state, rendering coordination, and events. |
-| `src/mhu-cube-cards.ts` | Intro, preview-card, selected-card, and compact-card markup. |
+| Source                          | Responsibility                                                                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.ts`                  | Supported package exports.                                                                                                               |
+| `src/mhu-cube.ts`               | Custom-element lifecycle, state, rendering coordination, and events.                                                                     |
+| `src/mhu-cube-cards.ts`         | Intro, preview-card, selected-card, and compact-card markup.                                                                             |
 | `src/mhu-cube-visualization.ts` | SVG frame with time and floor guides, blocks with floor shadows and age markers, axis labels, and accessible visualization descriptions. |
-| `src/projection.ts` | Framework-independent projection, category spacing, time mapping, lane layout, and paint order. |
-| `src/validation.ts` | Runtime normalization, alphabetical organ order, URL safety, and validation issues. |
-| `src/mhu-cube-copy.ts` | Editable introduction copy. |
-| `src/mhu-cube.scss` | Stylesheet entry. Loads the partials below in cascade order. |
-| `src/_mhu-cube-core.scss` | Responsive layout, visualization, and state styling. |
-| `src/_mhu-cube-data.scss` | Dimension key and dataset-detail presentation. |
-| `src/_mhu-cube-cards.scss` | Compact dataset cards, including their touch and mouse interactions. |
+| `src/projection.ts`             | Framework-independent projection, category spacing, time mapping, lane layout, and paint order.                                          |
+| `src/validation.ts`             | Runtime normalization, alphabetical organ order, URL safety, and validation issues.                                                      |
+| `src/mhu-cube-copy.ts`          | Editable introduction copy.                                                                                                              |
+| `src/mhu-cube.scss`             | Stylesheet entry. Loads the partials below in cascade order.                                                                             |
+| `src/_mhu-cube-core.scss`       | Responsive layout, visualization, and state styling.                                                                                     |
+| `src/_mhu-cube-data.scss`       | Dimension key and dataset-detail presentation.                                                                                           |
+| `src/_mhu-cube-cards.scss`      | Compact dataset cards, including their touch and mouse interactions.                                                                     |
 
 ## Acknowledgment
 
@@ -57,7 +57,7 @@ The `mhu-cube` interaction and visual design were inspired by the original metac
 Add the package to the Angular workspace using the team's normal internal-package or local-package process. Then register the element once in browser startup code:
 
 ```ts
-import { defineMhuCube } from "@mhu/mhu-cube";
+import { defineMhuCube } from '@mhu/mhu-cube';
 
 defineMhuCube();
 ```
@@ -68,7 +68,7 @@ Include the component stylesheet once in the application's global styles, before
 
 ```scss
 // src/styles.scss
-@use "@mhu/mhu-cube";
+@use '@mhu/mhu-cube';
 ```
 
 Without SCSS, add `dist/mhu-cube.css` to the global styles instead (for example in the `styles` array of `angular.json`). See [Styles](#styles) for overriding the component from the site's stylesheets.
@@ -76,11 +76,11 @@ Without SCSS, add `dist/mhu-cube.css` to the global styles instead (for example 
 Allow the custom element in the Angular component or module that owns the integration, following Angular's [`CUSTOM_ELEMENTS_SCHEMA` guidance](https://angular.dev/guide/components/advanced-configuration#custom-element-schemas):
 
 ```ts
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-  selector: "app-dataset-browser",
-  templateUrl: "./dataset-browser.component.html",
+  selector: 'app-dataset-browser',
+  templateUrl: './dataset-browser.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DatasetBrowserComponent {}
@@ -106,19 +106,19 @@ Angular commonly assigns bound properties synchronously. The component coalesces
 The custom element works in Angular as-is. If the team prefers typed Angular inputs and outputs over `CUSTOM_ELEMENTS_SCHEMA` in feature templates, a thin wrapper can own the element. This sketch is a starting point, not a shipped file; the package adds no Angular dependency:
 
 ```ts
-import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output } from '@angular/core';
 import {
   defineMhuCube,
   type MhuCubeAxes,
   type MhuCubeItem,
   type MhuCubeSelectionDetail,
   type MhuCubeValidationDetail,
-} from "@mhu/mhu-cube";
+} from '@mhu/mhu-cube';
 
 defineMhuCube();
 
 @Component({
-  selector: "app-mhu-cube",
+  selector: 'app-mhu-cube',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <mhu-cube
@@ -134,7 +134,7 @@ defineMhuCube();
   `,
 })
 export class MhuCubeComponent {
-  readonly label = input("Organ imaging datasets");
+  readonly label = input('Organ imaging datasets');
   readonly axes = input.required<MhuCubeAxes>();
   readonly items = input.required<MhuCubeItem[]>();
   readonly selectedId = input<string | null>(null);
@@ -173,14 +173,14 @@ The component responds to its available container width rather than the browser 
 
 ### Properties and JSON attributes
 
-| Name | Type | Purpose |
-| --- | --- | --- |
-| `axes` | `MhuCubeAxes` | Defines the `space`, `time`, and `organ` axes. |
-| `items` | `MhuCubeItem[]` | Supplies dataset labels, metadata, destinations, statuses, and plot positions. |
-| `selectedId` | `string \| null` | Selects a valid dataset on the desktop canvas. Property only. |
-| `label` | `string` | Gives the component section its accessible name. |
+| Name              | Type               | Purpose                                                                                                                                                                                                              |
+| ----------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `axes`            | `MhuCubeAxes`      | Defines the `space`, `time`, and `organ` axes.                                                                                                                                                                       |
+| `items`           | `MhuCubeItem[]`    | Supplies dataset labels, metadata, destinations, statuses, and plot positions.                                                                                                                                       |
+| `selectedId`      | `string \| null`   | Selects a valid dataset on the desktop canvas. Property only.                                                                                                                                                        |
+| `label`           | `string`           | Gives the component section its accessible name.                                                                                                                                                                     |
 | `compactMetadata` | `string[] \| null` | Metadata names shown on [compact cards](#dataset-cards), in order and ignoring case. Defaults to `null`, which shows every entry the card does not already show. The selected dataset card always shows every entry. |
-| `hoverMetadata` | `string[] \| null` | Metadata names shown on the desktop hover card, in order and ignoring case. Defaults to `null`, which shows every entry. Block descriptions for assistive technology always include every entry. |
+| `hoverMetadata`   | `string[] \| null` | Metadata names shown on the desktop hover card, in order and ignoring case. Defaults to `null`, which shows every entry. Block descriptions for assistive technology always include every entry.                     |
 
 `axes` and `items` may also be passed as JSON attributes for static HTML prototypes. Property binding is recommended for Angular because it preserves types and avoids serialization. `compactMetadata` and `hoverMetadata` also accept `compact-metadata` and `hover-metadata` JSON attributes, such as `compact-metadata='["Corresponding authors"]'`; anything other than a list of strings falls back to `null` with a `compact-metadata.invalid` or `hover-metadata.invalid` warning.
 
@@ -196,9 +196,9 @@ interface MhuCubeAxes {
 
 ```ts
 const axes: MhuCubeAxes = {
-  time: { label: "Time", unit: "years", min: 0, max: 100 },
-  space: { label: "Space", values: ["100 µm", "100 mm"] },
-  organ: { label: "Organ", values: ["Heart", "Kidney", "Liver", "Thymus"] },
+  time: { label: 'Time', unit: 'years', min: 0, max: 100 },
+  space: { label: 'Space', values: ['100 µm', '100 mm'] },
+  organ: { label: 'Organ', values: ['Heart', 'Kidney', 'Liver', 'Thymus'] },
 };
 ```
 
@@ -221,18 +221,18 @@ interface MhuCubeItem {
     space: string;
     organ: string;
   };
-  status?: "available" | "current" | "unavailable";
+  status?: 'available' | 'current' | 'unavailable';
 }
 ```
 
 ```ts
 const item: MhuCubeItem = {
-  id: "zandstra-thymus-codex",
-  label: "Thymus, 100 µm, 4–5 months",
-  href: "/metadata/zandstra-thymus-codex",
-  image: "/images/zandstra-thymus-codex.png",
-  metadata: { "Corresponding authors": ["Peter W. Zandstra", "Fabio M.V. Rossi"] },
-  position: { time: { start: 4 / 12, end: 5 / 12, label: "4–5 months" }, space: "100 µm", organ: "Thymus" },
+  id: 'zandstra-thymus-codex',
+  label: 'Thymus, 100 µm, 4–5 months',
+  href: '/metadata/zandstra-thymus-codex',
+  image: '/images/zandstra-thymus-codex.png',
+  metadata: { 'Corresponding authors': ['Peter W. Zandstra', 'Fabio M.V. Rossi'] },
+  position: { time: { start: 4 / 12, end: 5 / 12, label: '4–5 months' }, space: '100 µm', organ: 'Thymus' },
 };
 ```
 
@@ -282,15 +282,15 @@ Read `element.items`, `element.axes`, and `element.validationIssues` to inspect 
 `mhu-cube-selection-change` fires after a desktop selection changes. Closing the selected-dataset card emits `null`:
 
 ```ts
-element.addEventListener("mhu-cube-selection-change", (event) => {
-  console.log(event.detail.item ?? "Selection cleared");
+element.addEventListener('mhu-cube-selection-change', (event) => {
+  console.log(event.detail.item ?? 'Selection cleared');
 });
 ```
 
 `mhu-cube-validation` fires after connected configuration updates have been coalesced:
 
 ```ts
-element.addEventListener("mhu-cube-validation", (event) => {
+element.addEventListener('mhu-cube-validation', (event) => {
   event.detail.issues.forEach((issue) => {
     console.warn(issue.code, issue.path, issue.message);
   });
@@ -301,16 +301,16 @@ Both custom events bubble and are composed. Included declarations add event-deta
 
 Image and position validation codes, all warnings that leave the dataset available but unplotted unless noted:
 
-| Code | Cause |
-| --- | --- |
-| `item.image.unsafe` | `image` is not a relative, HTTP, or HTTPS URL; the dataset is shown without it. |
-| `item.position.missing` | No `position` was supplied. |
-| `item.position.invalid` | `position` is not an object, or uses the retired `{ x, y, z }` index format. |
-| `item.position.time.invalid` | `time` lacks finite `start` and `end`, or `start` is later than `end`. |
-| `item.position.time.out-of-range` | `time` falls outside the time axis. |
-| `item.position.time.label.invalid` | `time.label` is empty; the dataset is still plotted with formatted values. |
-| `item.position.space.unknown` | `space` does not exactly match a configured space value. |
-| `item.position.organ.unknown` | `organ` does not exactly match a configured organ value. |
+| Code                               | Cause                                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------------- |
+| `item.image.unsafe`                | `image` is not a relative, HTTP, or HTTPS URL; the dataset is shown without it. |
+| `item.position.missing`            | No `position` was supplied.                                                     |
+| `item.position.invalid`            | `position` is not an object, or uses the retired `{ x, y, z }` index format.    |
+| `item.position.time.invalid`       | `time` lacks finite `start` and `end`, or `start` is later than `end`.          |
+| `item.position.time.out-of-range`  | `time` falls outside the time axis.                                             |
+| `item.position.time.label.invalid` | `time.label` is empty; the dataset is still plotted with formatted values.      |
+| `item.position.space.unknown`      | `space` does not exactly match a configured space value.                        |
+| `item.position.organ.unknown`      | `organ` does not exactly match a configured organ value.                        |
 
 Axis errors use `axes.invalid`, `axis.invalid`, `axis.label.invalid`, `axis.values.invalid`, `axis.value.invalid`, `axis.values.duplicate`, `axis.time.range.invalid`, `axis.time.ticks.invalid`, and `axis.time.unit.invalid`.
 

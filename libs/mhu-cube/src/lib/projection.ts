@@ -1,4 +1,4 @@
-import type { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis, MhuCubeTimeRange } from "./types";
+import type { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis, MhuCubeTimeRange } from './types';
 
 export interface Point {
   x: number;
@@ -41,7 +41,7 @@ export interface PlotLayout {
   /** The block's footprint on the floor. */
   floor: Point[];
   /** Lines from the block's visible bottom corners down to the floor; empty when it rests on the floor. */
-  drops: Array<[Point, Point]>;
+  drops: [Point, Point][];
   /** Level lines tracing the exact start and end heights from the block to the time axis. */
   leaders: Point[][];
   /** The exact time span marked on the time axis. */
@@ -49,7 +49,7 @@ export interface PlotLayout {
   /** Paint order starting at one; higher values render in front. */
   layer: number;
   /** Side of the block where its hover card opens. */
-  cardSide: "left" | "right";
+  cardSide: 'left' | 'right';
   /** Vertical hover-card anchor as a percentage of the block's bounds. */
   cardTop: number;
 }
@@ -85,7 +85,7 @@ const DESIGN_HEIGHT_RATIO = 0.868;
  * @param planes - The frame's top and bottom faces in percentages of the 1000 × 868 design space.
  * @returns The faces in drawing-area percentages, and the area's height as a share of its width.
  */
-function fitFrame(planes: ViewDefinition["planes"]): Pick<ViewDefinition, "planes" | "heightRatio"> {
+function fitFrame(planes: ViewDefinition['planes']): Pick<ViewDefinition, 'planes' | 'heightRatio'> {
   const points = [...Object.values(planes.top), ...Object.values(planes.bottom)];
   const xs = points.map((point) => point.x);
   const ys = points.map((point) => point.y);
@@ -100,7 +100,10 @@ function fitFrame(planes: ViewDefinition["planes"]): Pick<ViewDefinition, "plane
     x1z1: fit(plane.x1z1),
     x0z1: fit(plane.x0z1),
   });
-  return { planes: { top: fitPlane(planes.top), bottom: fitPlane(planes.bottom) }, heightRatio: (height * DESIGN_HEIGHT_RATIO) / width };
+  return {
+    planes: { top: fitPlane(planes.top), bottom: fitPlane(planes.bottom) },
+    heightRatio: (height * DESIGN_HEIGHT_RATIO) / width,
+  };
 }
 
 // Faces the organ axis from above and slightly right of it: organs run left to right along the front, time runs
@@ -128,7 +131,7 @@ export interface AxisLayout {
   /** Normalized z center for each organ value, in axis order. */
   organ: number[];
   /** Normalized z range each organ value's lanes may occupy, in axis order. */
-  organBands: Array<[number, number]>;
+  organBands: [number, number][];
 }
 
 // Share of a categorical cell covered by a block's footprint.
@@ -145,10 +148,55 @@ const OVERLAP_TOLERANCE = 0.02;
 const CARD_ANCHOR_MIN = 12;
 const CARD_ANCHOR_MAX = 88;
 // Every edge of the unit cube as pairs of [x, y, z] corners.
-const CUBE_EDGES: Array<[[number, number, number], [number, number, number]]> = [
-  [[0, 0, 0], [1, 0, 0]], [[0, 0, 1], [1, 0, 1]], [[0, 1, 0], [1, 1, 0]], [[0, 1, 1], [1, 1, 1]],
-  [[0, 0, 0], [0, 0, 1]], [[1, 0, 0], [1, 0, 1]], [[0, 1, 0], [0, 1, 1]], [[1, 1, 0], [1, 1, 1]],
-  [[0, 0, 0], [0, 1, 0]], [[1, 0, 0], [1, 1, 0]], [[0, 0, 1], [0, 1, 1]], [[1, 0, 1], [1, 1, 1]],
+const CUBE_EDGES: [[number, number, number], [number, number, number]][] = [
+  [
+    [0, 0, 0],
+    [1, 0, 0],
+  ],
+  [
+    [0, 0, 1],
+    [1, 0, 1],
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 0],
+  ],
+  [
+    [0, 1, 1],
+    [1, 1, 1],
+  ],
+  [
+    [0, 0, 0],
+    [0, 0, 1],
+  ],
+  [
+    [1, 0, 0],
+    [1, 0, 1],
+  ],
+  [
+    [0, 1, 0],
+    [0, 1, 1],
+  ],
+  [
+    [1, 1, 0],
+    [1, 1, 1],
+  ],
+  [
+    [0, 0, 0],
+    [0, 1, 0],
+  ],
+  [
+    [1, 0, 0],
+    [1, 1, 0],
+  ],
+  [
+    [0, 0, 1],
+    [0, 1, 1],
+  ],
+  [
+    [1, 0, 1],
+    [1, 1, 1],
+  ],
 ];
 
 /**
@@ -169,7 +217,9 @@ export function getCategoryCenter(value: number, count: number) {
  * @returns A normalized position between zero and one; never closer together than equal-width cells.
  */
 export function getSpreadCenter(value: number, count: number, halfSize: number) {
-  if (count <= 1) return 0.5;
+  if (count <= 1) {
+    return 0.5;
+  }
   const inset = Math.min(0.5 / count, halfSize + SPACE_EDGE_MARGIN);
   return inset + (value * (1 - 2 * inset)) / (count - 1);
 }
@@ -182,8 +232,16 @@ function interpolatePlane(plane: FramePlane, x: number, z: number): Point {
     x0z1: (1 - x) * z,
   };
   return {
-    x: plane.x0z0.x * weights.x0z0 + plane.x1z0.x * weights.x1z0 + plane.x1z1.x * weights.x1z1 + plane.x0z1.x * weights.x0z1,
-    y: plane.x0z0.y * weights.x0z0 + plane.x1z0.y * weights.x1z0 + plane.x1z1.y * weights.x1z1 + plane.x0z1.y * weights.x0z1,
+    x:
+      plane.x0z0.x * weights.x0z0 +
+      plane.x1z0.x * weights.x1z0 +
+      plane.x1z1.x * weights.x1z1 +
+      plane.x0z1.x * weights.x0z1,
+    y:
+      plane.x0z0.y * weights.x0z0 +
+      plane.x1z0.y * weights.x1z0 +
+      plane.x1z1.y * weights.x1z1 +
+      plane.x0z1.y * weights.x0z1,
   };
 }
 
@@ -244,7 +302,7 @@ export function getAxisLayout(axes: MhuCubeAxes): AxisLayout {
  * Projects the twelve edges of the bounding cube so the frame and its contents share one projection.
  * @returns Start and end points of each frame edge in plot percentages.
  */
-export function getFrameEdges(): Array<[Point, Point]> {
+export function getFrameEdges(): [Point, Point][] {
   return CUBE_EDGES.map(([start, end]) => [projectPoint(...start), projectPoint(...end)]);
 }
 
@@ -308,7 +366,9 @@ export function getAxisEdges() {
 export function getRenderedTimeExtent(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis, minHeight: number) {
   const start = getTimeCoordinate(range.start, axis);
   const end = getTimeCoordinate(range.end, axis);
-  if (end - start >= minHeight) return { y0: start, y1: end };
+  if (end - start >= minHeight) {
+    return { y0: start, y1: end };
+  }
   const height = Math.min(minHeight, 1);
   const y0 = Math.min(Math.max((start + end) / 2 - height / 2, 0), 1 - height);
   return { y0, y1: y0 + height };
@@ -369,12 +429,16 @@ export function sortItemsForDisplay(items: readonly MhuCubeItem[], axes: MhuCube
     .sort((a, b) => {
       const first = a.item.position;
       const second = b.item.position;
-      if (!first || !second) return first ? -1 : second ? 1 : a.index - b.index;
-      return axes.organ.values.indexOf(first.organ) - axes.organ.values.indexOf(second.organ)
-        || axes.space.values.indexOf(first.space) - axes.space.values.indexOf(second.space)
-        || first.time.start - second.time.start
-        || first.time.end - second.time.end
-        || compareText(a.item.id, b.item.id);
+      if (!first || !second) {
+        return first ? -1 : second ? 1 : a.index - b.index;
+      }
+      return (
+        axes.organ.values.indexOf(first.organ) - axes.organ.values.indexOf(second.organ) ||
+        axes.space.values.indexOf(first.space) - axes.space.values.indexOf(second.space) ||
+        first.time.start - second.time.start ||
+        first.time.end - second.time.end ||
+        compareText(a.item.id, b.item.id)
+      );
     })
     .map(({ item }) => item);
 }
@@ -401,7 +465,7 @@ interface LaneSlot {
  * @returns Nothing.
  */
 function assignClusterLanes(cluster: Placement[], slots: Map<string, LaneSlot>) {
-  const lanes: Array<{ end: number; tallest: number; members: Placement[] }> = [];
+  const lanes: { end: number; tallest: number; members: Placement[] }[] = [];
   cluster.forEach((placement) => {
     let lane = lanes.find((candidate) => placement.y0 >= candidate.end + OVERLAP_TOLERANCE);
     if (!lane) {
@@ -445,7 +509,9 @@ function assignLanes(placements: Placement[]) {
       clusterEnd = cluster.length === 0 ? placement.y1 : Math.max(clusterEnd, placement.y1);
       cluster.push(placement);
     });
-    if (cluster.length > 0) assignClusterLanes(cluster, slots);
+    if (cluster.length > 0) {
+      assignClusterLanes(cluster, slots);
+    }
   });
   return slots;
 }
@@ -459,8 +525,16 @@ function assignLanes(placements: Placement[]) {
  * @param farEnd - Which end of the organ axis is farther from the camera; lane zero sits there.
  * @returns Normalized start and end along the organ axis.
  */
-function getLaneExtent(center: number, halfSize: number, band: [number, number], slot: LaneSlot, farEnd: 0 | 1): [number, number] {
-  if (slot.laneCount === 1) return [center - halfSize, center + halfSize];
+function getLaneExtent(
+  center: number,
+  halfSize: number,
+  band: [number, number],
+  slot: LaneSlot,
+  farEnd: 0 | 1,
+): [number, number] {
+  if (slot.laneCount === 1) {
+    return [center - halfSize, center + halfSize];
+  }
   // Lanes may spread a little into the band's spare width so each stays a usable target, but never past it.
   const room = 2 * Math.min(center - band[0], band[1] - center) * LANE_BAND_FILL;
   const span = Math.min(2 * halfSize * (1 + 0.5 * (slot.laneCount - 1)), room);
@@ -490,9 +564,10 @@ function getBlockGuides(box: Box, time: { start: number; end: number }) {
   const { front, left, right, back } = getNearCorners(box);
   const floor = [front, left, back, right].map(([x, z]) => projectPoint(x, 0, z));
   // The three visible bottom corners drop to the floor, outlining where the block would rest.
-  const drops = box.y0 > 0
-    ? [front, left, right].map(([x, z]): [Point, Point] => [projectPoint(x, box.y0, z), projectPoint(x, 0, z)])
-    : [];
+  const drops =
+    box.y0 > 0
+      ? [front, left, right].map(([x, z]): [Point, Point] => [projectPoint(x, box.y0, z), projectPoint(x, 0, z)])
+      : [];
   // Each level line stays at one height: from the block's corner nearest the time ticks, across to the tick
   // edge's wall, then along that wall to the ticks.
   const [tickX, tickZ] = VIEW.ticks;
@@ -520,10 +595,14 @@ export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
   const { near } = VIEW;
   const placements: Placement[] = [];
   items.forEach((item) => {
-    if (!item.position) return;
+    if (!item.position) {
+      return;
+    }
     const spaceIndex = axes.space.values.indexOf(item.position.space);
     const organIndex = axes.organ.values.indexOf(item.position.organ);
-    if (spaceIndex < 0 || organIndex < 0) return;
+    if (spaceIndex < 0 || organIndex < 0) {
+      return;
+    }
     placements.push({
       id: item.id,
       spaceIndex,
@@ -542,7 +621,13 @@ export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
     const centerZ = axisLayout.organ[placement.organIndex];
     const slot = slots.get(placement.id) ?? { lane: 0, laneCount: 1 };
     const [x0, x1] = [centerX - halfSize, centerX + halfSize];
-    const [z0, z1] = getLaneExtent(centerZ, halfSize, axisLayout.organBands[placement.organIndex], slot, near[1] === 0 ? 1 : 0);
+    const [z0, z1] = getLaneExtent(
+      centerZ,
+      halfSize,
+      axisLayout.organBands[placement.organIndex],
+      slot,
+      near[1] === 0 ? 1 : 0,
+    );
     const box: Box = { x0, x1, y0: placement.y0, y1: placement.y1, z0, z1 };
     return {
       id: placement.id,
@@ -554,10 +639,9 @@ export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
   });
 
   // Paint farther cells, then farther lanes, then lower blocks first so nearer faces and upper blocks stay visible.
-  blocks.sort((a, b) => b.cellDepth - a.cellDepth
-    || b.laneDepth - a.laneDepth
-    || a.box.y0 - b.box.y0
-    || compareText(a.id, b.id));
+  blocks.sort(
+    (a, b) => b.cellDepth - a.cellDepth || b.laneDepth - a.laneDepth || a.box.y0 - b.box.y0 || compareText(a.id, b.id),
+  );
 
   const layout = new Map<string, PlotLayout>();
   blocks.forEach(({ id, box, time }, rank) => {
@@ -571,7 +655,7 @@ export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
       geometry,
       ...getBlockGuides(box, time),
       layer: rank + 1,
-      cardSide: bounds.left + bounds.width / 2 > 66 ? "left" : "right",
+      cardSide: bounds.left + bounds.width / 2 > 66 ? 'left' : 'right',
       cardTop: ((anchor - bounds.top) / bounds.height) * 100,
     });
   });

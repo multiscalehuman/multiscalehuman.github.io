@@ -33,7 +33,7 @@
       "options": {
         "targetName": "lint"
       },
-      "include": ["apps/portal/**/*"]
+      "include": ["apps/portal/**/*", "libs/mhu-cube/**/*"]
     }
   ],
   "sync": {
@@ -163,6 +163,15 @@
       "inputs": ["production", "^production"]
     },
     "@angular/build:unit-test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/angular:unit-test": {
       "cache": true,
       "inputs": ["default", "^production"]
     }

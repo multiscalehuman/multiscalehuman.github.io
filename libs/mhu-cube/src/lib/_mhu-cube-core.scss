@@ -1,7 +1,10 @@
 mhu-cube {
   --_surface: var(--mhu-cube-surface, var(--mat-sys-surface, #fcfcfc));
   --_surface-container: var(--mhu-cube-surface-container, var(--mat-sys-surface-container, #eceff1));
-  --_surface-container-lowest: var(--mhu-cube-surface-container-lowest, var(--mat-sys-surface-container-lowest, #ffffff));
+  --_surface-container-lowest: var(
+    --mhu-cube-surface-container-lowest,
+    var(--mat-sys-surface-container-lowest, #ffffff)
+  );
   --_on-surface: var(--mhu-cube-on-surface, var(--mat-sys-on-surface, #1d2429));
   --_on-surface-variant: var(--mhu-cube-on-surface-variant, var(--mat-sys-on-surface-variant, #354b57));
   --_primary: var(--mhu-cube-primary, var(--mat-sys-primary, #be0f09));
@@ -25,14 +28,16 @@ mhu-cube {
   letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
 }
 
-mhu-cube * { box-sizing: border-box; }
+mhu-cube * {
+  box-sizing: border-box;
+}
 /* Spacing scales with the host's width (cqw), like the layout breakpoints, not with the browser window. */
 .mhu-cube {
   display: grid;
   /* The content column widens with the host up to 35rem, keeping its earlier 28rem on narrower desktops. */
   grid-template-columns: minmax(22rem, clamp(28rem, 31%, 35rem)) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
-  grid-template-areas: "content stage";
+  grid-template-areas: 'content stage';
   gap: clamp(1.5rem, 3cqw, 4rem);
   width: 100%;
   height: 100%;
@@ -78,7 +83,9 @@ mhu-cube * { box-sizing: border-box; }
   width: var(--_plot-width);
   height: calc((var(--_plot-width) - var(--_gutter-x)) * var(--_area-ratio, 1) + var(--_gutter-y));
 }
-.mhu-cube__frame, .mhu-cube__axes, .mhu-cube__list {
+.mhu-cube__frame,
+.mhu-cube__axes,
+.mhu-cube__list {
   position: absolute;
   top: var(--_gutter-top);
   left: var(--_gutter-left);
@@ -97,17 +104,24 @@ mhu-cube * { box-sizing: border-box; }
   stroke-width: 1.1;
   vector-effect: non-scaling-stroke;
 }
-.mhu-cube__frame-guide, .mhu-cube__frame-floor-guide {
+.mhu-cube__frame-guide,
+.mhu-cube__frame-floor-guide {
   fill: none;
   stroke: color-mix(in srgb, var(--_outline) 30%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
-.mhu-cube__frame-floor-guide { stroke: color-mix(in srgb, var(--_outline) 45%, transparent); }
-.mhu-cube__axes { z-index: 1; user-select: text; }
+.mhu-cube__frame-floor-guide {
+  stroke: color-mix(in srgb, var(--_outline) 45%, transparent);
+}
+.mhu-cube__axes {
+  z-index: 1;
+  user-select: text;
+}
 /* Labels sit on their axis point; --_align-* picks the box corner that touches it and --_offset pushes the
    box away from the frame along the edge's outward normal, so labels clear the frame at any camera angle. */
-.mhu-cube__axis-title, .mhu-cube__axis-value {
+.mhu-cube__axis-title,
+.mhu-cube__axis-value {
   --_align-x: -50%;
   --_align-y: -50%;
   --_offset: 0.5rem;
@@ -128,7 +142,10 @@ mhu-cube * { box-sizing: border-box; }
 }
 /* Value labels and the space and organ titles receive their alignment and offset inline from the frame's edges.
    The time title caps the tick column, right-aligned with the ticks just above the top value. */
-.mhu-cube__axis-title--time { --_align-x: -100%; --_align-y: calc(-100% - 0.75rem); }
+.mhu-cube__axis-title--time {
+  --_align-x: -100%;
+  --_align-y: calc(-100% - 0.75rem);
+}
 .mhu-cube__axis-value {
   color: var(--_on-surface-variant);
   font-family: var(--mat-sys-body-small-font, Roboto, Arial, sans-serif);
@@ -137,15 +154,23 @@ mhu-cube * { box-sizing: border-box; }
   line-height: var(--mat-sys-body-small-line-height, 1rem);
   letter-spacing: var(--mat-sys-body-small-tracking, 0.025rem);
 }
-.mhu-cube__axis-title--space, .mhu-cube__axis-title--organ,
-.mhu-cube__axis-value--space, .mhu-cube__axis-value--organ {
+.mhu-cube__axis-title--space,
+.mhu-cube__axis-title--organ,
+.mhu-cube__axis-value--space,
+.mhu-cube__axis-value--organ {
   text-shadow:
     -2px -2px 0 var(--_surface),
     2px -2px 0 var(--_surface),
     -2px 2px 0 var(--_surface),
     2px 2px 0 var(--_surface);
 }
-.mhu-cube__list { z-index: 2; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+.mhu-cube__list {
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
 /* Bounding boxes of tall blocks overlap their neighbors, so only painted faces receive pointer input. */
 .mhu-cube__item {
   position: absolute;
@@ -155,7 +180,9 @@ mhu-cube * { box-sizing: border-box; }
   height: var(--cube-height);
   pointer-events: none;
 }
-.mhu-cube__item--unpositioned { display: none; }
+.mhu-cube__item--unpositioned {
+  display: none;
+}
 .mhu-cube__select {
   position: relative;
   display: block;
@@ -171,7 +198,11 @@ mhu-cube * { box-sizing: border-box; }
   cursor: pointer;
   pointer-events: none;
 }
-.mhu-cube__select:focus-visible { z-index: 999; outline: 3px solid var(--_focus); outline-offset: 5px; }
+.mhu-cube__select:focus-visible {
+  z-index: 999;
+  outline: 3px solid var(--_focus);
+  outline-offset: 5px;
+}
 /* Shadows share each block's coordinate space but paint beneath every block, directly over the floor. */
 .mhu-cube__shadow {
   position: absolute;
@@ -195,7 +226,10 @@ mhu-cube * { box-sizing: border-box; }
   stroke-width: 1;
   stroke-dasharray: 3 3;
 }
-.mhu-cube__time-marker { opacity: 0; transition: opacity 120ms ease; }
+.mhu-cube__time-marker {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
 .mhu-cube__time-leader {
   fill: none;
   stroke: var(--_primary);
@@ -210,11 +244,17 @@ mhu-cube * { box-sizing: border-box; }
 }
 .mhu-cube__select:hover .mhu-cube__time-marker,
 .mhu-cube__select:focus-visible .mhu-cube__time-marker,
-.mhu-cube__item--selected .mhu-cube__time-marker { opacity: 1; }
+.mhu-cube__item--selected .mhu-cube__time-marker {
+  opacity: 1;
+}
 .mhu-cube__select:hover .mhu-cube__shadow-floor,
 .mhu-cube__select:focus-visible .mhu-cube__shadow-floor,
-.mhu-cube__item--selected .mhu-cube__shadow-floor { fill-opacity: 0.28; }
-.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__shadow { opacity: 0.35; }
+.mhu-cube__item--selected .mhu-cube__shadow-floor {
+  fill-opacity: 0.28;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__shadow {
+  opacity: 0.35;
+}
 /* Paint order lives on the block itself so hover cards can rise above every block without reordering the scene. */
 .mhu-cube__cube {
   position: relative;
@@ -225,46 +265,93 @@ mhu-cube * { box-sizing: border-box; }
   overflow: visible;
   shape-rendering: geometricPrecision;
 }
-.mhu-cube__top, .mhu-cube__left, .mhu-cube__right {
+.mhu-cube__top,
+.mhu-cube__left,
+.mhu-cube__right {
   stroke: color-mix(in srgb, var(--_outline) 75%, transparent);
   stroke-width: 0.85;
   stroke-linejoin: bevel;
   pointer-events: fill;
-  transition: fill-opacity 170ms ease, stroke 170ms ease, stroke-width 170ms ease;
+  transition:
+    fill-opacity 170ms ease,
+    stroke 170ms ease,
+    stroke-width 170ms ease;
 }
-.mhu-cube__top { fill: var(--_primary); fill-opacity: 0.4; }
-.mhu-cube__left { fill: var(--_primary); fill-opacity: 0.5; }
-.mhu-cube__right { fill: var(--_primary); fill-opacity: 0.64; }
+.mhu-cube__top {
+  fill: var(--_primary);
+  fill-opacity: 0.4;
+}
+.mhu-cube__left {
+  fill: var(--_primary);
+  fill-opacity: 0.5;
+}
+.mhu-cube__right {
+  fill: var(--_primary);
+  fill-opacity: 0.64;
+}
 .mhu-cube__edge {
   fill: none;
   stroke: color-mix(in srgb, var(--_on-surface) 38%, transparent);
   stroke-width: 0.75;
   pointer-events: none;
-  transition: stroke 170ms ease, stroke-width 170ms ease;
+  transition:
+    stroke 170ms ease,
+    stroke-width 170ms ease;
 }
-.mhu-cube__select:hover .mhu-cube__top, .mhu-cube__select:hover .mhu-cube__left,
-.mhu-cube__select:hover .mhu-cube__right, .mhu-cube__select:focus-visible .mhu-cube__top,
-.mhu-cube__select:focus-visible .mhu-cube__left, .mhu-cube__select:focus-visible .mhu-cube__right {
+.mhu-cube__select:hover .mhu-cube__top,
+.mhu-cube__select:hover .mhu-cube__left,
+.mhu-cube__select:hover .mhu-cube__right,
+.mhu-cube__select:focus-visible .mhu-cube__top,
+.mhu-cube__select:focus-visible .mhu-cube__left,
+.mhu-cube__select:focus-visible .mhu-cube__right {
   stroke: var(--_on-surface);
   stroke-width: 2.3;
 }
-.mhu-cube__select:hover .mhu-cube__edge, .mhu-cube__select:focus-visible .mhu-cube__edge {
+.mhu-cube__select:hover .mhu-cube__edge,
+.mhu-cube__select:focus-visible .mhu-cube__edge {
   stroke: var(--_on-surface);
   stroke-width: 2;
 }
-.mhu-cube__select:hover .mhu-cube__top, .mhu-cube__select:focus-visible .mhu-cube__top { fill-opacity: 0.46; }
-.mhu-cube__select:hover .mhu-cube__left, .mhu-cube__select:focus-visible .mhu-cube__left { fill-opacity: 0.56; }
-.mhu-cube__select:hover .mhu-cube__right, .mhu-cube__select:focus-visible .mhu-cube__right { fill-opacity: 0.68; }
+.mhu-cube__select:hover .mhu-cube__top,
+.mhu-cube__select:focus-visible .mhu-cube__top {
+  fill-opacity: 0.46;
+}
+.mhu-cube__select:hover .mhu-cube__left,
+.mhu-cube__select:focus-visible .mhu-cube__left {
+  fill-opacity: 0.56;
+}
+.mhu-cube__select:hover .mhu-cube__right,
+.mhu-cube__select:focus-visible .mhu-cube__right {
+  fill-opacity: 0.68;
+}
 .mhu-cube__item--selected .mhu-cube__select .mhu-cube__top,
 .mhu-cube__item--selected .mhu-cube__select .mhu-cube__left,
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right { stroke: var(--_primary); stroke-width: 1.2; }
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__edge { stroke: var(--_primary); stroke-width: 1.2; }
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__top { fill-opacity: 0.9; }
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__left { fill-opacity: 0.96; }
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right { fill-opacity: 1; }
-.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__top { fill-opacity: 0.08; }
-.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__left { fill-opacity: 0.1; }
-.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right { fill-opacity: 0.12; }
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right {
+  stroke: var(--_primary);
+  stroke-width: 1.2;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__edge {
+  stroke: var(--_primary);
+  stroke-width: 1.2;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__top {
+  fill-opacity: 0.9;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__left {
+  fill-opacity: 0.96;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right {
+  fill-opacity: 1;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__top {
+  fill-opacity: 0.08;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__left {
+  fill-opacity: 0.1;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right {
+  fill-opacity: 0.12;
+}
 .mhu-cube__card {
   position: absolute;
   z-index: 1000;
@@ -280,9 +367,17 @@ mhu-cube * { box-sizing: border-box; }
   transform: translateY(-50%);
   transition: opacity 120ms ease;
 }
-.mhu-cube__item--card-left .mhu-cube__card { right: calc(100% + 0.75rem); left: auto; }
-.mhu-cube__select:hover .mhu-cube__card, .mhu-cube__select:focus-visible .mhu-cube__card { opacity: 1; }
-.mhu-cube__item--selected .mhu-cube__select .mhu-cube__card { opacity: 0; }
+.mhu-cube__item--card-left .mhu-cube__card {
+  right: calc(100% + 0.75rem);
+  left: auto;
+}
+.mhu-cube__select:hover .mhu-cube__card,
+.mhu-cube__select:focus-visible .mhu-cube__card {
+  opacity: 1;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__card {
+  opacity: 0;
+}
 .mhu-cube__label {
   display: block;
   color: var(--_on-surface);
@@ -311,7 +406,10 @@ mhu-cube * { box-sizing: border-box; }
   line-height: var(--mat-sys-label-small-line-height, 1rem);
   letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
 }
-.mhu-cube__metadata-value { min-width: 0; overflow-wrap: anywhere; }
+.mhu-cube__metadata-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .mhu-cube__status {
   display: inline-block;
   margin-top: 0.4rem;
@@ -325,12 +423,20 @@ mhu-cube * { box-sizing: border-box; }
 }
 .mhu-cube__item--current .mhu-cube__top,
 .mhu-cube__item--current .mhu-cube__left,
-.mhu-cube__item--current .mhu-cube__right { stroke: var(--_primary); stroke-width: 2.5; }
-.mhu-cube__item--unavailable .mhu-cube__cube { opacity: 0.62; filter: grayscale(1); }
+.mhu-cube__item--current .mhu-cube__right {
+  stroke: var(--_primary);
+  stroke-width: 2.5;
+}
+.mhu-cube__item--unavailable .mhu-cube__cube {
+  opacity: 0.62;
+  filter: grayscale(1);
+}
 .mhu-cube__item--unavailable .mhu-cube__top,
 .mhu-cube__item--unavailable .mhu-cube__left,
 .mhu-cube__item--unavailable .mhu-cube__right,
-.mhu-cube__item--unavailable .mhu-cube__edge { stroke-dasharray: 3 2; }
+.mhu-cube__item--unavailable .mhu-cube__edge {
+  stroke-dasharray: 3 2;
+}
 /* Spacing lives on the list rather than as a stage gap, so the plot gets the stage's full height when it is absent. */
 .mhu-cube__unpositioned {
   align-self: end;
@@ -357,7 +463,14 @@ mhu-cube * { box-sizing: border-box; }
   line-height: var(--mat-sys-body-small-line-height, 1rem);
   letter-spacing: var(--mat-sys-body-small-tracking, 0.025rem);
 }
-.mhu-cube__unpositioned-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.625rem 0 0; padding: 0; list-style: none; }
+.mhu-cube__unpositioned-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.625rem 0 0;
+  padding: 0;
+  list-style: none;
+}
 .mhu-cube__unpositioned-button {
   min-height: 2.75rem;
   padding: 0.625rem 0.75rem;
@@ -371,8 +484,14 @@ mhu-cube * { box-sizing: border-box; }
   letter-spacing: var(--mat-sys-label-large-tracking, 0.00625rem);
   cursor: pointer;
 }
-.mhu-cube__unpositioned-button:hover { background: var(--_primary-container); color: var(--_on-primary-container); }
-.mhu-cube__unpositioned-button:focus-visible { outline: 3px solid var(--_focus); outline-offset: 3px; }
+.mhu-cube__unpositioned-button:hover {
+  background: var(--_primary-container);
+  color: var(--_on-primary-container);
+}
+.mhu-cube__unpositioned-button:focus-visible {
+  outline: 3px solid var(--_focus);
+  outline-offset: 3px;
+}
 .mhu-cube__unpositioned-item.mhu-cube__item--selected .mhu-cube__unpositioned-button {
   border-color: var(--_primary);
   border-width: 2px;
@@ -397,7 +516,9 @@ mhu-cube * { box-sizing: border-box; }
   text-transform: uppercase;
 }
 .mhu-cube__intro-eyebrow,
-.mhu-cube__details-eyebrow { margin: 0 0 0.5rem; }
+.mhu-cube__details-eyebrow {
+  margin: 0 0 0.5rem;
+}
 .mhu-cube__intro-heading {
   margin: 0;
   font-family: var(--mat-sys-headline-large-font, Roboto, Arial, sans-serif);
@@ -407,7 +528,9 @@ mhu-cube * { box-sizing: border-box; }
   letter-spacing: var(--mat-sys-headline-large-tracking, 0);
   white-space: nowrap;
 }
-.mhu-cube__intro-heading-compact { display: none; }
+.mhu-cube__intro-heading-compact {
+  display: none;
+}
 .mhu-cube__details-heading {
   margin: 0;
   font-family: var(--mat-sys-title-large-font, Roboto, Arial, sans-serif);
@@ -439,7 +562,9 @@ mhu-cube * { box-sizing: border-box; }
   letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
 }
 .mhu-cube__intro-summary,
-.mhu-cube__intro-attribution { margin: 0; }
+.mhu-cube__intro-attribution {
+  margin: 0;
+}
 /* The lead paragraph matches AtlasNG's content paragraph: body-large scaled by its multiplier, 17/16 by default. */
 .mhu-cube__intro-summary {
   font-size: calc(var(--ang-content-paragraph-size-multiplier, 1.0625) * var(--mat-sys-body-large-size, 1rem));
@@ -459,7 +584,9 @@ mhu-cube * { box-sizing: border-box; }
   line-height: var(--mat-sys-body-large-line-height, 1.5rem);
   letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
 }
-.mhu-cube__details:empty { display: none; }
+.mhu-cube__details:empty {
+  display: none;
+}
 .mhu-cube__details-card {
   border: 1px solid var(--_outline-variant);
   background: var(--_surface-container);
@@ -486,9 +613,15 @@ mhu-cube * { box-sizing: border-box; }
   text-decoration: none;
   white-space: nowrap;
 }
-.mhu-cube__details-action:hover { filter: brightness(0.92); }
-.mhu-cube__details-action:focus-visible { outline: 3px solid var(--_focus); outline-offset: 3px; }
-.mhu-cube__empty, .mhu-cube__plot-unavailable {
+.mhu-cube__details-action:hover {
+  filter: brightness(0.92);
+}
+.mhu-cube__details-action:focus-visible {
+  outline: 3px solid var(--_focus);
+  outline-offset: 3px;
+}
+.mhu-cube__empty,
+.mhu-cube__plot-unavailable {
   position: absolute;
   inset: 0;
   display: grid;
@@ -511,7 +644,14 @@ mhu-cube * { box-sizing: border-box; }
 }
 
 @container mhu-cube-host (max-width: 64rem) {
-  .mhu-cube { display: flex; min-height: 0; height: auto; padding: clamp(1.5rem, 4cqw, 2.5rem) 0 0; overflow: visible; flex-direction: column; }
+  .mhu-cube {
+    display: flex;
+    min-height: 0;
+    height: auto;
+    padding: clamp(1.5rem, 4cqw, 2.5rem) 0 0;
+    overflow: visible;
+    flex-direction: column;
+  }
   .mhu-cube__content {
     display: block;
     max-width: 45rem;
@@ -534,12 +674,29 @@ mhu-cube * { box-sizing: border-box; }
     letter-spacing: var(--mat-sys-headline-medium-tracking, 0);
     white-space: normal;
   }
-  .mhu-cube__intro-heading-wide, .mhu-cube__intro-visualization { display: none; }
-  .mhu-cube__intro-heading-compact { display: inline; }
-  .mhu-cube__intro-summary-compact { display: block; }
-  .mhu-cube__stage { display: block; container-type: normal; }
-  .mhu-cube__plot { width: 100%; height: auto; max-height: none; }
-  .mhu-cube__frame, .mhu-cube__axes { display: none; }
+  .mhu-cube__intro-heading-wide,
+  .mhu-cube__intro-visualization {
+    display: none;
+  }
+  .mhu-cube__intro-heading-compact {
+    display: inline;
+  }
+  .mhu-cube__intro-summary-compact {
+    display: block;
+  }
+  .mhu-cube__stage {
+    display: block;
+    container-type: normal;
+  }
+  .mhu-cube__plot {
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+  .mhu-cube__frame,
+  .mhu-cube__axes {
+    display: none;
+  }
   /* As many card columns as fit, each at least as wide as the designed card (a 14rem image plus padding). */
   .mhu-cube__list {
     position: static;
@@ -549,16 +706,39 @@ mhu-cube * { box-sizing: border-box; }
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.125rem), 1fr));
     gap: 1rem;
   }
-  .mhu-cube__item { position: static; display: grid; min-width: 0; width: auto; height: auto; pointer-events: auto; }
-  .mhu-cube__select { display: none; }
-  .mhu-cube__details { display: none; }
-  .mhu-cube__unpositioned { display: none; }
-  .mhu-cube__empty, .mhu-cube__plot-unavailable { position: static; }
+  .mhu-cube__item {
+    position: static;
+    display: grid;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    pointer-events: auto;
+  }
+  .mhu-cube__select {
+    display: none;
+  }
+  .mhu-cube__details {
+    display: none;
+  }
+  .mhu-cube__unpositioned {
+    display: none;
+  }
+  .mhu-cube__empty,
+  .mhu-cube__plot-unavailable {
+    position: static;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mhu-cube__top, .mhu-cube__left, .mhu-cube__right,
-  .mhu-cube__edge, .mhu-cube__card, .mhu-cube__shadow-floor, .mhu-cube__time-marker { transition: none; }
+  .mhu-cube__top,
+  .mhu-cube__left,
+  .mhu-cube__right,
+  .mhu-cube__edge,
+  .mhu-cube__card,
+  .mhu-cube__shadow-floor,
+  .mhu-cube__time-marker {
+    transition: none;
+  }
 }
 
 @media (forced-colors: active) {
@@ -566,25 +746,63 @@ mhu-cube * { box-sizing: border-box; }
   .mhu-cube__top,
   .mhu-cube__left,
   .mhu-cube__right,
-  .mhu-cube__edge { stroke: CanvasText; }
-  .mhu-cube__frame-guide, .mhu-cube__frame-floor-guide, .mhu-cube__shadow-drop { stroke: GrayText; }
-  .mhu-cube__shadow-floor { fill: Canvas; stroke: GrayText; }
-  .mhu-cube__time-leader, .mhu-cube__time-bracket { stroke: Highlight; }
-  .mhu-cube__top, .mhu-cube__left, .mhu-cube__right { fill: Canvas; fill-opacity: 1; }
+  .mhu-cube__edge {
+    stroke: CanvasText;
+  }
+  .mhu-cube__frame-guide,
+  .mhu-cube__frame-floor-guide,
+  .mhu-cube__shadow-drop {
+    stroke: GrayText;
+  }
+  .mhu-cube__shadow-floor {
+    fill: Canvas;
+    stroke: GrayText;
+  }
+  .mhu-cube__time-leader,
+  .mhu-cube__time-bracket {
+    stroke: Highlight;
+  }
+  .mhu-cube__top,
+  .mhu-cube__left,
+  .mhu-cube__right {
+    fill: Canvas;
+    fill-opacity: 1;
+  }
   .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__top,
   .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__left,
-  .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right { fill-opacity: 1; }
+  .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right {
+    fill-opacity: 1;
+  }
   .mhu-cube__item--selected .mhu-cube__select .mhu-cube__top,
   .mhu-cube__item--selected .mhu-cube__select .mhu-cube__left,
   .mhu-cube__item--selected .mhu-cube__select .mhu-cube__right,
   .mhu-cube__select:hover .mhu-cube__top,
   .mhu-cube__select:hover .mhu-cube__left,
-  .mhu-cube__select:hover .mhu-cube__right { fill: Highlight; stroke: HighlightText; }
+  .mhu-cube__select:hover .mhu-cube__right {
+    fill: Highlight;
+    stroke: HighlightText;
+  }
   .mhu-cube__item--selected .mhu-cube__select .mhu-cube__edge,
-  .mhu-cube__select:hover .mhu-cube__edge { stroke: HighlightText; }
-  .mhu-cube__item--unavailable .mhu-cube__cube { opacity: 1; filter: none; }
-  .mhu-cube__card, .mhu-cube__details-card, .mhu-cube__unpositioned { border-color: CanvasText; box-shadow: none; }
-  .mhu-cube__details-action, .mhu-cube__unpositioned-button { border: 1px solid ButtonText; }
-  .mhu-cube__select:focus-visible, .mhu-cube__details-action:focus-visible,
-  .mhu-cube__unpositioned-button:focus-visible { outline-color: Highlight; }
+  .mhu-cube__select:hover .mhu-cube__edge {
+    stroke: HighlightText;
+  }
+  .mhu-cube__item--unavailable .mhu-cube__cube {
+    opacity: 1;
+    filter: none;
+  }
+  .mhu-cube__card,
+  .mhu-cube__details-card,
+  .mhu-cube__unpositioned {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+  .mhu-cube__details-action,
+  .mhu-cube__unpositioned-button {
+    border: 1px solid ButtonText;
+  }
+  .mhu-cube__select:focus-visible,
+  .mhu-cube__details-action:focus-visible,
+  .mhu-cube__unpositioned-button:focus-visible {
+    outline-color: Highlight;
+  }
 }

@@ -8,11 +8,11 @@ import {
   type PlotLayout,
   type Point,
   type ProjectedBoxGeometry,
-} from "./projection";
-import type { MhuCubeAxes, MhuCubeItem, MhuCubeMetadataValue, MhuCubeTimeAxis, MhuCubeTimeRange } from "./types";
+} from './projection';
+import type { MhuCubeAxes, MhuCubeItem, MhuCubeMetadataValue, MhuCubeTimeAxis, MhuCubeTimeRange } from './types';
 
-const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
-const NUMBER_FORMAT = new Intl.NumberFormat("en", { maximumFractionDigits: 2 });
+const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+const NUMBER_FORMAT = new Intl.NumberFormat('en', { maximumFractionDigits: 2 });
 // Normal components below this keep a label centered on that axis instead of aligned to one side.
 const LABEL_ALIGN_THRESHOLD = 0.15;
 
@@ -24,8 +24,8 @@ const LABEL_ALIGN_THRESHOLD = 0.15;
 function toPathData(segments: Point[][]) {
   return segments
     .filter((points) => points.length > 1)
-    .map((points) => points.map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`).join(""))
-    .join("");
+    .map((points) => points.map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`).join(''))
+    .join('');
 }
 
 function createSvgElement<K extends keyof SVGElementTagNameMap>(tagName: K, attributes: Record<string, string>) {
@@ -52,7 +52,7 @@ export function getMetadataEntries(item: MhuCubeItem) {
  * @returns Text such as "Male" or "Peter W. Zandstra, Fabio M.V. Rossi".
  */
 export function formatMetadataValue(value: Exclude<MhuCubeMetadataValue, null | undefined>) {
-  return Array.isArray(value) ? value.join(", ") : String(value);
+  return Array.isArray(value) ? value.join(', ') : String(value);
 }
 
 /**
@@ -62,10 +62,13 @@ export function formatMetadataValue(value: Exclude<MhuCubeMetadataValue, null | 
  * @returns The range's own label, or its formatted values such as "45 years" or "7–47 years".
  */
 export function formatTimeRange(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis) {
-  if (range.label) return range.label;
-  const values = range.start === range.end
-    ? NUMBER_FORMAT.format(range.start)
-    : `${NUMBER_FORMAT.format(range.start)}–${NUMBER_FORMAT.format(range.end)}`;
+  if (range.label) {
+    return range.label;
+  }
+  const values =
+    range.start === range.end
+      ? NUMBER_FORMAT.format(range.start)
+      : `${NUMBER_FORMAT.format(range.start)}–${NUMBER_FORMAT.format(range.end)}`;
   return axis.unit ? `${values} ${axis.unit}` : values;
 }
 
@@ -75,11 +78,11 @@ export function formatTimeRange(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis) 
  * @returns A decorative SVG element with crisp, non-scaling frame lines.
  */
 export function createCoordinateFrame(axes: MhuCubeAxes) {
-  const svg = createSvgElement("svg", {
-    class: "mhu-cube__frame",
-    viewBox: "0 0 100 100",
-    preserveAspectRatio: "none",
-    "aria-hidden": "true",
+  const svg = createSvgElement('svg', {
+    class: 'mhu-cube__frame',
+    viewBox: '0 0 100 100',
+    preserveAspectRatio: 'none',
+    'aria-hidden': 'true',
   });
   const layout = getAxisLayout(axes);
   const timeGuides = (axes.time.ticks ?? [])
@@ -91,9 +94,9 @@ export function createCoordinateFrame(axes: MhuCubeAxes) {
     ...layout.organ.map((z) => [projectPoint(0, 0, z), projectPoint(1, 0, z)]),
   ];
   svg.append(
-    createSvgElement("path", { class: "mhu-cube__frame-guide", d: toPathData(timeGuides) }),
-    createSvgElement("path", { class: "mhu-cube__frame-floor-guide", d: toPathData(floorGuides) }),
-    createSvgElement("path", { class: "mhu-cube__frame-line", d: toPathData(getFrameEdges()) }),
+    createSvgElement('path', { class: 'mhu-cube__frame-guide', d: toPathData(timeGuides) }),
+    createSvgElement('path', { class: 'mhu-cube__frame-floor-guide', d: toPathData(floorGuides) }),
+    createSvgElement('path', { class: 'mhu-cube__frame-line', d: toPathData(getFrameEdges()) }),
   );
   return svg;
 }
@@ -104,7 +107,7 @@ export function createCoordinateFrame(axes: MhuCubeAxes) {
  * @returns A CSS translate percentage for that axis.
  */
 function getLabelAlignment(component: number) {
-  return component > LABEL_ALIGN_THRESHOLD ? "0%" : component < -LABEL_ALIGN_THRESHOLD ? "-100%" : "-50%";
+  return component > LABEL_ALIGN_THRESHOLD ? '0%' : component < -LABEL_ALIGN_THRESHOLD ? '-100%' : '-50%';
 }
 
 /**
@@ -113,18 +116,18 @@ function getLabelAlignment(component: number) {
  * @returns A decorative label layer positioned over the coordinate frame.
  */
 export function createAxisLabels(axes: MhuCubeAxes) {
-  const labels = document.createElement("div");
-  labels.className = "mhu-cube__axes";
-  labels.setAttribute("aria-hidden", "true");
+  const labels = document.createElement('div');
+  labels.className = 'mhu-cube__axes';
+  labels.setAttribute('aria-hidden', 'true');
   // Each label sits exactly on its axis position; CSS pushes it outward along the edge's normal.
   const addLabel = (text: string, className: string, point: Point, normal: Point) => {
-    const label = document.createElement("span");
+    const label = document.createElement('span');
     label.className = className;
     label.textContent = text;
     label.style.left = `${point.x}%`;
     label.style.top = `${point.y}%`;
-    label.style.setProperty("--axis-normal-x", normal.x.toFixed(4));
-    label.style.setProperty("--axis-normal-y", normal.y.toFixed(4));
+    label.style.setProperty('--axis-normal-x', normal.x.toFixed(4));
+    label.style.setProperty('--axis-normal-y', normal.y.toFixed(4));
     labels.append(label);
     return label;
   };
@@ -132,30 +135,42 @@ export function createAxisLabels(axes: MhuCubeAxes) {
     x: edge.start.x + (edge.end.x - edge.start.x) * t,
     y: edge.start.y + (edge.end.y - edge.start.y) * t,
   });
-  const addValue = (text: string, axis: "time" | "space" | "organ", point: Point, normal: Point) => {
+  const addValue = (text: string, axis: 'time' | 'space' | 'organ', point: Point, normal: Point) => {
     const label = addLabel(text, `mhu-cube__axis-value mhu-cube__axis-value--${axis}`, point, normal);
-    label.style.setProperty("--_align-x", getLabelAlignment(normal.x));
-    label.style.setProperty("--_align-y", getLabelAlignment(normal.y));
+    label.style.setProperty('--_align-x', getLabelAlignment(normal.x));
+    label.style.setProperty('--_align-y', getLabelAlignment(normal.y));
   };
   // Floor titles sit centered in a second row. A sloped edge makes value labels reach farther from it, so the
   // offset clears labels up to about 4rem wide and 1rem tall, plus the title's own half size, along the normal.
-  const addFloorTitle = (text: string, axis: "space" | "organ", edge: { start: Point; end: Point; normal: Point }) => {
+  const addFloorTitle = (text: string, axis: 'space' | 'organ', edge: { start: Point; end: Point; normal: Point }) => {
     const label = addLabel(text, `mhu-cube__axis-title mhu-cube__axis-title--${axis}`, along(edge, 0.5), edge.normal);
-    label.style.setProperty("--_offset", `${(0.75 + 1.6 * Math.abs(edge.normal.y) + 5.5 * Math.abs(edge.normal.x)).toFixed(3)}rem`);
+    label.style.setProperty(
+      '--_offset',
+      `${(0.75 + 1.6 * Math.abs(edge.normal.y) + 5.5 * Math.abs(edge.normal.x)).toFixed(3)}rem`,
+    );
   };
 
   const edges = getAxisEdges();
   const layout = getAxisLayout(axes);
   const timeTitle = axes.time.unit ? `${axes.time.label} (${axes.time.unit})` : axes.time.label;
-  addLabel(timeTitle, "mhu-cube__axis-title mhu-cube__axis-title--time", edges.time.end, edges.time.normal);
-  addFloorTitle(axes.space.label, "space", edges.space);
-  addFloorTitle(axes.organ.label, "organ", edges.organ);
+  addLabel(timeTitle, 'mhu-cube__axis-title mhu-cube__axis-title--time', edges.time.end, edges.time.normal);
+  addFloorTitle(axes.space.label, 'space', edges.space);
+  addFloorTitle(axes.organ.label, 'organ', edges.organ);
   (axes.time.ticks ?? []).forEach((tick) => {
-    addValue(NUMBER_FORMAT.format(tick), "time", along(edges.time, getTimeCoordinate(tick, axes.time)), edges.time.normal);
+    addValue(
+      NUMBER_FORMAT.format(tick),
+      'time',
+      along(edges.time, getTimeCoordinate(tick, axes.time)),
+      edges.time.normal,
+    );
   });
   // Space and organ labels start exactly where their floor guides meet the frame.
-  axes.space.values.forEach((value, index) => addValue(value, "space", along(edges.space, layout.space[index]), edges.space.normal));
-  axes.organ.values.forEach((value, index) => addValue(value, "organ", along(edges.organ, layout.organ[index]), edges.organ.normal));
+  axes.space.values.forEach((value, index) =>
+    addValue(value, 'space', along(edges.space, layout.space[index]), edges.space.normal),
+  );
+  axes.organ.values.forEach((value, index) =>
+    addValue(value, 'organ', along(edges.organ, layout.organ[index]), edges.organ.normal),
+  );
   return labels;
 }
 
@@ -165,25 +180,36 @@ export function createAxisLabels(axes: MhuCubeAxes) {
  * @returns The decorative block SVG.
  */
 export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry) {
-  const pointList = (...facePoints: Point[]) => facePoints.map((point) => `${point.x},${point.y}`).join(" ");
-  const path = (...pathPoints: Point[]) => pathPoints
-    .map((point, pointIndex) => `${pointIndex === 0 ? "M" : "L"}${point.x} ${point.y}`)
-    .join("");
-  const svg = createSvgElement("svg", {
-    class: "mhu-cube__cube",
+  const pointList = (...facePoints: Point[]) => facePoints.map((point) => `${point.x},${point.y}`).join(' ');
+  const path = (...pathPoints: Point[]) =>
+    pathPoints.map((point, pointIndex) => `${pointIndex === 0 ? 'M' : 'L'}${point.x} ${point.y}`).join('');
+  const svg = createSvgElement('svg', {
+    class: 'mhu-cube__cube',
     viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,
-    preserveAspectRatio: "none",
-    "aria-hidden": "true",
+    preserveAspectRatio: 'none',
+    'aria-hidden': 'true',
   });
   const topFace = [corners.topFront, corners.topLeft, corners.topBack, corners.topRight];
   const leftFace = [corners.topFront, corners.topLeft, corners.bottomLeft, corners.bottomFront];
   const rightFace = [corners.topFront, corners.topRight, corners.bottomRight, corners.bottomFront];
   svg.append(
-    createSvgElement("polygon", { class: "mhu-cube__top", points: pointList(...topFace), "vector-effect": "non-scaling-stroke" }),
-    createSvgElement("polygon", { class: "mhu-cube__left", points: pointList(...leftFace), "vector-effect": "non-scaling-stroke" }),
-    createSvgElement("polygon", { class: "mhu-cube__right", points: pointList(...rightFace), "vector-effect": "non-scaling-stroke" }),
-    createSvgElement("path", {
-      class: "mhu-cube__edge",
+    createSvgElement('polygon', {
+      class: 'mhu-cube__top',
+      points: pointList(...topFace),
+      'vector-effect': 'non-scaling-stroke',
+    }),
+    createSvgElement('polygon', {
+      class: 'mhu-cube__left',
+      points: pointList(...leftFace),
+      'vector-effect': 'non-scaling-stroke',
+    }),
+    createSvgElement('polygon', {
+      class: 'mhu-cube__right',
+      points: pointList(...rightFace),
+      'vector-effect': 'non-scaling-stroke',
+    }),
+    createSvgElement('path', {
+      class: 'mhu-cube__edge',
       d: [
         path(corners.topFront, corners.topBack),
         path(corners.topLeft, corners.topRight),
@@ -191,8 +217,8 @@ export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry) {
         path(corners.topLeft, corners.bottomFront),
         path(corners.topFront, corners.bottomRight),
         path(corners.topRight, corners.bottomFront),
-      ].join(""),
-      "vector-effect": "non-scaling-stroke",
+      ].join(''),
+      'vector-effect': 'non-scaling-stroke',
     }),
   );
   return svg;
@@ -206,25 +232,41 @@ export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry) {
  * @returns A decorative SVG sharing the block's coordinate space, painted beneath every block.
  */
 export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { bounds } }: PlotLayout) {
-  const svg = createSvgElement("svg", {
-    class: "mhu-cube__shadow",
+  const svg = createSvgElement('svg', {
+    class: 'mhu-cube__shadow',
     viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,
-    preserveAspectRatio: "none",
-    "aria-hidden": "true",
+    preserveAspectRatio: 'none',
+    'aria-hidden': 'true',
   });
-  svg.append(createSvgElement("polygon", {
-    class: "mhu-cube__shadow-floor",
-    points: floor.map((point) => `${point.x},${point.y}`).join(" "),
-    "vector-effect": "non-scaling-stroke",
-  }));
+  svg.append(
+    createSvgElement('polygon', {
+      class: 'mhu-cube__shadow-floor',
+      points: floor.map((point) => `${point.x},${point.y}`).join(' '),
+      'vector-effect': 'non-scaling-stroke',
+    }),
+  );
   if (drops.length > 0) {
-    svg.append(createSvgElement("path", { class: "mhu-cube__shadow-drop", d: toPathData(drops), "vector-effect": "non-scaling-stroke" }));
+    svg.append(
+      createSvgElement('path', {
+        class: 'mhu-cube__shadow-drop',
+        d: toPathData(drops),
+        'vector-effect': 'non-scaling-stroke',
+      }),
+    );
   }
 
-  const marker = createSvgElement("g", { class: "mhu-cube__time-marker" });
+  const marker = createSvgElement('g', { class: 'mhu-cube__time-marker' });
   marker.append(
-    createSvgElement("path", { class: "mhu-cube__time-leader", d: toPathData(leaders), "vector-effect": "non-scaling-stroke" }),
-    createSvgElement("path", { class: "mhu-cube__time-bracket", d: toPathData([bracket]), "vector-effect": "non-scaling-stroke" }),
+    createSvgElement('path', {
+      class: 'mhu-cube__time-leader',
+      d: toPathData(leaders),
+      'vector-effect': 'non-scaling-stroke',
+    }),
+    createSvgElement('path', {
+      class: 'mhu-cube__time-bracket',
+      d: toPathData([bracket]),
+      'vector-effect': 'non-scaling-stroke',
+    }),
   );
   svg.append(marker);
   return svg;
@@ -236,14 +278,14 @@ export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { 
  * @returns Visually hidden text describing every space category, the time span, and every organ, in that order.
  */
 export function createAccessibleAxisSummary(axes: MhuCubeAxes) {
-  const summary = document.createElement("p");
-  summary.className = "mhu-cube__sr-only";
-  const unit = axes.time.unit ? ` ${axes.time.unit}` : "";
+  const summary = document.createElement('p');
+  summary.className = 'mhu-cube__sr-only';
+  const unit = axes.time.unit ? ` ${axes.time.unit}` : '';
   summary.textContent = [
-    `${axes.space.label}: ${axes.space.values.join(", ")}`,
+    `${axes.space.label}: ${axes.space.values.join(', ')}`,
     `${axes.time.label}: ${NUMBER_FORMAT.format(axes.time.min)} to ${NUMBER_FORMAT.format(axes.time.max)}${unit}`,
-    `${axes.organ.label}: ${axes.organ.values.join(", ")}`,
-  ].join(". ");
+    `${axes.organ.label}: ${axes.organ.values.join(', ')}`,
+  ].join('. ');
   return summary;
 }
 
@@ -256,17 +298,22 @@ export function createAccessibleAxisSummary(axes: MhuCubeAxes) {
 export function getAccessibleItemDescription(item: MhuCubeItem, axes: MhuCubeAxes) {
   const metadata = getMetadataEntries(item).map(([key, value]) => `${key}: ${formatMetadataValue(value)}`);
   const position = item.position;
-  const axisPosition = position ? [
-    `${axes.space.label}: ${position.space}`,
-    `${axes.time.label}: ${formatTimeRange(position.time, axes.time)}`,
-    `${axes.organ.label}: ${position.organ}`,
-  ] : [];
-  const status = item.status ?? "available";
-  const statusText = status === "current" ? "Current page" : status === "unavailable" ? "Metadata unavailable" : "Metadata available";
+  const axisPosition = position
+    ? [
+        `${axes.space.label}: ${position.space}`,
+        `${axes.time.label}: ${formatTimeRange(position.time, axes.time)}`,
+        `${axes.organ.label}: ${position.organ}`,
+      ]
+    : [];
+  const status = item.status ?? 'available';
+  const statusText =
+    status === 'current' ? 'Current page' : status === 'unavailable' ? 'Metadata unavailable' : 'Metadata available';
   const parts = [
-    metadata.length > 0 ? metadata.join(", ") : "No dataset details provided",
-    axisPosition.length > 0 ? `Visualization position: ${axisPosition.join(", ")}` : "Visualization position not provided",
+    metadata.length > 0 ? metadata.join(', ') : 'No dataset details provided',
+    axisPosition.length > 0
+      ? `Visualization position: ${axisPosition.join(', ')}`
+      : 'Visualization position not provided',
     statusText,
   ];
-  return `${parts.join(". ")}.`;
+  return `${parts.join('. ')}.`;
 }

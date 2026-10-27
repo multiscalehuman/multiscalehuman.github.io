@@ -1,9 +1,4 @@
-export {
-  MHU_CUBE_SELECTION_EVENT,
-  MHU_CUBE_VALIDATION_EVENT,
-  MhuCube,
-  defineMhuCube,
-} from "./mhu-cube";
+export { MHU_CUBE_SELECTION_EVENT, MHU_CUBE_VALIDATION_EVENT, MhuCube, defineMhuCube } from './lib/mhu-cube';
 
 export {
   type MhuCubeAxes,
@@ -18,6 +13,13 @@ export {
   type MhuCubeValidationDetail,
   type MhuCubeValidationIssue,
   type MhuCubeValidationSeverity,
-} from "./types";
+} from './lib/types';
 
-export { isSafeMetadataHref, validateAxes, validateCompactMetadata, validateHoverMetadata, validateItems, type ValidationResult } from "./validation";
+export {
+  isSafeMetadataHref,
+  validateAxes,
+  validateCompactMetadata,
+  validateHoverMetadata,
+  validateItems,
+  type ValidationResult,
+} from './lib/validation';
