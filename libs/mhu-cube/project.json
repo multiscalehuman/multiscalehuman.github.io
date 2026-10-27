@@ -25,6 +25,13 @@
       "options": {
         "setupFiles": ["{projectRoot}/src/test-setup.ts"]
       }
+    },
+    "harness": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite --config libs/mhu-cube/harness/vite.config.mts"
+      }
     }
   }
 }
