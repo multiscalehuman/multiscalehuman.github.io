@@ -54,7 +54,10 @@ test("public typography follows Material 3 roles with limited semibold overrides
   assert.match(styles, /mhu-cube__details-heading[\s\S]*?--mat-sys-title-large-size, 1\.375rem[\s\S]*?font-weight: 500/);
   assert.match(dataStyles, /mhu-cube__details-metadata \{[\s\S]*?--mat-sys-body-medium-size, 0\.875rem/);
   assert.match(styles, /mhu-cube__intro-visualization \{[\s\S]*?--mat-sys-body-large-size, 1rem/);
-  assert.match(styles, /\.mhu-cube__intro-summary \{ font-size: 1\.125rem; line-height: 1\.75rem; letter-spacing: 0; \}/);
+  // The lead paragraph follows AtlasNG's content paragraph, so it scales body-large instead of fixing a size.
+  assert.match(styles, /\.mhu-cube__intro-summary \{\s*font-size: calc\(var\(--ang-content-paragraph-size-multiplier, 1\.0625\) \* var\(--mat-sys-body-large-size, 1rem\)\);/);
+  assert.match(styles, /\.mhu-cube__intro-summary \{[^}]*line-height: calc\([^;]*--ang-content-paragraph-line-height-multiplier, var\(--ang-content-paragraph-size-multiplier, 1\.0625\)\)[^;]*--mat-sys-body-large-line-height, 1\.5rem/);
+  assert.doesNotMatch(styles, /\.mhu-cube__intro-summary \{[^}]*letter-spacing/);
   assert.match(styles, /\.mhu-cube__intro-summary-compact \{[\s\S]*?--mat-sys-body-large-size, 1rem[\s\S]*?--mat-sys-body-large-line-height, 1\.5rem/);
   assert.match(dataStyles, /\.mhu-cube__intro-attribution \{[\s\S]*?--mat-sys-body-medium-size, 0\.875rem/);
   assert.match(styles, /mhu-cube__details-unavailable \{[\s\S]*?--mat-sys-body-large-size, 1rem/);

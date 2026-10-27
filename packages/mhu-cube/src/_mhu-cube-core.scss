@@ -440,8 +440,14 @@ mhu-cube * { box-sizing: border-box; }
 }
 .mhu-cube__intro-summary,
 .mhu-cube__intro-attribution { margin: 0; }
-/* The lead paragraph sits between the body and title roles, so it sets its own size. */
-.mhu-cube__intro-summary { font-size: 1.125rem; line-height: 1.75rem; letter-spacing: 0; }
+/* The lead paragraph matches AtlasNG's content paragraph: body-large scaled by its multiplier, 17/16 by default. */
+.mhu-cube__intro-summary {
+  font-size: calc(var(--ang-content-paragraph-size-multiplier, 1.0625) * var(--mat-sys-body-large-size, 1rem));
+  line-height: calc(
+    var(--ang-content-paragraph-line-height-multiplier, var(--ang-content-paragraph-size-multiplier, 1.0625)) *
+      var(--mat-sys-body-large-line-height, 1.5rem)
+  );
+}
 /* The compact lead paragraph replaces the desktop guidance at 64rem and below. */
 .mhu-cube__intro-summary-compact {
   display: none;
