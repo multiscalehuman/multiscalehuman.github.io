@@ -1,4 +1,11 @@
 <svg width="120" height="43" viewBox="0 0 120 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+@media (prefers-color-scheme: dark) {
+  [fill="#DA291C"] {
+    fill: #fff;
+  }
+}
+</style>
 <g clip-path="url(#clip0_3583_47725)">
 <mask id="mask0_3583_47725" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="43">
 <path d="M120 0H0V43H120V0Z" fill="white"/>
