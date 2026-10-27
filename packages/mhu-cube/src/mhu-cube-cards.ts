@@ -286,7 +286,7 @@ function getRemainingMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes) {
  * Chooses the metadata a compact card shows below its title.
  * @param item - Dataset represented by the card.
  * @param axes - Validated axes whose labels identify entries the card already shows.
- * @param hasPosition - Whether the card shows time, space, and organ itself.
+ * @param hasPosition - Whether the card shows space, time, and organ itself.
  * @param compactMetadata - Names to show in order, matched ignoring case, or null for every remaining entry.
  * @returns The entries to display.
  */
@@ -296,7 +296,7 @@ function getCompactMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes, hasPosi
 }
 
 /**
- * Creates a self-contained dataset card for layouts without the cube canvas: a square image, time and space,
+ * Creates a self-contained dataset card for layouts without the cube canvas: a square image, space and time,
  * the organ as the title, and the chosen metadata. The image and title both open the metadata page; with a
  * touch screen, the title link stretches over the whole card.
  * @param item - Dataset represented by the card.
@@ -336,8 +336,8 @@ export function createCompactCard(item: MhuCubeItem, axes: MhuCubeAxes, compactM
     const facts = document.createElement("dl");
     facts.className = "mhu-cube__compact-facts";
     [
-      [axes.time.label, formatTimeRange(position.time, axes.time)],
       [axes.space.label, position.space],
+      [axes.time.label, formatTimeRange(position.time, axes.time)],
     ].forEach(([label, value]) => {
       const fact = document.createElement("div");
       fact.className = "mhu-cube__compact-fact";
@@ -361,12 +361,12 @@ export function createCompactCard(item: MhuCubeItem, axes: MhuCubeAxes, compactM
     link.href = href;
     link.textContent = title;
     if (status === "current") link.setAttribute("aria-current", "page");
-    // Several datasets share an organ, so hidden time and space text completes each link's name.
+    // Several datasets share an organ, so hidden space and time text leads each link's name, in the card's visual order.
     if (position) {
       const context = document.createElement("span");
       context.className = "mhu-cube__sr-only";
-      context.textContent = `, ${formatTimeRange(position.time, axes.time)}, ${position.space}`;
-      link.append(context);
+      context.textContent = `${position.space}, ${formatTimeRange(position.time, axes.time)}, `;
+      link.prepend(context);
     }
     heading.append(link);
   } else heading.textContent = title;

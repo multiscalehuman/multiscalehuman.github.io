@@ -233,15 +233,15 @@ export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { 
 /**
  * Creates the screen-reader equivalent of the decorative axis labels.
  * @param axes - Validated axes.
- * @returns Visually hidden text describing the time span and every space and organ category.
+ * @returns Visually hidden text describing every space category, the time span, and every organ, in that order.
  */
 export function createAccessibleAxisSummary(axes: MhuCubeAxes) {
   const summary = document.createElement("p");
   summary.className = "mhu-cube__sr-only";
   const unit = axes.time.unit ? ` ${axes.time.unit}` : "";
   summary.textContent = [
-    `${axes.time.label}: ${NUMBER_FORMAT.format(axes.time.min)} to ${NUMBER_FORMAT.format(axes.time.max)}${unit}`,
     `${axes.space.label}: ${axes.space.values.join(", ")}`,
+    `${axes.time.label}: ${NUMBER_FORMAT.format(axes.time.min)} to ${NUMBER_FORMAT.format(axes.time.max)}${unit}`,
     `${axes.organ.label}: ${axes.organ.values.join(", ")}`,
   ].join(". ");
   return summary;
@@ -257,8 +257,8 @@ export function getAccessibleItemDescription(item: MhuCubeItem, axes: MhuCubeAxe
   const metadata = getMetadataEntries(item).map(([key, value]) => `${key}: ${formatMetadataValue(value)}`);
   const position = item.position;
   const axisPosition = position ? [
-    `${axes.time.label}: ${formatTimeRange(position.time, axes.time)}`,
     `${axes.space.label}: ${position.space}`,
+    `${axes.time.label}: ${formatTimeRange(position.time, axes.time)}`,
     `${axes.organ.label}: ${position.organ}`,
   ] : [];
   const status = item.status ?? "available";

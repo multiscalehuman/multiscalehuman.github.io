@@ -141,7 +141,7 @@ await test("cube controls have unique names, descriptions, state, and details re
   });
 });
 
-await test("axes label time, space, and organ with organs in alphabetical order", () => {
+await test("axes label space, time, and organ with organs in alphabetical order", () => {
   const labels = (selector: string) => [...component.querySelectorAll(selector)].map((label) => label.textContent).join(",");
   assert(labels(".mhu-cube__axis-title--time") === "Time (years)", "The time axis title should append its unit.");
   assert(labels(".mhu-cube__axis-value--time") === "0,20,40,60,80,100", "The time axis should default to five equal steps.");
@@ -210,12 +210,12 @@ await test("the component renders into the light DOM so page stylesheets reach i
   }
 });
 
-await test("block descriptions state the time, space, and organ position", () => {
+await test("block descriptions state the space, time, and organ position", () => {
   const button = component.querySelector<HTMLButtonElement>('[data-item-id="two"]');
   const descriptionId = button?.getAttribute("aria-describedby");
   const description = descriptionId ? document.getElementById(descriptionId)?.textContent : undefined;
   assert(
-    description?.includes("Visualization position: Time: 10–60 years, Space: large, Organ: Liver"),
+    description?.includes("Visualization position: Space: large, Time: 10–60 years, Organ: Liver"),
     "Descriptions should name each axis with its value.",
   );
 });
@@ -448,7 +448,7 @@ await test("compact mode exposes direct cards and removes the selection step", a
   assert(cards.length === items.length && cards.every((card) => getComputedStyle(card).display === "flex"), "Every dataset needs a compact card.");
 });
 
-await test("compact cards show the image, time and space, the organ title, and the remaining metadata", async () => {
+await test("compact cards show the image, space and time, the organ title, and the remaining metadata", async () => {
   const cards = [...component.querySelectorAll<HTMLElement>(".mhu-cube__compact-card")];
   const card = (id: string) => cards.find((candidate) => candidate.querySelector<HTMLAnchorElement>(".mhu-cube__compact-link")?.getAttribute("href") === `#${id}`);
   const terms = (element: Element | undefined, selector: string) => [...(element?.querySelectorAll(selector) ?? [])].map((term) => term.textContent).join(",");
@@ -461,8 +461,8 @@ await test("compact cards show the image, time and space, the organ title, and t
   });
   const linkNames = cards.map((candidate) => candidate.querySelector(".mhu-cube__compact-link")?.textContent);
   assert(new Set(linkNames).size === items.length, "Title links need unique accessible names, even when organs repeat.");
-  assert(card("two")?.querySelector(".mhu-cube__compact-link")?.textContent === "Liver, 10–60 years, large", "Titles show the organ, with time and space completing the link name.");
-  assert(terms(card("two"), ".mhu-cube__compact-facts dt") === "Time,Space" && terms(card("two"), ".mhu-cube__compact-facts dd") === "10–60 years,large", "Facts should list time, then space.");
+  assert(card("two")?.querySelector(".mhu-cube__compact-link")?.textContent === "large, 10–60 years, Liver", "Titles show the organ, with space and time leading the link name.");
+  assert(terms(card("two"), ".mhu-cube__compact-facts dt") === "Space,Time" && terms(card("two"), ".mhu-cube__compact-facts dd") === "large,10–60 years", "Facts should list space, then time.");
   assert(terms(card("two"), ".mhu-cube__compact-details dt") === "Sex,Lead author", "Metadata already shown as facts or the title should not repeat.");
   assert(terms(card("three"), ".mhu-cube__compact-details dd") === "Author three,Co-author three", "List values should show one entry per line.");
   assert(card("unplotted")?.querySelector(".mhu-cube__compact-link")?.textContent === "Dataset without coordinates" && !card("unplotted")?.querySelector(".mhu-cube__compact-facts"), "Unplotted datasets fall back to their label and full metadata.");

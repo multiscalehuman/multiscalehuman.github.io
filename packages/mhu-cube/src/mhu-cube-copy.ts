@@ -30,22 +30,22 @@ export interface MhuCubeIntroCopy {
 
 export const MHU_CUBE_INTRO_COPY: MhuCubeIntroCopy = {
   eyebrow: "Explore",
-  heading: "Time Space Organ Graph",
-  compactHeading: "Time Space Organ Datasets",
+  heading: "Space Time Organ Graph",
+  compactHeading: "Space Time Organ Datasets",
   // The counts describe the preview's datasets; update them here and in the visualization description together.
-  compactDescription: "7 experimental datasets from 4 international teams, by donor age, physical scale, and organ.",
+  compactDescription: "7 experimental datasets from 4 international teams, by physical scale, donor age, and organ.",
   visualization: {
     // The counts describe the preview's datasets; update them here and in the compact description together.
-    description: "Compare 7 experimental datasets from 4 international teams across time, space, and organs. Select a block to view its details.",
+    description: "Compare 7 experimental datasets from 4 international teams across space, time, and organs. Select a block to view its details.",
     dimensionHeadings: ["Dimension", "What it represents"],
     dimensions: [
       {
-        term: "Time",
-        description: "Donor age in years; taller blocks span an age range",
-      },
-      {
         term: "Space",
         description: "Physical scale the dataset captures",
+      },
+      {
+        term: "Time",
+        description: "Donor age in years; taller blocks span an age range",
       },
       {
         term: "Organ",

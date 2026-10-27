@@ -94,7 +94,7 @@ test("only painted block faces receive pointer input on desktop", () => {
   assert.doesNotMatch(styles, /\.mhu-cube__item--current \.mhu-cube__cube \{[^}]*outline/);
 });
 
-test("axis styles name the time, space, and organ axes", () => {
+test("axis styles name the space, time, and organ axes", () => {
   assert.match(styles, /\.mhu-cube__axis-title--time \{/);
   assert.match(styles, /\.mhu-cube__axis-value \{/);
   assert.match(styles, /\.mhu-cube__axis-title--space, \.mhu-cube__axis-title--organ,/);

@@ -4,7 +4,7 @@ Guidance for Claude Code in this repository. For people, start with [README.md](
 
 ## Project
 
-- `packages/mhu-cube`: the `<mhu-cube>` web component, the Time Space Organ Graph (TypeScript and SCSS). It renders into the light DOM and has no runtime dependencies.
+- `packages/mhu-cube`: the `<mhu-cube>` web component, the Space Time Organ Graph (TypeScript and SCSS). It renders into the light DOM and has no runtime dependencies.
 - `preview`: the preview page. Run `npm run dev` and open `http://localhost:5173/preview/`.
 - `tests`: Node tests (`*.test.mjs`) and the browser harness (`tests/browser`).
 
@@ -34,6 +34,10 @@ Don't add dependencies without the maintainer's approval.
 
 ## UX copy
 
+- The official dimension order is **Space, Time, Organ**. Use it in names, headings, labels, descriptions, screen-reader text, and metadata lists. The data model's field order (`time`, `space`, `organ`) is unrelated and doesn't need to match.
+- There are only two exceptions, and they read **Organ, Space, Time**:
+  - Dataset titles, such as "Heart, 100 µm, ~40–70 years". These appear on the selected dataset card and the hover card, and as the metadata page titles.
+  - Keyboard and card order: alphabetical by organ, then by space, then by time.
 - The intro copy lives in `packages/mhu-cube/src/mhu-cube-copy.ts`. To change wording, edit only that file.
 - Tests read the expected text from `MHU_CUBE_INTRO_COPY`. Don't hard-code intro copy in tests. Put copy constraints in `tests/mhu-cube-copy.test.mjs` as rules, such as the desktop heading's 28-character limit.
 - The desktop and compact descriptions both state the preview's dataset and team counts. Update them together.

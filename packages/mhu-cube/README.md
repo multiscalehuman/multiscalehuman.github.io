@@ -2,7 +2,7 @@
 
 `<mhu-cube>` is an accessible, responsive web component for comparing Multiscale Human Portal organ-imaging datasets and opening their metadata. It was prototyped in a separate repository and handed off to this one.
 
-When its container is wider than `64rem`, the component keeps its introduction visible beside a perspective canvas that plots each dataset by **time** (donor age, vertical), **space** (spatial scale), and **organ** (alphabetical), and reveals the selected dataset card beneath that introduction. At `64rem` and below, it replaces the canvas and selection workflow with direct [dataset cards](#dataset-cards), as many per row as fit at the designed card width (about `16rem`).
+When its container is wider than `64rem`, the component keeps its introduction visible beside a perspective canvas that plots each dataset by **space** (spatial scale), **time** (donor age, vertical), and **organ** (alphabetical), and reveals the selected dataset card beneath that introduction. At `64rem` and below, it replaces the canvas and selection workflow with direct [dataset cards](#dataset-cards), as many per row as fit at the designed card width (about `16rem`).
 
 ## Handoff status
 
@@ -175,7 +175,7 @@ The component responds to its available container width rather than the browser 
 
 | Name | Type | Purpose |
 | --- | --- | --- |
-| `axes` | `MhuCubeAxes` | Defines the `time`, `space`, and `organ` axes. |
+| `axes` | `MhuCubeAxes` | Defines the `space`, `time`, and `organ` axes. |
 | `items` | `MhuCubeItem[]` | Supplies dataset labels, metadata, destinations, statuses, and plot positions. |
 | `selectedId` | `string \| null` | Selects a valid dataset on the desktop canvas. Property only. |
 | `label` | `string` | Gives the component section its accessible name. |
@@ -202,8 +202,8 @@ const axes: MhuCubeAxes = {
 };
 ```
 
-- **Time** is the continuous vertical axis, measured as donor age. `min` must be less than `max`. `ticks` are optional; the default is five equal steps (`0, 20, 40, 60, 80, 100` above). The axis title appends `unit`, as in “Time (years)”; `unit` also appears in formatted ranges, such as “7–47 years”, and in the screen-reader axis summary. Faint guide lines on the back walls mark each interior tick.
 - **Space** values are displayed in the order supplied, so list them from smallest to largest.
+- **Time** is the continuous vertical axis, measured as donor age. `min` must be less than `max`. `ticks` are optional; the default is five equal steps (`0, 20, 40, 60, 80, 100` above). The axis title appends `unit`, as in “Time (years)”; `unit` also appears in formatted ranges, such as “7–47 years”, and in the screen-reader axis summary. Faint guide lines on the back walls mark each interior tick.
 - **Organ** values are always displayed alphabetically, regardless of the order supplied. Sorting ignores case and accents, so names that differ only that way are rejected as duplicates.
 - Space and organ values must be nonempty, unique strings. The normalized `element.axes` value reflects the alphabetical organ order and the effective time ticks.
 
@@ -258,7 +258,7 @@ const item: MhuCubeItem = {
 - Even so, a block's depth shifts it slightly against the time ticks. Hovering, keyboard focus, or selection reveals a bracket on the time axis for the dataset's exact start and end, plus level lines tracing those heights from the block to the axis. Single ages show a single level line and a dot.
 - The plot is as large as its column allows. The frame fills a drawing area with the frame's own proportions, and labels hang into fixed `rem` gutters around that area, so they keep their room at any size. Whichever of the column's height or width runs out first sets the size; the other dimension keeps the leftover space, centered.
 - Axis labels are placed from the frame itself. Each value label hangs from its axis position, offset straight out from the frame, and the space and organ titles sit in a second row beyond them. Labels stay clear of the frame and each other for values up to about `4rem` wide; longer space or organ names may need shorter display labels.
-- Keyboard order, reading order, and compact-card order follow the plot: organ, then space, then time.
+- Keyboard order, reading order, and compact-card order go alphabetically by organ, then by space, then by time, matching the dataset titles.
 
 ### Dataset cards
 
@@ -266,7 +266,7 @@ At `64rem` and below, each dataset is a card built from the [Figma design](https
 
 - A card on the lowest container surface (`surface-container-lowest`), white in light themes.
 - The dataset's `image`, about `14rem` square, on the primary container fill. Non-square images are contained and sit on the bottom edge.
-- Time and space, each after a small primary square.
+- Space and time, each after a small primary square.
 - The organ as the card title.
 - Below a divider, the metadata named in `compactMetadata`. Without it, every remaining entry appears, except entries whose key matches an axis label (ignoring case), because the card already shows them.
 - Interaction depends on the input device, not the width:
@@ -354,9 +354,9 @@ The host application owns font loading. The Roboto files used by this repository
 
 ### Intro copy
 
-The introduction copy is managed in `src/mhu-cube-copy.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains time, space, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the preview data, so update both when the data changes.
+The introduction copy is managed in `src/mhu-cube-copy.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the preview data, so update both when the data changes.
 
-The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The preview titles use a consistent organ, space, and time sequence so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
+The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The preview titles use a consistent organ, space, and time sequence, like the metadata page titles, so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
 
 The structured copy includes the desktop `heading` and `visualization` copy, a `compactHeading`, and a `compactDescription`. `eyebrow` and `compactDescription` are optional, and when absent they leave no empty element; `eyebrow` currently reads “Explore”.
 
@@ -366,10 +366,10 @@ The copy is an internal handoff configuration, not a public custom-element prope
 
 ## Accessibility behavior
 
-- Desktop blocks are native buttons with unique accessible names, descriptions, selected state, and a relationship to the persistent details region. Descriptions state the time, space, and organ position, such as “Time: 7–47 years, Space: 100 µm, Organ: Liver”.
-- Only a block's painted faces receive pointer input, so a tall block's bounding box never intercepts clicks meant for a neighbor. Keyboard and reading order follow organ, space, and time.
+- Desktop blocks are native buttons with unique accessible names, descriptions, selected state, and a relationship to the persistent details region. Descriptions state the space, time, and organ position, such as “Space: 100 µm, Time: 7–47 years, Organ: Liver”.
+- Only a block's painted faces receive pointer input, so a tall block's bounding box never intercepts clicks meant for a neighbor. Keyboard and reading order go alphabetically by organ, then by space and time.
 - Keyboard activation moves focus directly to the selected dataset's metadata action. Pointer activation keeps focus on the block.
-- Compact layouts remove the selection step. Each card's organ title is its one keyboard-reachable link; hidden text adds the time and space, such as “Liver, 7–47 years, 100 µm”, so cards that share an organ still have unique link names. The image link repeats it for pointer users and is removed from the tab order and accessibility tree, and its image has empty alternative text. The current dataset's link carries `aria-current="page"`.
+- Compact layouts remove the selection step. Each card's organ title is its one keyboard-reachable link; hidden space and time text leads its name, such as “100 µm, 7–47 years, Liver”, so cards that share an organ still have unique link names. The image link repeats it for pointer users and is removed from the tab order and accessibility tree, and its image has empty alternative text. The current dataset's link carries `aria-current="page"`.
 - Visualization dimensions and card metadata use semantic definition lists.
 - The introduction remains visible after desktop selection. The persistent details region replaces the dimension key with a semantically headed dataset card and announces selection changes politely. Closing the card restores the key and returns focus to the previously selected block.
 - Current, unavailable, hover, focus, and selected states do not rely on color alone.
@@ -388,7 +388,7 @@ npm run dev
 
 Open `/preview/` for the component preview. Its `preview/styles.scss` shows the integration: it `@use`s the component stylesheet first, then adds the page's own rules. Narrow the window below `64rem` to see the dataset cards, and use the browser's device emulation to try the touch interaction.
 
-The example configuration plots donor age from 0 to 100 years and displays its space categories as `100 µm` and `100 mm`. These are preview data rather than hard-coded component defaults, and the preview uses them consistently in the axes, dataset headings, metadata, and accessible descriptions. Its two Liver · 100 µm datasets (age 45 and ages 7–47) demonstrate lanes, and the infant Thymus dataset demonstrates a time label, the inward shift at the axis floor, a card image, and two corresponding authors. The preview labels a single author “Corresponding author” and several “Corresponding authors”, and sets `compactMetadata` to both names. `hoverMetadata` is set to time, space, organ, and sex. So the selected dataset card shows everything, the hover card leaves out the authors, and the compact cards show only the authors. Every preview dataset has a square image in `preview/images/`, mapped to its dataset ID in `preview/main.ts`. The preview follows the operating system's light or dark setting.
+The example configuration plots donor age from 0 to 100 years and displays its space categories as `100 µm` and `100 mm`. These are preview data rather than hard-coded component defaults, and the preview uses them consistently in the axes, dataset headings, metadata, and accessible descriptions. Its two Liver · 100 µm datasets (age 45 and ages 7–47) demonstrate lanes, and the infant Thymus dataset demonstrates a time label, the inward shift at the axis floor, a card image, and two corresponding authors. The preview labels a single author “Corresponding author” and several “Corresponding authors”, and sets `compactMetadata` to both names. `hoverMetadata` is set to space, time, organ, and sex. So the selected dataset card shows everything, the hover card leaves out the authors, and the compact cards show only the authors. Every preview dataset has a square image in `preview/images/`, mapped to its dataset ID in `preview/main.ts`. The preview follows the operating system's light or dark setting.
 
 Run the validation commands:
 

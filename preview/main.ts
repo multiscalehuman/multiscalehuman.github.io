@@ -41,10 +41,10 @@ const DATASET_IMAGES: Record<string, string> = {
 /**
  * Builds a preview dataset whose title and metadata agree with its plotted position.
  * @param id - Stable dataset identity used for the metadata destination and image.
- * @param position - Time, space, and organ placement.
+ * @param position - Space, time, and organ placement.
  * @param sex - Donor sex, shown on the visualization's cards.
  * @param authors - Corresponding authors, shown one per line on compact cards; one author takes the singular label.
- * @returns A dataset with a consistent organ, space, and time title.
+ * @returns A dataset whose title reads organ, space, then time, like the metadata page titles.
  */
 function createDataset(id: string, position: MhuCubePosition, sex: string, authors: string[]) {
   const time = formatTime(position.time);
@@ -54,8 +54,8 @@ function createDataset(id: string, position: MhuCubePosition, sex: string, autho
     href: `#metadata-${id}`,
     ...(DATASET_IMAGES[id] ? { image: DATASET_IMAGES[id] } : {}),
     metadata: {
-      Time: time,
       Space: position.space,
+      Time: time,
       Organ: position.organ,
       Sex: sex,
       [authors.length === 1 ? "Corresponding author" : "Corresponding authors"]: authors,
@@ -118,7 +118,7 @@ if (mhuCube) {
   mhuCube.axes = ORGAN_DATASET_AXES;
   mhuCube.items = datasets;
   // The selected-dataset card shows every detail; the hover and compact cards each show a subset.
-  mhuCube.hoverMetadata = ["Time", "Space", "Organ", "Sex"];
+  mhuCube.hoverMetadata = ["Space", "Time", "Organ", "Sex"];
   mhuCube.compactMetadata = ["Corresponding author", "Corresponding authors"];
 }
 
