@@ -33,7 +33,8 @@ const items: MhuCubeItem[] = [
     id: 'two',
     label: 'Dataset two',
     href: '#two',
-    image: new URL('./dataset.svg', import.meta.url).href,
+    // A plain path: Vite would inline an imported small SVG as a data: URL, which the component rejects as unsafe.
+    image: './dataset.svg',
     metadata: { Organ: 'Liver', Sex: 'Female', 'Lead author': 'Author two' },
     position: { time: { start: 10, end: 60 }, space: 'large', organ: 'Liver' },
   },
