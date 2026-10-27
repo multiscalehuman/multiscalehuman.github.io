@@ -54,6 +54,7 @@ test("public typography follows Material 3 roles with limited semibold overrides
   assert.match(styles, /mhu-cube__intro-eyebrow \{[\s\S]*?--mat-sys-label-large-size, 0\.875rem/);
   assert.match(styles, /mhu-cube__intro-visualization \{[\s\S]*?--mat-sys-body-large-size, 1rem/);
   assert.match(styles, /\.mhu-cube__intro-summary \{ font-size: 1\.125rem; line-height: 1\.75rem; letter-spacing: 0; \}/);
+  assert.match(styles, /\.mhu-cube__intro-summary-compact \{[\s\S]*?--mat-sys-body-large-size, 1rem[\s\S]*?--mat-sys-body-large-line-height, 1\.5rem/);
   assert.match(dataStyles, /\.mhu-cube__intro-attribution \{[\s\S]*?--mat-sys-body-medium-size, 0\.875rem/);
   assert.match(styles, /mhu-cube__details-unavailable \{[\s\S]*?--mat-sys-body-large-size, 1rem/);
   assert.match(dataStyles, /mhu-cube__details-metadata dt \{ color: var\(--_on-surface\); font-weight: 500; \}/);
@@ -141,11 +142,12 @@ test("the preview page and component share the lowest container surface", () => 
   assert.match(previewStyles, /\nmhu-cube \{[^}]*--mhu-cube-surface: var\(--mat-sys-surface-container-lowest\);/);
 });
 
-test("responsive introductions swap the heading text and drop visualization guidance on compact layouts", () => {
+test("responsive introductions swap the heading text and replace visualization guidance with the compact description", () => {
   assert.match(styles, /\.mhu-cube__intro-heading-compact \{ display: none; \}/);
+  assert.match(styles, /\.mhu-cube__intro-summary-compact \{\s*display: none;/);
   assert.match(styles, /@container mhu-cube-host \(max-width: 64rem\)[\s\S]*?\.mhu-cube__intro-heading-wide, \.mhu-cube__intro-visualization \{ display: none; \}/);
   assert.match(styles, /@container mhu-cube-host \(max-width: 64rem\)[\s\S]*?\.mhu-cube__intro-heading-compact \{ display: inline; \}/);
-  assert.doesNotMatch(styles, /mhu-cube__intro-compact/);
+  assert.match(styles, /@container mhu-cube-host \(max-width: 64rem\)[\s\S]*?\.mhu-cube__intro-summary-compact \{ display: block; \}/);
 });
 
 test("component spacing follows the host width rather than the browser window", () => {

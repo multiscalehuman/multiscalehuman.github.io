@@ -6,6 +6,8 @@ import {
   type MhuCubeAxes,
   type MhuCubeItem,
 } from "../../packages/mhu-cube/src";
+// Copy assertions read the configured copy, so editing it needs no test changes.
+import { MHU_CUBE_INTRO_COPY } from "../../packages/mhu-cube/src/mhu-cube-copy";
 // The element renders into the light DOM, so the page includes its styles.
 import "../../packages/mhu-cube/src/mhu-cube.scss";
 
@@ -95,23 +97,32 @@ await test("desktop introduction explains the visualization with semantic dimens
   const visualization = intro[0].querySelector<HTMLElement>(".mhu-cube__intro-visualization");
   const wideHeading = intro[0].querySelector<HTMLElement>(".mhu-cube__intro-heading-wide");
   const compactHeading = intro[0].querySelector<HTMLElement>(".mhu-cube__intro-heading-compact");
+  const compactDescription = intro[0].querySelector<HTMLElement>(".mhu-cube__intro-summary-compact");
+  const { visualization: copy } = MHU_CUBE_INTRO_COPY;
   assert(visualization && getComputedStyle(visualization).display !== "none", "Visualization guidance should be visible on desktop.");
-  assert(intro[0].querySelector(".mhu-cube__intro-eyebrow")?.textContent === "Explore", "The introduction eyebrow is missing.");
-  assert(wideHeading?.textContent === "Space Time Organ Graph" && getComputedStyle(wideHeading).display !== "none", "The desktop heading should be visible on desktop.");
-  assert(compactHeading && getComputedStyle(compactHeading).display === "none", "The compact heading should be hidden on desktop.");
+  assert(intro[0].querySelector(".mhu-cube__intro-eyebrow")?.textContent === MHU_CUBE_INTRO_COPY.eyebrow, "The introduction eyebrow is missing.");
+  assert(wideHeading?.textContent === MHU_CUBE_INTRO_COPY.heading && getComputedStyle(wideHeading).display !== "none", "The desktop heading should be visible on desktop.");
+  // The desktop heading doesn't wrap, so a heading too long for its column would overflow into the visualization.
   assert(
-    visualization.querySelector(".mhu-cube__intro-summary")?.textContent === "Compare 7 experimental datasets from 4 international teams across time, space, and organs. Select a block to view its details.",
+    wideHeading.getBoundingClientRect().right <= (intro[0].querySelector(".mhu-cube__intro-heading")?.getBoundingClientRect().right ?? 0) + 0.5,
+    "The desktop heading should fit on one line within the introduction column.",
+  );
+  assert(compactHeading && getComputedStyle(compactHeading).display === "none", "The compact heading should be hidden on desktop.");
+  assert(compactDescription && getComputedStyle(compactDescription).display === "none", "The compact description should be hidden on desktop.");
+  assert(
+    visualization.querySelector(".mhu-cube__intro-summary")?.textContent === copy.description,
     "Visualization guidance should combine the comparison and selection instructions.",
   );
   const dimensionKey = visualization.querySelector<HTMLDListElement>("dl.mhu-cube__intro-dimensions");
   const dimensionHeadings = [...visualization.querySelectorAll(".mhu-cube__intro-dimensions-header span")].map((heading) => heading.textContent);
   const terms = [...(dimensionKey?.querySelectorAll("dt") ?? [])].map((term) => term.textContent);
-  assert(dimensionHeadings.join(",") === "Dimension,What it represents", "The dimension key should expose its visual column headings.");
-  assert(terms.join(",") === "Time,Space,Organ", "Visualization dimensions should use semantic terms.");
+  assert(dimensionHeadings.join(",") === copy.dimensionHeadings.join(","), "The dimension key should expose its visual column headings.");
+  assert(terms.join(",") === copy.dimensions.map((dimension) => dimension.term).join(","), "Visualization dimensions should use semantic terms.");
   const attribution = visualization.querySelector<HTMLAnchorElement>(".mhu-cube__intro-attribution a");
+  // The attribution destination is a requirement rather than editable copy, so it stays literal.
   assert(attribution?.getAttribute("href") === "https://github.com/Chair-for-Clinical-Bioinformatics/metacube", "Visualization attribution is missing.");
   assert(
-    attribution?.parentElement?.textContent === "Visualization inspired by Metacube from the Chair for Clinical Bioinformatics.",
+    attribution?.parentElement?.textContent === `${copy.attribution.beforeLink}${copy.attribution.linkText}${copy.attribution.afterLink}`,
     "Visualization attribution should credit the Metacube source.",
   );
 });
@@ -424,11 +435,16 @@ await test("compact mode exposes direct cards and removes the selection step", a
   const cards = [...component.querySelectorAll<HTMLElement>(".mhu-cube__compact-card")];
   const visualization = component.querySelector<HTMLElement>(".mhu-cube__intro-visualization");
   const heading = component.querySelector<HTMLElement>(".mhu-cube__intro-heading");
+  const visibleParagraphs = [...component.querySelectorAll<HTMLElement>(".mhu-cube__intro p:not(.mhu-cube__intro-eyebrow)")]
+    .filter((paragraph) => paragraph.offsetParent !== null);
   assert(select && getComputedStyle(select).display === "none", "Cube selection remains exposed in compact mode.");
   assert(details && getComputedStyle(details).display === "none", "Desktop details remain exposed in compact mode.");
   assert(visualization && getComputedStyle(visualization).display === "none", "Visualization guidance remains exposed in compact mode.");
-  assert(heading?.innerText.trim() === "Space Time Organ Graph", "Compact layouts should show only the compact heading.");
-  assert([...component.querySelectorAll<HTMLElement>(".mhu-cube__intro p:not(.mhu-cube__intro-eyebrow)")].every((paragraph) => paragraph.offsetParent === null), "Compact layouts should have no introduction body text.");
+  assert(heading?.innerText.trim() === MHU_CUBE_INTRO_COPY.compactHeading, "Compact layouts should show only the compact heading.");
+  assert(
+    visibleParagraphs.length === 1 && visibleParagraphs[0].matches(".mhu-cube__intro-summary-compact") && visibleParagraphs[0].textContent === MHU_CUBE_INTRO_COPY.compactDescription,
+    "Compact layouts should show only the compact description below the heading.",
+  );
   assert(cards.length === items.length && cards.every((card) => getComputedStyle(card).display === "flex"), "Every dataset needs a compact card.");
 });
 

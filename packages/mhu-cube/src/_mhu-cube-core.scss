@@ -445,6 +445,17 @@ mhu-cube * { box-sizing: border-box; }
 .mhu-cube__intro-attribution { margin: 0; }
 /* The lead paragraph sits between the body and title roles, so it sets its own size. */
 .mhu-cube__intro-summary { font-size: 1.125rem; line-height: 1.75rem; letter-spacing: 0; }
+/* The compact lead paragraph replaces the desktop guidance at 64rem and below. */
+.mhu-cube__intro-summary-compact {
+  display: none;
+  margin: 0.75rem 0 0;
+  color: var(--_on-surface-variant);
+  font-family: var(--mat-sys-body-large-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-body-large-size, 1rem);
+  font-weight: var(--mat-sys-body-large-weight, 400);
+  line-height: var(--mat-sys-body-large-line-height, 1.5rem);
+  letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
+}
 .mhu-cube__details:empty { display: none; }
 .mhu-cube__details-card {
   border: 1px solid var(--_outline-variant);
@@ -522,6 +533,7 @@ mhu-cube * { box-sizing: border-box; }
   }
   .mhu-cube__intro-heading-wide, .mhu-cube__intro-visualization { display: none; }
   .mhu-cube__intro-heading-compact { display: inline; }
+  .mhu-cube__intro-summary-compact { display: block; }
   .mhu-cube__stage { display: block; container-type: normal; }
   .mhu-cube__plot { width: 100%; height: auto; max-height: none; }
   .mhu-cube__frame, .mhu-cube__axes { display: none; }

@@ -1,6 +1,6 @@
 # multiscalehuman.github.io
 
-Source for the Multiscale Human site. It currently holds `<mhu-cube>`, the Space Time Organ Graph: an accessible, responsive web component that compares organ-imaging datasets by time, space, and organ and links to their metadata.
+Source for the Multiscale Human site. It currently holds `<mhu-cube>`, the Time Space Organ Graph: an accessible, responsive web component that compares organ-imaging datasets by time, space, and organ and links to their metadata.
 
 ## Quick start
 

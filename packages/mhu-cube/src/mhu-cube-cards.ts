@@ -48,6 +48,14 @@ export function createIntro(details: HTMLElement) {
   compactHeading.className = "mhu-cube__intro-heading-compact";
   compactHeading.textContent = MHU_CUBE_INTRO_COPY.compactHeading;
   heading.append(wideHeading, compactHeading);
+  intro.append(heading);
+  // The compact lead sentence stands in for the desktop guidance, which compact layouts remove.
+  if (MHU_CUBE_INTRO_COPY.compactDescription) {
+    const compactDescription = document.createElement("p");
+    compactDescription.className = "mhu-cube__intro-summary-compact";
+    compactDescription.textContent = MHU_CUBE_INTRO_COPY.compactDescription;
+    intro.append(compactDescription);
+  }
 
   const visualization = document.createElement("div");
   visualization.className = "mhu-cube__intro-visualization";
@@ -85,7 +93,7 @@ export function createIntro(details: HTMLElement) {
     MHU_CUBE_INTRO_COPY.visualization.attribution.afterLink,
   );
   visualization.append(visualizationDescription, dimensionHeadings, dimensions, details, attribution);
-  intro.append(heading, visualization);
+  intro.append(visualization);
   return intro;
 }
 

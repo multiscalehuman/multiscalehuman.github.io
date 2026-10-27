@@ -21,17 +21,21 @@ export interface MhuCubeIntroCopy {
   eyebrow?: string;
   /** Desktop heading, beside the visualization; it stays on one line. */
   heading: string;
-  /** Compact heading, above the dataset cards; compact layouts have no body text. */
+  /** Compact heading, above the dataset cards. */
   compactHeading: string;
+  /** Compact lead sentence, between the compact heading and the dataset cards. */
+  compactDescription?: string;
   visualization: MhuCubeVisualizationCopy;
 }
 
 export const MHU_CUBE_INTRO_COPY: MhuCubeIntroCopy = {
   eyebrow: "Explore",
-  heading: "Space Time Organ Graph",
-  compactHeading: "Space Time Organ Graph",
+  heading: "Time Space Organ Graph",
+  compactHeading: "Time Space Organ Datasets",
+  // The counts describe the preview's datasets; update them here and in the visualization description together.
+  compactDescription: "7 experimental datasets from 4 international teams, by donor age, physical scale, and organ.",
   visualization: {
-    // The counts describe the preview's datasets; update them when the data changes.
+    // The counts describe the preview's datasets; update them here and in the compact description together.
     description: "Compare 7 experimental datasets from 4 international teams across time, space, and organs. Select a block to view its details.",
     dimensionHeadings: ["Dimension", "What it represents"],
     dimensions: [
