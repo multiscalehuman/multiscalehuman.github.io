@@ -1,15 +1,20 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { compile } from 'sass';
 
 // Specs are bundled, so resolve sources from the workspace root rather than import.meta.url.
 const libDir = join(process.cwd(), 'libs/mhu-cube/src/lib');
+const stylesDir = join(libDir, 'styles');
 const read = (file: string) => readFileSync(join(libDir, file), 'utf8');
 
-// Prettier spreads rules over several lines and prefers single quotes, so the assertions match against a
-// whitespace-collapsed copy with double quotes, which reads like a stylesheet written one rule per line.
+// Compiled CSS keeps one declaration per line and double quotes, so the assertions match against a
+// whitespace-collapsed copy, which reads like a stylesheet written one rule per line.
 const normalize = (stylesheet: string) =>
   stylesheet.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/ \)/g, ')').replace(/'/g, '"');
+
+// Each partial loads the helpers it uses, so it compiles on its own. The assertions read the CSS that each group of
+// partials produces, so they check the custom properties and fallbacks the helpers write out.
+const compilePartial = (file: string) => compile(join(stylesDir, file)).css;
 
 // The core partials split one sequence of rules, so the assertions read them as one stylesheet, in load order.
 const CORE_PARTIALS = [
@@ -24,12 +29,32 @@ const CORE_PARTIALS = [
   '_utilities.scss',
   '_responsive.scss',
 ];
-const rawStyles = CORE_PARTIALS.map((file) => read(`styles/${file}`)).join('\n');
-const rawDataStyles = read('styles/_data.scss');
-const rawCardStyles = read('styles/_cards.scss');
-const styles = normalize(rawStyles);
-const dataStyles = normalize(rawDataStyles);
-const cardStyles = normalize(rawCardStyles);
+// Only these helper modules may spell out custom property prefixes and var() reads.
+const HELPER_MODULES = ['_tokens.scss', '_typography.scss'];
+const SOURCES = readdirSync(stylesDir).filter((file) => file.endsWith('.scss'));
+const rawSources = Object.fromEntries(SOURCES.map((file) => [file, read(`styles/${file}`)]));
+const styles = normalize(CORE_PARTIALS.map(compilePartial).join('\n'));
+const dataStyles = normalize(compilePartial('_data.scss'));
+const cardStyles = normalize(compilePartial('_cards.scss'));
+
+// Reduces Sass source to plain CSS rules: drops comments, @function and @mixin bodies, and interpolation, whose
+// braces would otherwise read as rule blocks.
+const cssRulesOf = (source: string) => {
+  let text = source
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|[^:])\/\/[^\n]*/g, '$1')
+    .replace(/#\{[^}]*\}/g, 'x');
+  for (let start = text.search(/@(function|mixin)\b/); start >= 0; start = text.search(/@(function|mixin)\b/)) {
+    let depth = 0;
+    let end = text.indexOf('{', start);
+    do {
+      depth += text[end] === '{' ? 1 : text[end] === '}' ? -1 : 0;
+      end++;
+    } while (depth > 0 && end < text.length);
+    text = `${text.slice(0, start)}${text.slice(end)}`;
+  }
+  return text;
+};
 
 describe('mhu-cube styles', () => {
   it('the SCSS entry compiles the partials in cascade order', () => {
@@ -50,19 +75,33 @@ describe('mhu-cube styles', () => {
 
   it('light DOM styles stay scoped to the element', () => {
     expect(styles).not.toMatch(/:host/);
-    expect(styles).toMatch(/^mhu-cube \{[\s\S]*?container: mhu-cube-host \/ inline-size;/);
+    expect(styles).toMatch(/^mhu-cube \{[\s\S]*?container: mhu-cube-host ?\/ ?inline-size;/);
     expect(styles).toMatch(/\} mhu-cube \* \{ box-sizing: border-box; \}/);
-    [rawStyles, rawDataStyles, rawCardStyles].forEach((stylesheet) => {
-      const selectors = stylesheet.replace(/\/\*[\s\S]*?\*\//g, '').match(/(^|[};]\s*)[^@{};\s][^{};]*(?=\{)/g) ?? [];
+    expect(SOURCES).toEqual(expect.arrayContaining([...CORE_PARTIALS, ...HELPER_MODULES, '_data.scss', '_cards.scss']));
+    SOURCES.forEach((file) => {
+      // At-rules and Sass statements such as @use, @include, @each, @if, and @return start with @, so they are skipped.
+      const selectors = cssRulesOf(rawSources[file]).match(/(^|[};]\s*)[^@{};\s][^{};]*(?=\{)/g) ?? [];
       selectors
         .flatMap((selector) => selector.replace(/^[};]?\s*/, '').split(','))
         .map((selector) => selector.trim())
         .forEach((selector) => {
-          expect(selector, `${selector} must be scoped to the element`).toMatch(
+          expect(selector, `${selector} in ${file} must be scoped to the element`).toMatch(
             /^(mhu-cube\b|\.mhu-cube|from\b|to\b|\d+%)/,
           );
         });
     });
+  });
+
+  it('custom properties are named and read only through the token and typography helpers', () => {
+    SOURCES.filter((file) => !HELPER_MODULES.includes(file)).forEach((file) => {
+      expect(rawSources[file], `${file} reads custom properties through _tokens.scss`).not.toMatch(
+        /var\(--|--mhu-cube-|--mat-sys-/,
+      );
+    });
+    expect(rawSources['_host.scss']).toMatch(/@include t\.themeable-colors\(\$colors\);/);
+    expect(normalize(rawSources['_intro.scss'])).toMatch(
+      /\.mhu-cube__eyebrow \{[^}]*@include typescale\(label-medium, 600\);[^}]*text-transform: uppercase;/,
+    );
   });
 
   it('component styles preserve non-color states and forced-colors support', () => {

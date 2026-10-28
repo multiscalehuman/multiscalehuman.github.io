@@ -94,6 +94,8 @@
 
 ### Styles
 
-- Scope every style rule to `mhu-cube` or a `.mhu-cube__*` class; `styles/styles.spec.ts` enforces this. Use Angular Material system tokens with fallbacks.
-- Text styles are defined once and shared. For example, every eyebrow uses the `.mhu-cube__eyebrow` style (`label-medium`, 600 weight, uppercase, primary color), and its own class sets only spacing.
+- Scope every style rule to `mhu-cube` or a `.mhu-cube__*` class; `styles/styles.spec.ts` enforces this.
+- Name and read custom properties only through the `styles/_tokens.scss` helpers (`t.slot()`, `t.public-slot()`, `t.sys-slot()`, `t.custom-slot()`, `t.set()`), never with raw `var(--…)`; the spec rejects `var(--`, `--mhu-cube-`, and `--mat-sys-` outside `_tokens.scss` and `_typography.scss`. Material system tokens always get a fallback.
+- Add new public color hooks to the `$colors` map in `styles/_host.scss`.
+- Set text styles with `@include typescale(<role>)` from `styles/_typography.scss`, passing a literal weight such as `600` only where one is approved. Text styles are defined once and shared. For example, every eyebrow uses the `.mhu-cube__eyebrow` style (`typescale(label-medium, 600)`, uppercase, primary color), and its own class sets only spacing.
 - When behavior, copy fields, or styles change, update `libs/mhu-cube/README.md` to match.

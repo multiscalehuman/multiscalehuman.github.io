@@ -1,3 +1,6 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
 /* Compact dataset cards, shown when the component is 64rem wide or less. */
 .mhu-cube__compact-card {
   display: none;
@@ -14,8 +17,8 @@
     width: 100%;
     height: 100%;
     padding: 1rem;
-    border: 1px solid var(--_outline-variant);
-    background: var(--_surface-container-lowest);
+    border: 1px solid t.slot(outline-variant);
+    background: t.slot(surface-container-lowest);
   }
   /* A square image with a transparent background, on the primary container fill. */
   .mhu-cube__compact-media {
@@ -24,7 +27,7 @@
     width: min(100%, 14rem);
     aspect-ratio: 1;
     overflow: hidden;
-    background: var(--_primary-container);
+    background: t.slot(primary-container);
   }
   .mhu-cube__compact-image {
     display: block;
@@ -59,26 +62,18 @@
     flex: none;
     width: 0.25rem;
     height: 0.25rem;
-    background: var(--_primary);
+    background: t.slot(primary);
   }
   .mhu-cube__compact-fact dd {
     margin: 0;
-    color: var(--_on-surface-variant);
-    font-family: var(--mat-sys-label-small-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-label-small-size, 0.6875rem);
-    font-weight: 600;
-    line-height: var(--mat-sys-label-small-line-height, 1rem);
-    letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
+    color: t.slot(on-surface-variant);
+    @include typescale(label-small, 600);
     white-space: nowrap;
   }
   .mhu-cube__compact-heading {
     margin: 0;
-    color: var(--_on-surface);
-    font-family: var(--mat-sys-title-medium-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-title-medium-size, 1rem);
-    font-weight: 600;
-    line-height: var(--mat-sys-title-medium-line-height, 1.5rem);
-    letter-spacing: var(--mat-sys-title-medium-tracking, 0.009375rem);
+    color: t.slot(on-surface);
+    @include typescale(title-medium, 600);
     overflow-wrap: anywhere;
     text-wrap: balance;
   }
@@ -90,13 +85,9 @@
     align-self: flex-start;
     margin: 0;
     padding: 0.125rem 0.5rem;
-    background: var(--_primary-container);
-    color: var(--_on-primary-container);
-    font-family: var(--mat-sys-label-small-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-label-small-size, 0.6875rem);
-    font-weight: 600;
-    line-height: var(--mat-sys-label-small-line-height, 1rem);
-    letter-spacing: var(--mat-sys-label-small-tracking, 0.03125rem);
+    background: t.slot(primary-container);
+    color: t.slot(on-primary-container);
+    @include typescale(label-small, 600);
     text-transform: uppercase;
   }
   /* Remaining metadata below a divider, such as corresponding authors with one name per line. */
@@ -105,8 +96,8 @@
     gap: 0.75rem;
     margin: 0;
     padding-top: 0.75rem;
-    border-top: 1px solid var(--_outline-variant);
-    color: var(--_on-surface-variant);
+    border-top: 1px solid t.slot(outline-variant);
+    color: t.slot(on-surface-variant);
   }
   .mhu-cube__compact-details-row {
     display: grid;
@@ -114,26 +105,18 @@
     min-width: 0;
   }
   .mhu-cube__compact-details dt {
-    font-family: var(--mat-sys-title-small-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-title-small-size, 0.875rem);
-    font-weight: 600;
-    line-height: var(--mat-sys-title-small-line-height, 1.25rem);
-    letter-spacing: var(--mat-sys-title-small-tracking, 0.00625rem);
+    @include typescale(title-small, 600);
     text-wrap: balance;
   }
   .mhu-cube__compact-details dd {
     margin: 0;
-    font-family: var(--mat-sys-body-medium-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-body-medium-size, 0.875rem);
-    font-weight: var(--mat-sys-body-medium-weight, 400);
-    line-height: var(--mat-sys-body-medium-line-height, 1.25rem);
-    letter-spacing: var(--mat-sys-body-medium-tracking, 0.015625rem);
+    @include typescale(body-medium);
     overflow-wrap: anywhere;
   }
   .mhu-cube__compact-card .mhu-cube__details-unavailable {
     margin: 0;
-    font-size: var(--mat-sys-body-medium-size, 0.875rem);
-    line-height: var(--mat-sys-body-medium-line-height, 1.25rem);
+    font-size: typescale-slot(body-medium, size);
+    line-height: typescale-slot(body-medium, line-height);
   }
 
   /* Touch screens: the title link stretches over the whole card, so pressing anywhere opens the metadata page. */
@@ -143,13 +126,13 @@
     inset: 0;
   }
   .mhu-cube__compact-link:active::after {
-    background: color-mix(in srgb, var(--_on-surface) 10%, transparent);
+    background: color-mix(in srgb, t.slot(on-surface) 10%, transparent);
   }
   .mhu-cube__compact-link:focus-visible {
     outline: none;
   }
   .mhu-cube__compact-link:focus-visible::after {
-    outline: 3px solid var(--_focus);
+    outline: 3px solid t.slot(focus);
     outline-offset: -3px;
   }
 }
@@ -165,7 +148,7 @@
     text-underline-offset: 0.15em;
   }
   .mhu-cube__compact-link:focus-visible {
-    outline: 3px solid var(--_focus);
+    outline: 3px solid t.slot(focus);
     outline-offset: 2px;
   }
   .mhu-cube__compact-media:hover .mhu-cube__compact-image {

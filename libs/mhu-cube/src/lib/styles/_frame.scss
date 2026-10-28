@@ -1,3 +1,6 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
 .mhu-cube__frame {
   z-index: 0;
   overflow: visible;
@@ -6,19 +9,19 @@
 }
 .mhu-cube__frame-line {
   fill: none;
-  stroke: color-mix(in srgb, var(--_outline) 68%, transparent);
+  stroke: color-mix(in srgb, t.slot(outline) 68%, transparent);
   stroke-width: 1.1;
   vector-effect: non-scaling-stroke;
 }
 .mhu-cube__frame-guide,
 .mhu-cube__frame-floor-guide {
   fill: none;
-  stroke: color-mix(in srgb, var(--_outline) 30%, transparent);
+  stroke: color-mix(in srgb, t.slot(outline) 30%, transparent);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 .mhu-cube__frame-floor-guide {
-  stroke: color-mix(in srgb, var(--_outline) 45%, transparent);
+  stroke: color-mix(in srgb, t.slot(outline) 45%, transparent);
 }
 .mhu-cube__axes {
   z-index: 1;
@@ -28,45 +31,37 @@
    box away from the frame along the edge's outward normal, so labels clear the frame at any camera angle. */
 .mhu-cube__axis-title,
 .mhu-cube__axis-value {
-  --_align-x: -50%;
-  --_align-y: -50%;
-  --_offset: 0.5rem;
+  @include t.set(align-x, -50%);
+  @include t.set(align-y, -50%);
+  @include t.set(offset, 0.5rem);
   position: absolute;
   transform: translate(
-    calc(var(--_align-x) + var(--axis-normal-x, 0) * var(--_offset)),
-    calc(var(--_align-y) + var(--axis-normal-y, 0) * var(--_offset))
+    calc(t.slot(align-x) + t.custom-slot(axis-normal-x, 0) * t.slot(offset)),
+    calc(t.slot(align-y) + t.custom-slot(axis-normal-y, 0) * t.slot(offset))
   );
   white-space: nowrap;
 }
 .mhu-cube__axis-title {
-  color: var(--_primary);
-  font-family: var(--mat-sys-label-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-label-large-size, 0.875rem);
-  font-weight: 600;
-  line-height: var(--mat-sys-label-large-line-height, 1.25rem);
-  letter-spacing: var(--mat-sys-label-large-tracking, 0.00625rem);
+  color: t.slot(primary);
+  @include typescale(label-large, 600);
 }
 /* Value labels and the space and organ titles receive their alignment and offset inline from the frame's edges.
    The time title caps the tick column, right-aligned with the ticks just above the top value. */
 .mhu-cube__axis-title--time {
-  --_align-x: -100%;
-  --_align-y: calc(-100% - 0.75rem);
+  @include t.set(align-x, -100%);
+  @include t.set(align-y, calc(-100% - 0.75rem));
 }
 .mhu-cube__axis-value {
-  color: var(--_on-surface-variant);
-  font-family: var(--mat-sys-body-small-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-body-small-size, 0.75rem);
-  font-weight: var(--mat-sys-body-small-weight, 400);
-  line-height: var(--mat-sys-body-small-line-height, 1rem);
-  letter-spacing: var(--mat-sys-body-small-tracking, 0.025rem);
+  color: t.slot(on-surface-variant);
+  @include typescale(body-small);
 }
 .mhu-cube__axis-title--space,
 .mhu-cube__axis-title--organ,
 .mhu-cube__axis-value--space,
 .mhu-cube__axis-value--organ {
   text-shadow:
-    -2px -2px 0 var(--_surface),
-    2px -2px 0 var(--_surface),
-    -2px 2px 0 var(--_surface),
-    2px 2px 0 var(--_surface);
+    -2px -2px 0 t.slot(surface),
+    2px -2px 0 t.slot(surface),
+    -2px 2px 0 t.slot(surface),
+    2px 2px 0 t.slot(surface);
 }

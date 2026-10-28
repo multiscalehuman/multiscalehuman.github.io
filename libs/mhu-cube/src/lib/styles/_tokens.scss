@@ -1,0 +1,98 @@
+// Custom property helpers. The stylesheet uses three tiers of custom properties, and every name and `var()` read
+// goes through these helpers so the prefixes live in one place:
+// - public theme hooks, `mhu-cube-<name>`, which host pages set to theme the element;
+// - private slots, `_<name>`, which the element defines on itself or on one of its parts;
+// - Angular Material system tokens, `mat-sys-<token>`, which supply the defaults.
+// Properties named elsewhere, such as the ones the element sets inline from TypeScript, are read with `custom-slot()`.
+@use 'sass:list';
+@use 'sass:string';
+
+/// The name of a public theme hook.
+/// @param {String} $name - The hook's name without its prefix, such as `surface`.
+/// @return {String} The custom property name, such as `--mhu-cube-surface`.
+@function public-name($name) {
+  @return string.unquote('--mhu-cube-#{$name}');
+}
+
+/// The name of a private slot, which only the component's own rules read.
+/// @param {String} $name - The slot's name without its prefix, such as `primary`.
+/// @return {String} The custom property name, such as `--_primary`.
+@function private-name($name) {
+  @return string.unquote('--_#{$name}');
+}
+
+/// The name of an Angular Material system token.
+/// @param {String} $token - The token's name without its prefix, such as `body-large-size`.
+/// @return {String} The custom property name, such as `--mat-sys-body-large-size`.
+@function sys-name($token) {
+  @return string.unquote('--mat-sys-#{$token}');
+}
+
+/// A `var()` read of any custom property name, with an optional fallback.
+/// @param {String} $property - The full custom property name, including its leading dashes.
+/// @param {*} $fallback [null] - The value used when the property is unset; `null` leaves the fallback out. Lists,
+///   such as font stacks, are written out comma-separated.
+/// @return {String} The `var()` expression.
+@function _read($property, $fallback) {
+  @if $fallback == null {
+    @return string.unquote('var(#{$property})');
+  }
+  @return string.unquote('var(#{$property}, #{$fallback})');
+}
+
+/// Reads a private slot.
+/// @param {String} $name - The slot's name without its prefix.
+/// @param {*} $fallback [null] - The value used when the slot is unset.
+/// @return {String} `var(--_<name>)`, or `var(--_<name>, <fallback>)`.
+@function slot($name, $fallback: null) {
+  @return _read(private-name($name), $fallback);
+}
+
+/// Reads a public theme hook.
+/// @param {String} $name - The hook's name without its prefix.
+/// @param {*} $fallback [null] - The value used when the hook is unset.
+/// @return {String} `var(--mhu-cube-<name>)`, or `var(--mhu-cube-<name>, <fallback>)`.
+@function public-slot($name, $fallback: null) {
+  @return _read(public-name($name), $fallback);
+}
+
+/// Reads an Angular Material system token.
+/// @param {String} $token - The token's name without its prefix.
+/// @param {*} $fallback [null] - The value used when the host defines no Material theme.
+/// @return {String} `var(--mat-sys-<token>)`, or `var(--mat-sys-<token>, <fallback>)`.
+@function sys-slot($token, $fallback: null) {
+  @return _read(sys-name($token), $fallback);
+}
+
+/// Reads a custom property outside the three tiers, such as `cube-left`, which the element sets inline from
+/// TypeScript, or an AtlasNG property such as `ang-content-paragraph-size-multiplier`.
+/// @param {String} $name - The property's name without its leading dashes.
+/// @param {*} $fallback [null] - The value used when the property is unset.
+/// @return {String} `var(--<name>)`, or `var(--<name>, <fallback>)`.
+@function custom-slot($name, $fallback: null) {
+  @return _read(string.unquote('--#{$name}'), $fallback);
+}
+
+/// Defines a private slot on the current rule.
+/// @param {String} $name - The slot's name without its prefix.
+/// @param {*} $value - The slot's value. A quoted string is written out unquoted.
+@mixin set($name, $value) {
+  #{private-name($name)}: #{$value};
+}
+
+/// Defines a themeable private slot: the public hook of the same name when the host sets one, then the Material
+/// system token, then a built-in fallback.
+/// @param {String} $name - The slot's and the public hook's name without their prefixes.
+/// @param {String} $sys-token - The Material system token that supplies the default.
+/// @param {*} $fallback - The value used when neither the hook nor the token is set.
+@mixin themeable($name, $sys-token, $fallback) {
+  @include set($name, public-slot($name, sys-slot($sys-token, $fallback)));
+}
+
+/// Defines a themeable private slot for every entry of a map, in map order.
+/// @param {Map} $map - Slot names mapped to `sys-token fallback` pairs, such as `surface: surface #fcfcfc`.
+@mixin themeable-colors($map) {
+  @each $name, $pair in $map {
+    @include themeable($name, list.nth($pair, 1), list.nth($pair, 2));
+  }
+}

@@ -1,3 +1,5 @@
+@use 'typography' as *;
+
 @container mhu-cube-host (max-width: 64rem) {
   .mhu-cube {
     display: flex;
@@ -22,11 +24,7 @@
     margin: 0 0 0.875rem;
   }
   .mhu-cube__intro-heading {
-    font-family: var(--mat-sys-headline-medium-font, Roboto, Arial, sans-serif);
-    font-size: var(--mat-sys-headline-medium-size, 1.75rem);
-    font-weight: var(--mat-sys-headline-medium-weight, 600);
-    line-height: var(--mat-sys-headline-medium-line-height, 2.25rem);
-    letter-spacing: var(--mat-sys-headline-medium-tracking, 0);
+    @include typescale(headline-medium);
     white-space: normal;
   }
   .mhu-cube__intro-heading-wide,
