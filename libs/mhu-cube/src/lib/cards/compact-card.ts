@@ -1,8 +1,20 @@
 import { formatTimeRange, getMetadataEntries } from '../text/format';
 import type { MhuCubeAxes, MhuCubeItem } from '../types';
 import { canPlotAxes } from '../validation/axes';
-import { getRemainingMetadataEntries } from './details';
 import { createMetadataList, createUnavailableMessage, getNamedMetadataEntries } from './metadata-list';
+
+/**
+ * Drops metadata that repeats a dimension the card already shows, matched by axis label.
+ * @param item - Dataset whose metadata should be displayed.
+ * @param axes - Validated axes whose labels identify repeated entries.
+ * @returns The remaining metadata entries in their provided order.
+ */
+function getRemainingMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes) {
+  const dimensionLabels = new Set(
+    [axes.time.label, axes.space.label, axes.organ.label].map((label) => label.trim().toLowerCase()),
+  );
+  return getMetadataEntries(item).filter(([key]) => !dimensionLabels.has(key.trim().toLowerCase()));
+}
 
 /**
  * Chooses the metadata a compact card shows below its title.

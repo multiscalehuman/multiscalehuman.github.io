@@ -1,5 +1,5 @@
 import { getMetadataEntries } from '../text/format';
-import type { MhuCubeAxes, MhuCubeItem } from '../types';
+import type { MhuCubeItem } from '../types';
 import { createCloseIcon } from './icons';
 import { createDestination, createMetadataList } from './metadata-list';
 
@@ -66,17 +66,4 @@ export function updateDetails(
   card.append(createDestination(item, 'mhu-cube__details-action'));
   details.append(card);
   return details;
-}
-
-/**
- * Drops metadata that repeats a dimension the card already shows, matched by axis label.
- * @param item - Dataset whose metadata should be displayed.
- * @param axes - Validated axes whose labels identify repeated entries.
- * @returns The remaining metadata entries in their provided order.
- */
-export function getRemainingMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes) {
-  const dimensionLabels = new Set(
-    [axes.time.label, axes.space.label, axes.organ.label].map((label) => label.trim().toLowerCase()),
-  );
-  return getMetadataEntries(item).filter(([key]) => !dimensionLabels.has(key.trim().toLowerCase()));
 }
