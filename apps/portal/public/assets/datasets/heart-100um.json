@@ -1,0 +1,206 @@
+{
+  "organ": "Heart",
+  "space": "100 µm",
+  "time": "~40–70 years",
+  "description": "Visualize cell type populations and cell distance distributions of the healthy human heart.",
+  "sections": [
+    {
+      "title": "Data Overview",
+      "anchor": "data-overview",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "This paper contributed single-cell data to HRApop, which estimates how cell types are distributed across healthy human anatomy. The resulting heart population estimates for healthy adult males and females were visualized in VR in the HRA Organ Gallery."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3D Visualizations Within the Human Reference Atlas",
+      "anchor": "3d-visualizations-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://humanatlas.io/hra-organ-gallery"
+              },
+              "content": "Human Reference Atlas Organ Gallery"
+            },
+            " to visualize cell type populations within the human heart in VR."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "HRA Organ Gallery visualization"
+          }
+        }
+      ]
+    },
+    {
+      "title": "2D Cell Distance Distributions",
+      "anchor": "2d-cell-distance-distributions",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://apps.humanatlas.io/cde/"
+              },
+              "content": "Cell Distance Explorer"
+            },
+            " to explore how cell types are spatially distributed around endothelial cells."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "Cell Distance Explorer"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Lead Contacts",
+      "anchor": "lead-contacts",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Michela Noseda, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:m.noseda@imperial.ac.uk"
+                  },
+                  "content": "m.noseda@imperial.ac.uk"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Sarah A. Teichmann, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:sat1003@cam.ac.uk"
+                  },
+                  "content": "sat1003@cam.ac.uk"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "anchor": "references",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Litviňuková, Monika, Carlos Talavera-López, Henrike Maatz, Daniel Reichart, Catherine L. Worth, Eric L. Lindberg, Masatoshi Kanda, Krzysztof Polanski, Matthias Heinig, Michael Lee, Emily R. Nadelmann, Kenny Roberts, Liz Tuck, Eirini S. Fasouli, Daniel M. DeLaughter, Barbara McDonough, Hiroko Wakimoto, Joshua M. Gorham, Sara Samari, Krishnaa T. Mahbubani, Kourosh Saeb-Parsy, Giannino Patone, Joseph J. Boyle, Hongbo Zhang, Hao Zhang, Anissa Viveiros, Gavin Y. Oudit, Omer Ali Bayraktar, J. G. Seidman, Christine E. Seidman, Michela Noseda, Norbert Hubner, and Sarah A. Teichmann. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1038/s41586-020-2797-4"
+              },
+              "content": "Cells of the Adult Human Heart"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "Nature"
+            },
+            " 588, no. 7838 (2020): 466–472. doi:10.1038/s41586-020-2797-4."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Bueckle, Andreas, Chenchen Zhu, Alex Yu Hin Wong, Archibald Enninful, Yang Miao, Negin Farzad, Maria Pedersen, Courteney Mattison, Nicholas Sloan, Jason Mares, Cheng Xing, Bruce W. Herr II, Juhi Khare, Yash Ramesh Kumar, Keyur Parekh, Siddhi Chavan, Paean Luby, Ushma Patel, Yashvardhan Jain, John W. Hickey, Gary D. Bader, Hemali Phatnani, Vilas Menon, Rong Fan, Peter K. Sorger, Michael Snyder, and Katy Börner. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.07.07.737090"
+              },
+              "content": "Multiscale Harmonization and Semantic Integration of Biomedical Data Enable Biological Insights through Immersive Exploration"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.07.07.737090."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "License",
+      "anchor": "license",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://creativecommons.org/licenses/by/4.0/"
+              },
+              "content": "CC BY 4.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acknowledgments",
+      "anchor": "acknowledgments",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Virtual reality was funded by ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://reporter.nih.gov/search/results?query=1R03OD039970-01"
+              },
+              "content": "1R03OD039970-01"
+            },
+            "."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "This publication is part of the Human Cell Atlas (",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://www.humancellatlas.org/publications"
+              },
+              "content": "www.humancellatlas.org/publications"
+            },
+            "). We acknowledge the Sanger Flow Cytometry Facility, Sanger Cellular Generation and Phenotyping (CGaP) Core Facility, and Sanger Core Sequencing pipeline for support with sample processing and sequencing library preparation. We acknowledge the HMS MicRoN Core for their support and assistance in this work. We thank J. Eliasova for graphical images; M. Prete, V. Kiselev and O. Tarkowska for IT support; S. Aldridge for editing the manuscript; C. Domínguez-Conde, J. Park, K. James, K. Tuong, R. Elmentaite and M. Haniffa for discussions about immune cell annotation, and M. Luecken, M. Lotfollahi, D. Fischer and F. Theis for discussions on computational analyses. We thank T. R. W. Oliver and L. Campos for their assistance with orientation of basic cardiac histology. M.N. is the recipient of a British Heart Foundation (BHF) grant (PG/16/47/32156) and J.J.B. is recipient of a BHF grant (FS/13/12/30037, PG/15/57/31580, PG/17/71/33242). M.N., N.H. and S.A.T. are funded by a BHF/DZHK grant (SP/19/1/34461). N.H. is the recipient of an ERC Advanced Grant under the European Union Horizon 2020 Research and Innovation Program (grant agreement AdG788970) and the Federal Ministry of Education and Research of Germany in the framework of CaRNAtion (031L0075A). N.H., C.E.S. and J.G.S. are supported by grants from the Leducq Fondation (16CVD03). D.R. is supported by the German Research Foundation (DFG). H.Z. is supported by the long-term Chinese Council Scholarship (CSC). M.K. received funding provided by the Alexander von Humboldt Foundation. H.Z. was supported by an EMBO long-term postdoctoral fellowship. G.O. received funding provided by the CIHR Canadian Institutes for Health Research, HSF Heart and Stroke Foundation and AI Alberta Innovates. This project has been made possible in part by grant number 2019-202666 from the Chan Zuckerberg Initiative (C.E.S., J.G.S., M.N., M.H., N.H. and S.A.T.). C.T.-L., K.P., E.F., E.T., K.R., O.B., H.Z. and S.A.T. are supported by the Wellcome Sanger Institute grant (WT206194) and the Wellcome Science Strategic Support for a Pilot for the Human Cell Atlas (WT211276/Z/18/Z)). J.G.S. and C.E.S. are supported by NIH grants (2R01HL080494, 2R01HL080494, 1UM1HL098166). J.G.S. and C.E.S. are supported by Engineering Research Centers Program of the National Science Foundation under NSF Cooperative Agreement no. EEC-1647837. C.E.S. and B.M. are supported by the Howard Hughes Medical Institute. We are grateful to the deceased donors and their families, the Human Organ Procurement and Exchange Program (HOPE) and to the Cambridge Biorepository for Translational Medicine (CBTM) for access to human tissue. E.R.N. was supported by a fellowship from the Sarnoff Cardiovascular Research Foundation."
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-09-22"
+}

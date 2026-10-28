@@ -27,6 +27,7 @@
     "@angular/router": "^22.2.3",
     "@atlasng/analytics": "^0.0.9",
     "@atlasng/common": "^0.0.9",
+    "@atlasng/content-blocks": "^0.0.9",
     "@atlasng/core": "^0.0.9",
     "@atlasng/design-system": "^0.0.9",
     "@atlasng/labs": "^0.0.9",

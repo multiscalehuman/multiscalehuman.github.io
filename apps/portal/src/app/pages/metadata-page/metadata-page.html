@@ -1,0 +1,34 @@
+@let data = metadata();
+
+<div class="layout">
+  <div class="intro">
+    <ang-breadcrumbs [items]="crumbs()" />
+
+    <header class="header">
+      <!-- Placeholder until AtlasNG's icon display component is available -->
+      <div class="organ-icon" aria-hidden="true">
+        <mat-icon fontIcon="favorite" />
+      </div>
+      <ang-content-header level="1" [tagline]="title()" />
+      <ang-content-paragraph>{{ data.description }}</ang-content-paragraph>
+    </header>
+  </div>
+
+  <ang-table-of-contents
+    class="toc"
+    tagline="On this page"
+    [items]="tocItems()"
+    [activeItem]="activeTocItem()"
+    (activeItemChange)="$event && activeSection.selectSection($event.anchor)"
+  />
+
+  <div class="content">
+    @for (section of sections(); track section.anchor) {
+      <ang-content-section level="2" [title]="section.title" [id]="section.anchor">
+        <ang-content-block class="section-body" [document]="section.document" />
+      </ang-content-section>
+    }
+
+    <p class="last-updated">Last updated on {{ data.lastUpdated | date: 'MMMM d, y' }}</p>
+  </div>
+</div>
