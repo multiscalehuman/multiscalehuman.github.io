@@ -1,24 +1,11 @@
 :host {
   display: block;
-  padding: 2.5rem;
-}
-
-.title {
-  margin: 0 0 1rem;
-  font: var(--mat-sys-display-medium);
-  letter-spacing: var(--mat-sys-display-medium-tracking);
-}
-
-.tagline {
-  margin: 0;
-  font: var(--mat-sys-body-large);
-  color: var(--mat-sys-on-surface-variant);
 }
 
 .space-time-organ-graph {
   height: 100vh;
   height: 100svh;
   min-height: 40rem;
-  margin-top: 2.5rem;
+  padding: 2.5rem;
   overflow-x: clip;
 }

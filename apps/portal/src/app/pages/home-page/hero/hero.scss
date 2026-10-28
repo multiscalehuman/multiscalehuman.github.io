@@ -1,0 +1,74 @@
+@use '@atlasng/design-system' as ds;
+
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  color: white;
+  padding: 5.5rem 2.5rem;
+}
+
+.illustration {
+  object-fit: cover;
+}
+
+.content {
+  position: relative;
+}
+
+.breadcrumbs {
+  margin-bottom: 2.5rem;
+
+  @include ds.breadcrumbs-overrides(
+    (
+      crumb-color: white,
+      separator-color: white,
+    )
+  );
+  @include ds.text-link-overrides(
+    (
+      color: white,
+    )
+  );
+}
+
+.logo {
+  display: block;
+  width: 3.75rem;
+  height: auto;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font: var(--mat-sys-display-large);
+  letter-spacing: var(--mat-sys-display-large-tracking);
+}
+
+.tagline {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+}
+
+// // The illustration moves down by half the hero's height while the hero scrolls out,
+// // so it scrolls at half the page's speed.
+// @media (prefers-reduced-motion: no-preference) {
+//   @supports (animation-timeline: view()) {
+//     :host {
+//       view-timeline: --hero block;
+//     }
+
+//     .illustration {
+//       animation: hero-parallax linear both;
+//       animation-timeline: --hero;
+//       animation-range: exit 0% exit 100%;
+//     }
+//   }
+// }
+
+// @keyframes hero-parallax {
+//   to {
+//     transform: translateY(50%);
+//   }
+// }
