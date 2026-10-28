@@ -1,0 +1,7 @@
+// Styles for <mhu-cube>. The element renders into the light DOM, so include this stylesheet once on any page that
+// uses it, for example with `@use "path/to/mhu-cube/src/mhu-cube";` in the site's global SCSS. Rules that come
+// after it can restyle the component's `mhu-cube__*` classes; theme colors and type come from the `--mat-sys-*`
+// and `--mhu-cube-*` custom properties. Partials load in this order so later rules refine earlier ones.
+@use 'mhu-cube-core';
+@use 'mhu-cube-data';
+@use 'mhu-cube-cards';

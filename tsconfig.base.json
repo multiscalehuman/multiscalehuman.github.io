@@ -3,7 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "paths": {}
+    "paths": {
+      "@mhu/mhu-cube": ["./libs/mhu-cube/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
