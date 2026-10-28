@@ -1,0 +1,36 @@
+.mhu-cube__details:empty {
+  display: none;
+}
+.mhu-cube__details-card {
+  border: 1px solid var(--_outline-variant);
+  background: var(--_surface-container);
+  box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--_on-surface) 10%, transparent);
+}
+.mhu-cube__details-card {
+  width: 100%;
+  padding: 1.25rem;
+}
+.mhu-cube__details-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  margin-top: 1.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--_primary);
+  color: var(--_on-primary);
+  font-family: var(--mat-sys-label-large-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-label-large-size, 0.875rem);
+  font-weight: var(--mat-sys-label-large-weight, 500);
+  line-height: var(--mat-sys-label-large-line-height, 1.25rem);
+  letter-spacing: var(--mat-sys-label-large-tracking, 0.00625rem);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.mhu-cube__details-action:hover {
+  filter: brightness(0.92);
+}
+.mhu-cube__details-action:focus-visible {
+  outline: 3px solid var(--_focus);
+  outline-offset: 3px;
+}

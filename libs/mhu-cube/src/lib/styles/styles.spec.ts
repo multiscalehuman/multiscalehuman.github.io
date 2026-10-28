@@ -11,7 +11,20 @@ const read = (file: string) => readFileSync(join(libDir, file), 'utf8');
 const normalize = (stylesheet: string) =>
   stylesheet.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/ \)/g, ')').replace(/'/g, '"');
 
-const rawStyles = read('styles/_blocks.scss');
+// The core partials split one sequence of rules, so the assertions read them as one stylesheet, in load order.
+const CORE_PARTIALS = [
+  '_host.scss',
+  '_layout.scss',
+  '_frame.scss',
+  '_blocks.scss',
+  '_hover-card.scss',
+  '_unpositioned.scss',
+  '_intro.scss',
+  '_details.scss',
+  '_utilities.scss',
+  '_responsive.scss',
+];
+const rawStyles = CORE_PARTIALS.map((file) => read(`styles/${file}`)).join('\n');
 const rawDataStyles = read('styles/_data.scss');
 const rawCardStyles = read('styles/_cards.scss');
 const styles = normalize(rawStyles);
@@ -138,7 +151,7 @@ describe('mhu-cube styles', () => {
   });
 
   it("axis labels are pushed off the frame along each edge's outward normal", () => {
-    const projection = read('geometry/projection.ts');
+    const view = read('geometry/view.ts');
 
     expect(styles).toMatch(
       /transform: translate\(\s*calc\(var\(--_align-x\) \+ var\(--axis-normal-x, 0\) \* var\(--_offset\)\),\s*calc\(var\(--_align-y\) \+ var\(--axis-normal-y, 0\) \* var\(--_offset\)\)\s*\);/,
@@ -151,7 +164,7 @@ describe('mhu-cube styles', () => {
       /\.mhu-cube__plot \{[^}]*\/ var\(--_area-ratio, 1\) \+ var\(--_gutter-x\)[^}]*\* var\(--_area-ratio, 1\) \+ var\(--_gutter-y\)/,
     );
     expect(element).toMatch(/style\.setProperty\(['"]--_area-ratio['"], String\(DRAWING_AREA_RATIO\)\)/);
-    expect(projection).toMatch(/heightRatio: \(height \* DESIGN_HEIGHT_RATIO\) \/ width/);
+    expect(view).toMatch(/heightRatio: \(height \* DESIGN_HEIGHT_RATIO\) \/ width/);
   });
 
   it('block shadows paint beneath every block and age markers appear only when a block is active', () => {

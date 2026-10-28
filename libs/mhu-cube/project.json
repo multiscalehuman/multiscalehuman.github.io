@@ -23,7 +23,16 @@
     },
     "test": {
       "options": {
-        "setupFiles": ["{projectRoot}/src/test-setup.ts"]
+        "setupFiles": ["{projectRoot}/src/test-setup.ts"],
+        "coverageExclude": [
+          "{projectRoot}/**/index.ts",
+          "{projectRoot}/**/main.ts",
+          "{projectRoot}/**/test-setup.ts",
+          "{projectRoot}/.storybook/**/*.ts",
+          "{projectRoot}/**/*.stories.ts",
+          "{projectRoot}/src/testing/**",
+          "{projectRoot}/harness/**"
+        ]
       }
     },
     "harness": {

@@ -1,90 +1,15 @@
+import { codes, validAxes } from '../../testing/validation-fixtures';
 import type { MhuCubePosition } from '../types';
-import {
-  canPlotAxes,
-  isSafeMetadataHref,
-  validateAxes,
-  validateCompactMetadata,
-  validateHoverMetadata,
-  validateItems,
-  type ValidationResult,
-} from './items';
+import { validateAxes } from './axes';
+import { validateItems } from './items';
 
-const validAxes = {
-  time: { label: 'Time', unit: 'years', min: 0, max: 100 },
-  space: { label: 'Space', values: ['small', 'large'] },
-  organ: { label: 'Organ', values: ['Liver', 'heart', 'Kidney'] },
-};
 const axes = validateAxes(validAxes).value;
-const codes = (result: ValidationResult<unknown>) => result.issues.map((validationIssue) => validationIssue.code);
 
 function position(overrides: Partial<MhuCubePosition> = {}): MhuCubePosition {
   return { time: { start: 20, end: 40 }, space: 'small', organ: 'Liver', ...overrides };
 }
 
-describe('validation', () => {
-  it('validateAxes sorts organs alphabetically and keeps the supplied space order', () => {
-    const result = validateAxes(validAxes);
-
-    expect(result.value.organ.values).toEqual(['heart', 'Kidney', 'Liver']);
-    expect(result.value.space.values).toEqual(['small', 'large']);
-    expect(result.issues).toEqual([]);
-  });
-
-  it('validateAxes defaults time ticks to five equal steps', () => {
-    const result = validateAxes(validAxes);
-
-    expect(result.value.time).toEqual({
-      label: 'Time',
-      unit: 'years',
-      min: 0,
-      max: 100,
-      ticks: [0, 20, 40, 60, 80, 100],
-    });
-    expect(canPlotAxes(result.value)).toBe(true);
-  });
-
-  it('validateAxes keeps valid custom ticks and replaces invalid ones', () => {
-    const custom = validateAxes({ ...validAxes, time: { ...validAxes.time, ticks: [50, 0, 100, 50] } });
-    expect(custom.value.time.ticks).toEqual([0, 50, 100]);
-
-    const invalid = validateAxes({ ...validAxes, time: { ...validAxes.time, ticks: [0, 150] } });
-    expect(invalid.value.time.ticks).toEqual([0, 20, 40, 60, 80, 100]);
-    expect(codes(invalid)).toEqual(['axis.time.ticks.invalid']);
-  });
-
-  it('validateAxes rejects a time axis without a positive span', () => {
-    const result = validateAxes({ ...validAxes, time: { label: 'Time', min: 10, max: 10 } });
-
-    expect(canPlotAxes(result.value)).toBe(false);
-    expect(codes(result)).toEqual(['axis.time.range.invalid']);
-  });
-
-  it('validateAxes omits an empty time unit with a warning', () => {
-    const result = validateAxes({ ...validAxes, time: { ...validAxes.time, unit: ' ' } });
-
-    expect(result.value.time.unit).toBe(undefined);
-    expect(codes(result)).toEqual(['axis.time.unit.invalid']);
-  });
-
-  it('validateAxes treats organ names that differ only by case as duplicates', () => {
-    const result = validateAxes({ ...validAxes, organ: { label: 'Organ', values: ['Liver', 'liver'] } });
-
-    expect(result.value.organ.values).toEqual([]);
-    expect(codes(result)).toEqual(['axis.values.duplicate']);
-    expect(canPlotAxes(result.value)).toBe(false);
-  });
-
-  it('validateAxes explains the retired x, y, and z format', () => {
-    const result = validateAxes({
-      x: { label: 'X', values: ['a'] },
-      y: { label: 'Y', values: ['b'] },
-      z: { label: 'Z', values: ['c'] },
-    });
-
-    expect(codes(result)).toEqual(['axes.invalid']);
-    expect(result.issues[0].message).toMatch(/retired x, y, and z/);
-  });
-
+describe('items validation', () => {
   it('validateItems preserves incomplete datasets without inventing positions', () => {
     const result = validateItems(
       [
@@ -243,33 +168,6 @@ describe('validation', () => {
     expect(codes(result)).toContain('item.metadata.value.invalid');
   });
 
-  it('isSafeMetadataHref allows web destinations and rejects executable schemes', () => {
-    expect(isSafeMetadataHref('#local-metadata')).toBe(true);
-    expect(isSafeMetadataHref('../metadata/dataset')).toBe(true);
-    expect(isSafeMetadataHref('https://example.org/metadata')).toBe(true);
-    expect(isSafeMetadataHref('javascript:alert(1)')).toBe(false);
-    expect(isSafeMetadataHref('data:text/html,test')).toBe(false);
-    expect(isSafeMetadataHref('http://'), 'Unparseable URLs are unsafe.').toBe(false);
-  });
-
-  it('validateAxes rejects malformed axes and empty or non-text categories', () => {
-    const malformed = validateAxes(null);
-    expect(codes(malformed)).toEqual(['axes.invalid']);
-    expect(canPlotAxes(malformed.value)).toBe(false);
-
-    const result = validateAxes({
-      time: 'always',
-      space: { label: 'Space', values: [] },
-      organ: { label: 'Organ', values: ['Liver', 3] },
-    });
-    expect(codes(result)).toEqual(['axis.invalid', 'axis.values.invalid', 'axis.value.invalid']);
-    expect(result.value.space.values).toEqual([]);
-    expect(result.value.organ.values).toEqual([]);
-    expect(canPlotAxes(result.value)).toBe(false);
-
-    expect(codes(validateAxes({ ...validAxes, space: undefined }))).toEqual(['axis.invalid']);
-  });
-
   it('validateItems rejects a non-list and excludes non-object datasets, metadata, and positions', () => {
     expect(codes(validateItems({}, axes))).toEqual(['items.invalid']);
 
@@ -282,26 +180,6 @@ describe('validation', () => {
     );
     expect(codes(result)).toEqual(['item.invalid', 'item.metadata.invalid', 'item.position.invalid']);
     expect(result.value).toEqual([{ id: 'current', label: 'Current', href: '#current', status: 'current' }]);
-  });
-
-  it('validateCompactMetadata keeps trimmed unique names and falls back to every entry', () => {
-    expect(validateCompactMetadata(undefined)).toEqual({ value: null, issues: [] });
-    expect(validateCompactMetadata([' Corresponding authors ', 'Sex', 'Sex', ''])).toEqual({
-      value: ['Corresponding authors', 'Sex'],
-      issues: [],
-    });
-    const invalid = validateCompactMetadata(['Sex', 4]);
-    expect(invalid.value).toBe(null);
-    expect(codes(invalid)).toEqual(['compact-metadata.invalid']);
-    expect(invalid.issues[0].severity).toBe('warning');
-  });
-
-  it('validateHoverMetadata keeps trimmed unique names and falls back to every entry', () => {
-    expect(validateHoverMetadata(null)).toEqual({ value: null, issues: [] });
-    expect(validateHoverMetadata([' Time ', 'Sex'])).toEqual({ value: ['Time', 'Sex'], issues: [] });
-    const invalid = validateHoverMetadata('Sex');
-    expect(invalid.value).toBe(null);
-    expect(codes(invalid)).toEqual(['hover-metadata.invalid']);
   });
 
   it('validateItems keeps safe images and trims list metadata such as several authors', () => {

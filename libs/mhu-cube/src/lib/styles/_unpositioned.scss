@@ -1,0 +1,61 @@
+/* Spacing lives on the list rather than as a stage gap, so the plot gets the stage's full height when it is absent. */
+.mhu-cube__unpositioned {
+  align-self: end;
+  width: min(100%, 38rem);
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--_outline);
+  background: var(--_surface-container);
+}
+.mhu-cube__unpositioned-heading {
+  margin: 0;
+  font-family: var(--mat-sys-title-small-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-title-small-size, 0.875rem);
+  font-weight: var(--mat-sys-title-small-weight, 500);
+  line-height: var(--mat-sys-title-small-line-height, 1.25rem);
+  letter-spacing: var(--mat-sys-title-small-tracking, 0.00625rem);
+}
+.mhu-cube__unpositioned-guidance {
+  margin: 0.25rem 0 0;
+  color: var(--_on-surface-variant);
+  font-family: var(--mat-sys-body-small-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-body-small-size, 0.75rem);
+  font-weight: var(--mat-sys-body-small-weight, 400);
+  line-height: var(--mat-sys-body-small-line-height, 1rem);
+  letter-spacing: var(--mat-sys-body-small-tracking, 0.025rem);
+}
+.mhu-cube__unpositioned-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.625rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mhu-cube__unpositioned-button {
+  min-height: 2.75rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--_outline);
+  background: var(--_surface);
+  color: var(--_on-surface);
+  font-family: var(--mat-sys-label-large-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-label-large-size, 0.875rem);
+  font-weight: var(--mat-sys-label-large-weight, 500);
+  line-height: var(--mat-sys-label-large-line-height, 1.25rem);
+  letter-spacing: var(--mat-sys-label-large-tracking, 0.00625rem);
+  cursor: pointer;
+}
+.mhu-cube__unpositioned-button:hover {
+  background: var(--_primary-container);
+  color: var(--_on-primary-container);
+}
+.mhu-cube__unpositioned-button:focus-visible {
+  outline: 3px solid var(--_focus);
+  outline-offset: 3px;
+}
+.mhu-cube__unpositioned-item.mhu-cube__item--selected .mhu-cube__unpositioned-button {
+  border-color: var(--_primary);
+  border-width: 2px;
+  background: var(--_primary-container);
+  color: var(--_on-primary-container);
+}

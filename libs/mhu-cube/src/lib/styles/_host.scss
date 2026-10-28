@@ -1,0 +1,33 @@
+mhu-cube {
+  --_surface: var(--mhu-cube-surface, var(--mat-sys-surface, #fcfcfc));
+  --_surface-container: var(--mhu-cube-surface-container, var(--mat-sys-surface-container, #eceff1));
+  --_surface-container-lowest: var(
+    --mhu-cube-surface-container-lowest,
+    var(--mat-sys-surface-container-lowest, #ffffff)
+  );
+  --_on-surface: var(--mhu-cube-on-surface, var(--mat-sys-on-surface, #1d2429));
+  --_on-surface-variant: var(--mhu-cube-on-surface-variant, var(--mat-sys-on-surface-variant, #354b57));
+  --_primary: var(--mhu-cube-primary, var(--mat-sys-primary, #be0f09));
+  --_on-primary: var(--mhu-cube-on-primary, var(--mat-sys-on-primary, #ffffff));
+  --_primary-container: var(--mhu-cube-primary-container, var(--mat-sys-primary-container, #ffdad5));
+  --_on-primary-container: var(--mhu-cube-on-primary-container, var(--mat-sys-on-primary-container, #6b0f0a));
+  --_outline: var(--mhu-cube-outline, var(--mat-sys-outline, #6c7f8a));
+  --_outline-variant: var(--mhu-cube-outline-variant, var(--mat-sys-outline-variant, #c0cbd1));
+  --_focus: var(--mhu-cube-focus, var(--mat-sys-primary, #be0f09));
+  display: block;
+  box-sizing: border-box;
+  container: mhu-cube-host / inline-size;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  color: var(--_on-surface);
+  font-family: var(--mat-sys-body-large-font, Roboto, Arial, sans-serif);
+  font-size: var(--mat-sys-body-large-size, 1rem);
+  font-weight: var(--mat-sys-body-large-weight, 400);
+  line-height: var(--mat-sys-body-large-line-height, 1.5rem);
+  letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
+}
+
+mhu-cube * {
+  box-sizing: border-box;
+}
