@@ -1,3 +1,4 @@
+import { h } from '../dom/create-element';
 import type { MhuCubeAxes, MhuCubeItem } from '../types';
 import { NUMBER_FORMAT, formatMetadataValue, formatTimeRange, getMetadataEntries } from './format';
 
@@ -19,15 +20,15 @@ export function getAccessibleDatasetName(item: MhuCubeItem): string {
  * @returns Visually hidden text describing every space category, the time span, and every organ, in that order.
  */
 export function createAccessibleAxisSummary(axes: MhuCubeAxes): HTMLParagraphElement {
-  const summary = document.createElement('p');
-  summary.className = 'mhu-cube__sr-only';
   const unit = axes.time.unit ? ` ${axes.time.unit}` : '';
-  summary.textContent = [
-    `${axes.space.label}: ${axes.space.values.join(', ')}`,
-    `${axes.time.label}: ${NUMBER_FORMAT.format(axes.time.min)} to ${NUMBER_FORMAT.format(axes.time.max)}${unit}`,
-    `${axes.organ.label}: ${axes.organ.values.join(', ')}`,
-  ].join('. ');
-  return summary;
+  return h('p', {
+    className: 'mhu-cube__sr-only',
+    text: [
+      `${axes.space.label}: ${axes.space.values.join(', ')}`,
+      `${axes.time.label}: ${NUMBER_FORMAT.format(axes.time.min)} to ${NUMBER_FORMAT.format(axes.time.max)}${unit}`,
+      `${axes.organ.label}: ${axes.organ.values.join(', ')}`,
+    ].join('. '),
+  });
 }
 
 /**

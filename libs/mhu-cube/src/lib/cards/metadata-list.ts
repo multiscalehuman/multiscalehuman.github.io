@@ -1,3 +1,4 @@
+import { h } from '../dom/create-element';
 import { getAccessibleDatasetName } from '../text/accessible-text';
 import { formatMetadataValue, getMetadataEntries, type MetadataEntry } from '../text/format';
 import type { MhuCubeItem } from '../types';
@@ -18,22 +19,18 @@ export function createMetadataList(
     return null;
   }
 
-  const metadata = document.createElement('dl');
-  metadata.className = className;
-  entries.forEach(([key, value]) => {
-    const row = document.createElement('div');
-    row.className = `${className}-row`;
-    const term = document.createElement('dt');
-    term.textContent = key;
-    row.append(term);
-    (Array.isArray(value) && listsOnSeparateLines ? value : [formatMetadataValue(value)]).forEach((entry) => {
-      const description = document.createElement('dd');
-      description.textContent = entry;
-      row.append(description);
-    });
-    metadata.append(row);
-  });
-  return metadata;
+  return h(
+    'dl',
+    { className },
+    entries.map(([key, value]) =>
+      h('div', { className: `${className}-row` }, [
+        h('dt', { text: key }),
+        ...(Array.isArray(value) && listsOnSeparateLines ? value : [formatMetadataValue(value)]).map((entry) =>
+          h('dd', { text: entry }),
+        ),
+      ]),
+    ),
+  );
 }
 
 /**
@@ -41,10 +38,10 @@ export function createMetadataList(
  * @returns A noninteractive availability message.
  */
 export function createUnavailableMessage(): HTMLParagraphElement {
-  const unavailable = document.createElement('p');
-  unavailable.className = 'mhu-cube__details-unavailable';
-  unavailable.textContent = 'Metadata is not currently available for this dataset.';
-  return unavailable;
+  return h('p', {
+    className: 'mhu-cube__details-unavailable',
+    text: 'Metadata is not currently available for this dataset.',
+  });
 }
 
 /**
@@ -62,15 +59,14 @@ export function createDestination(
     return createUnavailableMessage();
   }
 
-  const action = document.createElement('a');
-  action.className = actionClassName;
-  action.href = item.href;
-  action.setAttribute(
-    'aria-label',
-    `View metadata for ${getAccessibleDatasetName(item)}${status === 'current' ? ', current page' : ''}`,
-  );
-  action.textContent = 'View metadata';
-  return action;
+  return h('a', {
+    className: actionClassName,
+    attrs: {
+      href: item.href,
+      'aria-label': `View metadata for ${getAccessibleDatasetName(item)}${status === 'current' ? ', current page' : ''}`,
+    },
+    text: 'View metadata',
+  });
 }
 
 /**

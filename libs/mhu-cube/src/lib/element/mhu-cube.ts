@@ -1,6 +1,7 @@
 import { createDetails, updateDetails } from '../cards/details';
 import { createIntro } from '../cards/intro';
 import { createUnpositionedList } from '../cards/unpositioned-list';
+import { h } from '../dom/create-element';
 import { layoutPlot } from '../geometry/layout';
 import { sortItemsForDisplay } from '../geometry/lanes';
 import type { PlotLayout } from '../geometry/types';
@@ -303,18 +304,13 @@ export class MhuCube extends HTMLElementBase {
    * @returns Nothing.
    */
   #createStructure(): void {
-    const section = document.createElement('section');
-    section.className = 'mhu-cube';
-    const content = document.createElement('div');
-    content.className = 'mhu-cube__content';
     const details = createDetails(this.#detailsId);
-    content.append(createIntro(details));
-    const stage = document.createElement('div');
-    stage.className = 'mhu-cube__stage';
-    const plot = document.createElement('div');
-    plot.className = 'mhu-cube__plot';
-    stage.append(plot);
-    section.append(content, stage);
+    const plot = h('div', { className: 'mhu-cube__plot' });
+    const stage = h('div', { className: 'mhu-cube__stage' }, [plot]);
+    const section = h('section', { className: 'mhu-cube' }, [
+      h('div', { className: 'mhu-cube__content' }, [createIntro(details)]),
+      stage,
+    ]);
     this.replaceChildren(section);
     this.#section = section;
     this.#details = details;
@@ -376,10 +372,12 @@ export class MhuCube extends HTMLElementBase {
         createAccessibleAxisSummary(this.#axes),
       );
     } else {
-      const unavailable = document.createElement('p');
-      unavailable.className = 'mhu-cube__plot-unavailable';
-      unavailable.textContent = 'Visualization unavailable because the axis data is incomplete.';
-      this.#plot.replaceChildren(unavailable);
+      this.#plot.replaceChildren(
+        h('p', {
+          className: 'mhu-cube__plot-unavailable',
+          text: 'Visualization unavailable because the axis data is incomplete.',
+        }),
+      );
     }
     const selectedItem = this.#items.find((item) => item.id === this.#selectedId) ?? null;
     this.#section.classList.toggle('mhu-cube--has-selection', Boolean(selectedItem));
@@ -387,34 +385,32 @@ export class MhuCube extends HTMLElementBase {
     updateDetails(this.#details, selectedItem, this.#detailsHeadingId, () => this.#closeDetails());
     if (this.#items.length === 0) {
       if (axesCanBePlotted) {
-        const empty = document.createElement('p');
-        empty.className = 'mhu-cube__empty';
-        empty.textContent = 'No datasets are available.';
-        this.#plot.append(empty);
+        this.#plot.append(h('p', { className: 'mhu-cube__empty', text: 'No datasets are available.' }));
       }
       return;
     }
 
-    const list = document.createElement('ul');
-    list.className = 'mhu-cube__list';
     const itemIndexes = new Map(this.#items.map((item, index) => [item.id, index]));
     const layout = axesCanBePlotted ? layoutPlot(this.#items, this.#axes) : new Map<string, PlotLayout>();
     // Source order keeps description IDs stable; display order follows the plot for reading and keyboard use.
-    sortItemsForDisplay(this.#items, this.#axes).forEach((item) => {
-      list.append(
-        createBlockListItem(item, {
-          block: layout.get(item.id),
-          descriptionId: `${this.#instanceId}-item-${itemIndexes.get(item.id) ?? 0}-description`,
-          selected: item.id === this.#selectedId,
-          axes: this.#axes,
-          compactMetadata: this.#compactMetadata,
-          hoverMetadata: this.#hoverMetadata,
-          configureSelectionButton: (button, selectableItem, descriptionId) =>
-            this.#configureSelectionButton(button, selectableItem, descriptionId),
-        }),
-      );
-    });
-    this.#plot.append(list);
+    this.#plot.append(
+      h(
+        'ul',
+        { className: 'mhu-cube__list' },
+        sortItemsForDisplay(this.#items, this.#axes).map((item) =>
+          createBlockListItem(item, {
+            block: layout.get(item.id),
+            descriptionId: `${this.#instanceId}-item-${itemIndexes.get(item.id) ?? 0}-description`,
+            selected: item.id === this.#selectedId,
+            axes: this.#axes,
+            compactMetadata: this.#compactMetadata,
+            hoverMetadata: this.#hoverMetadata,
+            configureSelectionButton: (button, selectableItem, descriptionId) =>
+              this.#configureSelectionButton(button, selectableItem, descriptionId),
+          }),
+        ),
+      ),
+    );
     const unpositionedItems = this.#items.filter((item) => !layout.has(item.id));
     if (unpositionedItems.length > 0) {
       this.#stage.append(

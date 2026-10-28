@@ -1,3 +1,4 @@
+import { h } from '../dom/create-element';
 import { getAccessibleItemDescription } from '../text/accessible-text';
 import type { MhuCubeAxes, MhuCubeItem } from '../types';
 import type { ConfigureSelectionButton } from '../visualization/block-list-item';
@@ -24,34 +25,32 @@ export interface UnpositionedListOptions {
  */
 export function createUnpositionedList(items: MhuCubeItem[], options: UnpositionedListOptions): HTMLElement {
   const { instanceId, itemIndexes, selectedId, axes, configureSelectionButton } = options;
-  const region = document.createElement('section');
-  region.className = 'mhu-cube__unpositioned';
-  const heading = document.createElement('h3');
-  heading.className = 'mhu-cube__unpositioned-heading';
-  heading.textContent = 'Not plotted';
-  const guidance = document.createElement('p');
-  guidance.className = 'mhu-cube__unpositioned-guidance';
-  guidance.textContent = 'These datasets do not include usable visualization coordinates.';
-  const list = document.createElement('ul');
-  list.className = 'mhu-cube__unpositioned-list';
-  items.forEach((item) => {
-    const index = itemIndexes.get(item.id) ?? 0;
-    const listItem = document.createElement('li');
-    listItem.className = 'mhu-cube__unpositioned-item';
-    if (item.id === selectedId) {
-      listItem.classList.add('mhu-cube__item--selected');
-    }
-    const description = document.createElement('span');
-    description.className = 'mhu-cube__sr-only';
-    description.id = `${instanceId}-unpositioned-${index}-description`;
-    description.textContent = getAccessibleItemDescription(item, axes);
-    const button = document.createElement('button');
-    button.className = 'mhu-cube__unpositioned-button';
-    button.textContent = item.label;
-    configureSelectionButton(button, item, description.id);
-    listItem.append(description, button);
-    list.append(listItem);
-  });
-  region.append(heading, guidance, list);
-  return region;
+  return h('section', { className: 'mhu-cube__unpositioned' }, [
+    h('h3', { className: 'mhu-cube__unpositioned-heading', text: 'Not plotted' }),
+    h('p', {
+      className: 'mhu-cube__unpositioned-guidance',
+      text: 'These datasets do not include usable visualization coordinates.',
+    }),
+    h(
+      'ul',
+      { className: 'mhu-cube__unpositioned-list' },
+      items.map((item) => {
+        const descriptionId = `${instanceId}-unpositioned-${itemIndexes.get(item.id) ?? 0}-description`;
+        const button = h('button', { className: 'mhu-cube__unpositioned-button', text: item.label });
+        configureSelectionButton(button, item, descriptionId);
+        return h(
+          'li',
+          { className: ['mhu-cube__unpositioned-item', item.id === selectedId && 'mhu-cube__item--selected'] },
+          [
+            h('span', {
+              className: 'mhu-cube__sr-only',
+              attrs: { id: descriptionId },
+              text: getAccessibleItemDescription(item, axes),
+            }),
+            button,
+          ],
+        );
+      }),
+    ),
+  ]);
 }

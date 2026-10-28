@@ -1,3 +1,4 @@
+import { h } from '../dom/create-element';
 import { getAxisEdges, getAxisLayout, getTimeCoordinate } from '../geometry/projection';
 import type { AxisEdge, Point } from '../geometry/types';
 import { NUMBER_FORMAT } from '../text/format';
@@ -21,38 +22,46 @@ function getLabelAlignment(component: number): string {
  * @returns A decorative label layer positioned over the coordinate frame.
  */
 export function createAxisLabels(axes: MhuCubeAxes): HTMLDivElement {
-  const labels = document.createElement('div');
-  labels.className = 'mhu-cube__axes';
-  labels.setAttribute('aria-hidden', 'true');
-  // Each label sits exactly on its axis position; CSS pushes it outward along the edge's normal.
-  const addLabel = (text: string, className: string, point: Point, normal: Point): HTMLSpanElement => {
-    const label = document.createElement('span');
-    label.className = className;
-    label.textContent = text;
-    label.style.left = `${point.x}%`;
-    label.style.top = `${point.y}%`;
-    label.style.setProperty('--axis-normal-x', normal.x.toFixed(4));
-    label.style.setProperty('--axis-normal-y', normal.y.toFixed(4));
-    labels.append(label);
-    return label;
+  const labels = h('div', { className: 'mhu-cube__axes', attrs: { 'aria-hidden': 'true' } });
+  // Each label sits exactly on its axis position; CSS pushes it outward along the edge's normal. `style` adds the
+  // label's own custom properties.
+  const addLabel = (
+    text: string,
+    className: string,
+    point: Point,
+    normal: Point,
+    style: Record<string, string> = {},
+  ): void => {
+    labels.append(
+      h('span', {
+        className,
+        style: {
+          left: `${point.x}%`,
+          top: `${point.y}%`,
+          '--axis-normal-x': normal.x.toFixed(4),
+          '--axis-normal-y': normal.y.toFixed(4),
+          ...style,
+        },
+        text,
+      }),
+    );
   };
   const along = (edge: AxisEdge, t: number): Point => ({
     x: edge.start.x + (edge.end.x - edge.start.x) * t,
     y: edge.start.y + (edge.end.y - edge.start.y) * t,
   });
   const addValue = (text: string, axis: keyof MhuCubeAxes, point: Point, normal: Point): void => {
-    const label = addLabel(text, `mhu-cube__axis-value mhu-cube__axis-value--${axis}`, point, normal);
-    label.style.setProperty('--_align-x', getLabelAlignment(normal.x));
-    label.style.setProperty('--_align-y', getLabelAlignment(normal.y));
+    addLabel(text, `mhu-cube__axis-value mhu-cube__axis-value--${axis}`, point, normal, {
+      '--_align-x': getLabelAlignment(normal.x),
+      '--_align-y': getLabelAlignment(normal.y),
+    });
   };
   // Floor titles sit centered in a second row. A sloped edge makes value labels reach farther from it, so the
   // offset clears labels up to about 4rem wide and 1rem tall, plus the title's own half size, along the normal.
   const addFloorTitle = (text: string, axis: 'space' | 'organ', edge: AxisEdge): void => {
-    const label = addLabel(text, `mhu-cube__axis-title mhu-cube__axis-title--${axis}`, along(edge, 0.5), edge.normal);
-    label.style.setProperty(
-      '--_offset',
-      `${(0.75 + 1.6 * Math.abs(edge.normal.y) + 5.5 * Math.abs(edge.normal.x)).toFixed(3)}rem`,
-    );
+    addLabel(text, `mhu-cube__axis-title mhu-cube__axis-title--${axis}`, along(edge, 0.5), edge.normal, {
+      '--_offset': `${(0.75 + 1.6 * Math.abs(edge.normal.y) + 5.5 * Math.abs(edge.normal.x)).toFixed(3)}rem`,
+    });
   };
 
   const edges = getAxisEdges();
