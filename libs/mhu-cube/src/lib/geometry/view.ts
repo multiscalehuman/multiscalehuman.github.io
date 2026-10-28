@@ -40,7 +40,7 @@ function fitFrame(planes: ViewDefinition['planes']): Pick<ViewDefinition, 'plane
   const top = Math.min(...ys);
   const width = Math.max(...xs) - left;
   const height = Math.max(...ys) - top;
-  const fit = (point: Point) => ({ x: ((point.x - left) / width) * 100, y: ((point.y - top) / height) * 100 });
+  const fit = (point: Point): Point => ({ x: ((point.x - left) / width) * 100, y: ((point.y - top) / height) * 100 });
   const fitPlane = (plane: FramePlane): FramePlane => ({
     x0z0: fit(plane.x0z0),
     x1z0: fit(plane.x1z0),

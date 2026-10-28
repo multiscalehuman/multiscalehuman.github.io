@@ -36,7 +36,7 @@ export function isFiniteNumber(value: unknown): value is number {
  * @param input - Axes or position object.
  * @returns Whether the object has x, y, or z keys and none of time, space, or organ.
  */
-export function usesRetiredIndexFormat(input: Record<string, unknown>) {
+export function usesRetiredIndexFormat(input: Record<string, unknown>): boolean {
   return !('time' in input || 'space' in input || 'organ' in input) && ('x' in input || 'y' in input || 'z' in input);
 }
 

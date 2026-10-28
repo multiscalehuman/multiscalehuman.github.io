@@ -4,6 +4,31 @@ export interface Point {
   y: number;
 }
 
+/** A normalized floor position as [x, z]. */
+export type FloorPosition = readonly [x: number, z: number];
+
+/** A block's floor corners named by where they sit relative to the camera. */
+export interface NearCorners {
+  /** The corner nearest the camera. */
+  front: FloorPosition;
+  /** The corner across the space axis from `front`. */
+  left: FloorPosition;
+  /** The corner across the organ axis from `front`. */
+  right: FloorPosition;
+  /** The corner farthest from the camera. */
+  back: FloorPosition;
+}
+
+/** A projected cube edge that carries axis labels, with the direction pointing away from the cube. */
+export interface AxisEdge {
+  /** The edge's projected start, at the axis minimum. */
+  start: Point;
+  /** The edge's projected end, at the axis maximum. */
+  end: Point;
+  /** Unit screen direction perpendicular to the edge, pointing away from the cube. */
+  normal: Point;
+}
+
 /** Normalized block extents where x is space (inverted), y is time, and z is organ. */
 export interface Box {
   x0: number;

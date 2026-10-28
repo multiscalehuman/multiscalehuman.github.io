@@ -7,7 +7,7 @@ import { createSvgElement, toPathData } from './svg';
  * @param axes - Validated axes supplying the time ticks and category positions.
  * @returns A decorative SVG element with crisp, non-scaling frame lines.
  */
-export function createCoordinateFrame(axes: MhuCubeAxes) {
+export function createCoordinateFrame(axes: MhuCubeAxes): SVGSVGElement {
   const svg = createSvgElement('svg', {
     class: 'mhu-cube__frame',
     viewBox: '0 0 100 100',

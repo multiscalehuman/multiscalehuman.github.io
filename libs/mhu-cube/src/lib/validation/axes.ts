@@ -18,7 +18,7 @@ const CATEGORY_COLLATOR = new Intl.Collator('en', { sensitivity: 'base', numeric
  * @param b - Second organ name.
  * @returns A negative, zero, or positive sort result.
  */
-export function compareOrganNames(a: string, b: string) {
+export function compareOrganNames(a: string, b: string): number {
   return CATEGORY_COLLATOR.compare(a, b) || (a < b ? -1 : a > b ? 1 : 0);
 }
 
@@ -27,7 +27,7 @@ export function compareOrganNames(a: string, b: string) {
  * @param axes - Validated axes.
  * @returns Whether time has a positive span and both categorical axes have values.
  */
-export function canPlotAxes(axes: MhuCubeAxes) {
+export function canPlotAxes(axes: MhuCubeAxes): boolean {
   return axes.time.max > axes.time.min && axes.space.values.length > 0 && axes.organ.values.length > 0;
 }
 
@@ -36,7 +36,7 @@ function validateAxisLabel(
   fallbackLabel: string,
   path: string,
   issues: MhuCubeValidationIssue[],
-) {
+): string {
   const label = typeof input['label'] === 'string' ? input['label'].trim() : '';
   if (!label) {
     issues.push(

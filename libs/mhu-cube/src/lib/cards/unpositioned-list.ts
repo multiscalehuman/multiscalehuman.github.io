@@ -22,7 +22,7 @@ export interface UnpositionedListOptions {
  * @param options - Description IDs, selection state, and element settings for the datasets.
  * @returns A selectable fallback region for unpositioned datasets.
  */
-export function createUnpositionedList(items: MhuCubeItem[], options: UnpositionedListOptions) {
+export function createUnpositionedList(items: MhuCubeItem[], options: UnpositionedListOptions): HTMLElement {
   const { instanceId, itemIndexes, selectedId, axes, configureSelectionButton } = options;
   const region = document.createElement('section');
   region.className = 'mhu-cube__unpositioned';

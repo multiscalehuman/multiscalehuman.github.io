@@ -6,9 +6,9 @@ import { createSvgElement, toPathData } from './svg';
  * @param geometry - Projected corners and percentage bounds from the plot layout.
  * @returns The decorative block SVG.
  */
-export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry) {
-  const pointList = (...facePoints: Point[]) => facePoints.map((point) => `${point.x},${point.y}`).join(' ');
-  const path = (...pathPoints: Point[]) =>
+export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry): SVGSVGElement {
+  const pointList = (...facePoints: Point[]): string => facePoints.map((point) => `${point.x},${point.y}`).join(' ');
+  const path = (...pathPoints: Point[]): string =>
     pathPoints.map((point, pointIndex) => `${pointIndex === 0 ? 'M' : 'L'}${point.x} ${point.y}`).join('');
   const svg = createSvgElement('svg', {
     class: 'mhu-cube__cube',
@@ -58,7 +58,7 @@ export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry) {
  * @param block - Plot layout for one dataset, including its precomputed reference lines.
  * @returns A decorative SVG sharing the block's coordinate space, painted beneath every block.
  */
-export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { bounds } }: PlotLayout) {
+export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { bounds } }: PlotLayout): SVGSVGElement {
   const svg = createSvgElement('svg', {
     class: 'mhu-cube__shadow',
     viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,

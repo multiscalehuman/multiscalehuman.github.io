@@ -49,7 +49,7 @@ export function validateHoverMetadata(input: unknown): ValidationResult<string[]
  * @param value - Candidate URL supplied by component data.
  * @returns Whether the URL is relative, same-page, HTTP, or HTTPS.
  */
-export function isSafeMetadataHref(value: string) {
+export function isSafeMetadataHref(value: string): boolean {
   const href = value.trim();
   if (!href) {
     return false;
@@ -70,7 +70,12 @@ export function isSafeMetadataHref(value: string) {
  * @param issues - Issue list, appended to in place.
  * @returns The supported metadata, or undefined when the dataset has none or it is not an object.
  */
-export function validateMetadata(input: unknown, path: string, itemId: string, issues: MhuCubeValidationIssue[]) {
+export function validateMetadata(
+  input: unknown,
+  path: string,
+  itemId: string,
+  issues: MhuCubeValidationIssue[],
+): MhuCubeItem['metadata'] {
   if (input === undefined) {
     return undefined;
   }

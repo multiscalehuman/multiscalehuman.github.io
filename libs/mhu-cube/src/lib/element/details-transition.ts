@@ -10,7 +10,7 @@ export class DetailsTransition {
    * Cancels any active transition and prevents its deferred update from running.
    * @returns Nothing.
    */
-  cancel() {
+  cancel(): void {
     this.#version += 1;
     this.#animation?.cancel();
     this.#animation = null;
@@ -22,7 +22,7 @@ export class DetailsTransition {
    * @param updateContent - Callback that replaces the card content at minimum opacity.
    * @returns Nothing.
    */
-  run(details: HTMLElement, updateContent: () => void) {
+  run(details: HTMLElement, updateContent: () => void): void {
     this.cancel();
     const transitionVersion = this.#version;
     const reduceMotion = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,6 +1,6 @@
 import type { MhuCubeTimeAxis, MhuCubeTimeRange } from '../types';
 import { projectPoint, getTimeCoordinate } from './projection';
-import type { Box, ProjectedBoxGeometry } from './types';
+import type { Box, NearCorners, ProjectedBoxGeometry } from './types';
 import { VIEW } from './view';
 
 /**
@@ -10,7 +10,11 @@ import { VIEW } from './view';
  * @param minHeight - Smallest drawn height; ranges shorter than this grow around their midpoint.
  * @returns Normalized bottom and top heights, shifted inward rather than clipped at the axis ends.
  */
-export function getRenderedTimeExtent(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis, minHeight: number) {
+export function getRenderedTimeExtent(
+  range: MhuCubeTimeRange,
+  axis: MhuCubeTimeAxis,
+  minHeight: number,
+): Pick<Box, 'y0' | 'y1'> {
   const start = getTimeCoordinate(range.start, axis);
   const end = getTimeCoordinate(range.end, axis);
   if (end - start >= minHeight) {
@@ -26,13 +30,13 @@ export function getRenderedTimeExtent(range: MhuCubeTimeRange, axis: MhuCubeTime
  * @param box - Normalized block extents.
  * @returns The nearest corner, the corner across the space axis, the corner across the organ axis, and the far corner.
  */
-export function getNearCorners(box: Box) {
+export function getNearCorners(box: Box): NearCorners {
   const [nearX, nearZ] = VIEW.near;
   const xNear = nearX === 0 ? box.x0 : box.x1;
   const xFar = nearX === 0 ? box.x1 : box.x0;
   const zNear = nearZ === 0 ? box.z0 : box.z1;
   const zFar = nearZ === 0 ? box.z1 : box.z0;
-  return { front: [xNear, zNear], left: [xFar, zNear], right: [xNear, zFar], back: [xFar, zFar] } as const;
+  return { front: [xNear, zNear], left: [xFar, zNear], right: [xNear, zFar], back: [xFar, zFar] };
 }
 
 /**

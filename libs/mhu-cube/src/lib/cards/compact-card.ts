@@ -1,4 +1,4 @@
-import { formatTimeRange, getMetadataEntries } from '../text/format';
+import { formatTimeRange, getMetadataEntries, type MetadataEntry } from '../text/format';
 import type { MhuCubeAxes, MhuCubeItem } from '../types';
 import { canPlotAxes } from '../validation/axes';
 import { createMetadataList, createUnavailableMessage, getNamedMetadataEntries } from './metadata-list';
@@ -9,7 +9,7 @@ import { createMetadataList, createUnavailableMessage, getNamedMetadataEntries }
  * @param axes - Validated axes whose labels identify repeated entries.
  * @returns The remaining metadata entries in their provided order.
  */
-function getRemainingMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes) {
+function getRemainingMetadataEntries(item: MhuCubeItem, axes: MhuCubeAxes): MetadataEntry[] {
   const dimensionLabels = new Set(
     [axes.time.label, axes.space.label, axes.organ.label].map((label) => label.trim().toLowerCase()),
   );
@@ -29,7 +29,7 @@ export function getCompactMetadataEntries(
   axes: MhuCubeAxes,
   hasPosition: boolean,
   compactMetadata: string[] | null,
-) {
+): MetadataEntry[] {
   if (!compactMetadata) {
     return hasPosition ? getRemainingMetadataEntries(item, axes) : getMetadataEntries(item);
   }
@@ -45,7 +45,11 @@ export function getCompactMetadataEntries(
  * @param compactMetadata - Metadata names to show, or null for every entry the card does not already show.
  * @returns A card whose links share the dataset's metadata destination.
  */
-export function createCompactCard(item: MhuCubeItem, axes: MhuCubeAxes, compactMetadata: string[] | null = null) {
+export function createCompactCard(
+  item: MhuCubeItem,
+  axes: MhuCubeAxes,
+  compactMetadata: string[] | null = null,
+): HTMLElement {
   const card = document.createElement('article');
   card.className = 'mhu-cube__compact-card';
   const status = item.status ?? 'available';

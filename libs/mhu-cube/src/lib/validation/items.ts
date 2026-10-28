@@ -77,7 +77,7 @@ function validateCategoryReference(
   path: string,
   itemId: string,
   issues: MhuCubeValidationIssue[],
-) {
+): string | undefined {
   const value = typeof input === 'string' ? input.trim() : '';
   if (axis.values.includes(value)) {
     return value;
@@ -141,7 +141,12 @@ function validatePosition(
  * @param issues - Issue list, appended to in place.
  * @returns The trimmed destination, or undefined when it is absent or was removed as unsafe.
  */
-function validateHref(input: unknown, path: string, itemId: string, issues: MhuCubeValidationIssue[]) {
+function validateHref(
+  input: unknown,
+  path: string,
+  itemId: string,
+  issues: MhuCubeValidationIssue[],
+): string | undefined {
   let href: string | undefined;
   if (input !== undefined) {
     if (typeof input === 'string' && isSafeMetadataHref(input)) {
@@ -169,7 +174,12 @@ function validateHref(input: unknown, path: string, itemId: string, issues: MhuC
  * @param issues - Issue list, appended to in place.
  * @returns The supplied status, or `available` when it is absent or unknown.
  */
-function validateStatus(input: unknown, path: string, itemId: string, issues: MhuCubeValidationIssue[]) {
+function validateStatus(
+  input: unknown,
+  path: string,
+  itemId: string,
+  issues: MhuCubeValidationIssue[],
+): MhuCubeItemStatus {
   let status: MhuCubeItemStatus = 'available';
   if (input !== undefined) {
     if (typeof input === 'string' && ITEM_STATUSES.has(input as MhuCubeItemStatus)) {
@@ -197,7 +207,12 @@ function validateStatus(input: unknown, path: string, itemId: string, issues: Mh
  * @param issues - Issue list, appended to in place.
  * @returns The trimmed image URL, or undefined when it is absent or was removed as unsafe.
  */
-function validateImage(input: unknown, path: string, itemId: string, issues: MhuCubeValidationIssue[]) {
+function validateImage(
+  input: unknown,
+  path: string,
+  itemId: string,
+  issues: MhuCubeValidationIssue[],
+): string | undefined {
   let image: string | undefined;
   if (input !== undefined) {
     if (typeof input === 'string' && isSafeMetadataHref(input)) {
