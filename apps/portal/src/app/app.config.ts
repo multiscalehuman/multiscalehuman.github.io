@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
       { appName: 'multiscalehuman' },
       withGlobalErrorHandler(),
       withDefaultBackend({
-        endpoint: isDevMode() ? 'https://cns.iu.edu/tr-mhu-dev' : 'https://cns.iu.edu/tr-mhu',
+        endpoint: `https://cns.iu.edu/tr-mhu${isDevMode() ? '-dev' : ''}`,
       }),
     ),
   ],
