@@ -1,0 +1,35 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
+.mhu-cube__details:empty {
+  display: none;
+}
+.mhu-cube__details-card {
+  border: 1px solid t.slot(outline-variant);
+  background: t.slot(surface-container);
+  box-shadow: 0 1rem 2.5rem color-mix(in srgb, t.slot(on-surface) 10%, transparent);
+}
+.mhu-cube__details-card {
+  width: 100%;
+  padding: 1.25rem;
+}
+.mhu-cube__details-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  margin-top: 1.75rem;
+  padding: 0.75rem 1rem;
+  background: t.slot(primary);
+  color: t.slot(on-primary);
+  @include typescale(label-large);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.mhu-cube__details-action:hover {
+  filter: brightness(0.92);
+}
+.mhu-cube__details-action:focus-visible {
+  outline: 3px solid t.slot(focus);
+  outline-offset: 3px;
+}

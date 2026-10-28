@@ -1,0 +1,11 @@
+{
+  "name": "@mhu/mhu-cube",
+  "version": "0.1.0",
+  "description": "Accessible organ-imaging dataset preview web component.",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "private": true
+}

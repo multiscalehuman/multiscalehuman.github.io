@@ -1,0 +1,66 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
+.mhu-cube__intro {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+/* The eyebrow style, a short uppercase label above a heading. Each eyebrow's own class sets only its spacing. */
+.mhu-cube__eyebrow {
+  margin: 0;
+  color: t.slot(primary);
+  @include typescale(label-medium, 600);
+  text-transform: uppercase;
+}
+.mhu-cube__intro-eyebrow,
+.mhu-cube__details-eyebrow {
+  margin: 0 0 0.5rem;
+}
+.mhu-cube__intro-heading {
+  margin: 0;
+  @include typescale(headline-large);
+  white-space: nowrap;
+}
+.mhu-cube__intro-heading-compact {
+  display: none;
+}
+.mhu-cube__details-heading {
+  margin: 0;
+  @include typescale(title-large, 500);
+}
+.mhu-cube__details-unavailable {
+  margin: 1rem 0 0;
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
+}
+.mhu-cube__intro-visualization {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0.75rem 0 0;
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
+}
+.mhu-cube__intro-summary,
+.mhu-cube__intro-attribution {
+  margin: 0;
+}
+/// AtlasNG's content paragraph multipliers, which scale body-large; the line height follows the size by default.
+$_paragraph-size: t.custom-slot(ang-content-paragraph-size-multiplier, 1.0625);
+$_paragraph-line-height: t.custom-slot(ang-content-paragraph-line-height-multiplier, $_paragraph-size);
+
+/* The lead paragraph matches AtlasNG's content paragraph: body-large scaled by its multiplier, 17/16 by default. */
+.mhu-cube__intro-summary {
+  font-size: calc($_paragraph-size * typescale-slot(body-large, size));
+  line-height: calc($_paragraph-line-height * typescale-slot(body-large, line-height));
+}
+/* The compact lead paragraph replaces the desktop guidance at 64rem and below. */
+.mhu-cube__intro-summary-compact {
+  display: none;
+  margin: 0.75rem 0 0;
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
+}

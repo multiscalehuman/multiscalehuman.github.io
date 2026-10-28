@@ -1,0 +1,46 @@
+{
+  "name": "mhu-cube",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mhu-cube/src",
+  "prefix": "mhu",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "project": "libs/mhu-cube/ng-package.json",
+        "tsConfig": "libs/mhu-cube/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/mhu-cube/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      }
+    },
+    "test": {
+      "options": {
+        "setupFiles": ["{projectRoot}/src/test-setup.ts"],
+        "coverageExclude": [
+          "{projectRoot}/**/index.ts",
+          "{projectRoot}/**/main.ts",
+          "{projectRoot}/**/test-setup.ts",
+          "{projectRoot}/.storybook/**/*.ts",
+          "{projectRoot}/**/*.stories.ts",
+          "{projectRoot}/src/testing/**",
+          "{projectRoot}/harness/**"
+        ]
+      }
+    },
+    "harness": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite --config libs/mhu-cube/harness/vite.config.mts"
+      }
+    }
+  }
+}

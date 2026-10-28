@@ -1,0 +1,67 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
+.mhu-cube__frame {
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+  shape-rendering: geometricPrecision;
+}
+.mhu-cube__frame-line {
+  fill: none;
+  stroke: color-mix(in srgb, t.slot(outline) 68%, transparent);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+}
+.mhu-cube__frame-guide,
+.mhu-cube__frame-floor-guide {
+  fill: none;
+  stroke: color-mix(in srgb, t.slot(outline) 30%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.mhu-cube__frame-floor-guide {
+  stroke: color-mix(in srgb, t.slot(outline) 45%, transparent);
+}
+.mhu-cube__axes {
+  z-index: 1;
+  user-select: text;
+}
+/* Labels sit on their axis point; --_align-* picks the box corner that touches it and --_offset pushes the
+   box away from the frame along the edge's outward normal, so labels clear the frame at any camera angle. */
+.mhu-cube__axis-title,
+.mhu-cube__axis-value {
+  @include t.set(align-x, -50%);
+  @include t.set(align-y, -50%);
+  @include t.set(offset, 0.5rem);
+  position: absolute;
+  transform: translate(
+    calc(t.slot(align-x) + t.custom-slot(axis-normal-x, 0) * t.slot(offset)),
+    calc(t.slot(align-y) + t.custom-slot(axis-normal-y, 0) * t.slot(offset))
+  );
+  white-space: nowrap;
+}
+.mhu-cube__axis-title {
+  color: t.slot(primary);
+  @include typescale(label-large, 600);
+}
+/* Value labels and the space and organ titles receive their alignment and offset inline from the frame's edges.
+   The time title caps the tick column, right-aligned with the ticks just above the top value. */
+.mhu-cube__axis-title--time {
+  @include t.set(align-x, -100%);
+  @include t.set(align-y, calc(-100% - 0.75rem));
+}
+.mhu-cube__axis-value {
+  color: t.slot(on-surface-variant);
+  @include typescale(body-small);
+}
+.mhu-cube__axis-title--space,
+.mhu-cube__axis-title--organ,
+.mhu-cube__axis-value--space,
+.mhu-cube__axis-value--organ {
+  text-shadow:
+    -2px -2px 0 t.slot(surface),
+    2px -2px 0 t.slot(surface),
+    -2px 2px 0 t.slot(surface),
+    2px 2px 0 t.slot(surface);
+}

@@ -1,0 +1,72 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
+.mhu-cube__card {
+  position: absolute;
+  z-index: 1000;
+  top: t.custom-slot(card-top, 50%);
+  left: calc(100% + 0.75rem);
+  width: 15rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, t.slot(outline) 75%, transparent);
+  opacity: 0;
+  background: t.slot(surface-container);
+  box-shadow: 0 0.5rem 1.2rem color-mix(in srgb, t.slot(on-surface) 22%, transparent);
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity 120ms ease;
+}
+.mhu-cube__item--card-left .mhu-cube__card {
+  right: calc(100% + 0.75rem);
+  left: auto;
+}
+.mhu-cube__select:hover .mhu-cube__card,
+.mhu-cube__select:focus-visible .mhu-cube__card {
+  opacity: 1;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__card {
+  opacity: 0;
+}
+.mhu-cube__label {
+  display: block;
+  color: t.slot(on-surface);
+  @include typescale(title-small);
+}
+.mhu-cube__metadata {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.5rem;
+  margin: 0.5rem 0 0;
+  color: t.slot(on-surface-variant);
+  @include typescale(body-small);
+}
+.mhu-cube__metadata-key {
+  @include typescale(label-small);
+}
+.mhu-cube__metadata-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.mhu-cube__status {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: t.slot(on-primary-container);
+  @include typescale(label-small);
+  text-transform: uppercase;
+}
+.mhu-cube__item--current .mhu-cube__top,
+.mhu-cube__item--current .mhu-cube__left,
+.mhu-cube__item--current .mhu-cube__right {
+  stroke: t.slot(primary);
+  stroke-width: 2.5;
+}
+.mhu-cube__item--unavailable .mhu-cube__cube {
+  opacity: 0.62;
+  filter: grayscale(1);
+}
+.mhu-cube__item--unavailable .mhu-cube__top,
+.mhu-cube__item--unavailable .mhu-cube__left,
+.mhu-cube__item--unavailable .mhu-cube__right,
+.mhu-cube__item--unavailable .mhu-cube__edge {
+  stroke-dasharray: 3 2;
+}

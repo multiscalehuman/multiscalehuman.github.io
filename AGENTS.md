@@ -65,3 +65,37 @@
 - Do not edit generated coverage artifacts under `coverage/` unless explicitly requested.
 
 <!-- atlasng configuration end -->
+
+## Repository Rules
+
+- Never push to `main` or merge a pull request without the maintainer's approval.
+- Don't add dependencies without the maintainer's approval.
+
+## mhu-cube
+
+`libs/mhu-cube` holds `<mhu-cube>`, the Space Time Organ Graph: a framework-neutral custom element that renders into the light DOM and has no runtime dependencies. The portal registers it at startup and renders it on the home page with the sample datasets in `apps/portal/src/app/datasets/sample-datasets.ts`.
+
+### Testing
+
+- jsdom has no layout, so the specs can't check geometry, computed styles, hit testing, or container queries. After changing the element, card, SVG, or style modules, run the manual browser harness with `npx nx harness mhu-cube` and open the URL it prints. A passing run sets the page title to `PASS — MHU cube browser tests`.
+- Add tests with new code rather than lowering the coverage thresholds.
+
+### UX Copy
+
+- The official dimension order is **Space, Time, Organ**. Use it in names, headings, labels, descriptions, screen-reader text, and metadata lists. The data model's field order (`time`, `space`, `organ`) is unrelated and doesn't need to match.
+- There are only two exceptions, and they read **Organ, Space, Time**:
+  - Dataset titles, such as "Heart, 100 µm, ~40–70 years". These appear on the selected dataset card and the hover card, and as the metadata page titles.
+  - Keyboard and card order: alphabetical by organ, then by space, then by time.
+- The intro copy lives in `libs/mhu-cube/src/lib/content/intro-content.ts`. To change wording, edit only that file.
+- Tests read the expected text from `MHU_CUBE_INTRO_CONTENT`. Don't hard-code intro copy in tests. Put copy constraints in `intro-content.spec.ts` as rules, such as the desktop heading's 28-character limit.
+- The desktop and compact descriptions both state the sample data's dataset and team counts. Update them together.
+- Keep the Metacube attribution link to `https://github.com/Chair-for-Clinical-Bioinformatics/metacube`. It's a required credit, so the specs and the harness check the literal URL.
+- Other interface text, such as status labels, button names, and fallback messages, is still in the component modules.
+
+### Styles
+
+- Scope every style rule to `mhu-cube` or a `.mhu-cube__*` class; `styles/styles.spec.ts` enforces this.
+- Name and read custom properties only through the `styles/_tokens.scss` helpers (`t.slot()`, `t.public-slot()`, `t.sys-slot()`, `t.custom-slot()`, `t.set()`), never with raw `var(--…)`; the spec rejects `var(--`, `--mhu-cube-`, and `--mat-sys-` outside `_tokens.scss` and `_typography.scss`. Material system tokens always get a fallback.
+- Add new public color hooks to the `$colors` map in `styles/_host.scss`.
+- Set text styles with `@include typescale(<role>)` from `styles/_typography.scss`, passing a literal weight such as `600` only where one is approved. Text styles are defined once and shared. For example, every eyebrow uses the `.mhu-cube__eyebrow` style (`typescale(label-medium, 600)`, uppercase, primary color), and its own class sets only spacing.
+- When behavior, copy fields, or styles change, update `libs/mhu-cube/README.md` to match.

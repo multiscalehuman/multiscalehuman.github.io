@@ -1,0 +1,190 @@
+@use 'tokens' as t;
+
+.mhu-cube__list {
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+/* Bounding boxes of tall blocks overlap their neighbors, so only painted faces receive pointer input. */
+.mhu-cube__item {
+  position: absolute;
+  top: t.custom-slot(cube-top);
+  left: t.custom-slot(cube-left);
+  width: t.custom-slot(cube-width);
+  height: t.custom-slot(cube-height);
+  pointer-events: none;
+}
+.mhu-cube__item--unpositioned {
+  display: none;
+}
+.mhu-cube__select {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  pointer-events: none;
+}
+.mhu-cube__select:focus-visible {
+  z-index: 999;
+  outline: 3px solid t.slot(focus);
+  outline-offset: 5px;
+}
+/* Shadows share each block's coordinate space but paint beneath every block, directly over the floor. */
+.mhu-cube__shadow {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.mhu-cube__shadow-floor {
+  fill: t.slot(primary);
+  fill-opacity: 0.12;
+  stroke: color-mix(in srgb, t.slot(primary) 45%, transparent);
+  stroke-width: 1;
+  transition: fill-opacity 170ms ease;
+}
+.mhu-cube__shadow-drop {
+  fill: none;
+  stroke: color-mix(in srgb, t.slot(on-surface) 40%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.mhu-cube__time-marker {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.mhu-cube__time-leader {
+  fill: none;
+  stroke: t.slot(primary);
+  stroke-width: 1.25;
+  stroke-dasharray: 5 3;
+}
+.mhu-cube__time-bracket {
+  fill: none;
+  stroke: t.slot(primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.mhu-cube__select:hover .mhu-cube__time-marker,
+.mhu-cube__select:focus-visible .mhu-cube__time-marker,
+.mhu-cube__item--selected .mhu-cube__time-marker {
+  opacity: 1;
+}
+.mhu-cube__select:hover .mhu-cube__shadow-floor,
+.mhu-cube__select:focus-visible .mhu-cube__shadow-floor,
+.mhu-cube__item--selected .mhu-cube__shadow-floor {
+  fill-opacity: 0.28;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__shadow {
+  opacity: 0.35;
+}
+/* Paint order lives on the block itself so hover cards can rise above every block without reordering the scene. */
+.mhu-cube__cube {
+  position: relative;
+  z-index: t.custom-slot(cube-layer, 1);
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+.mhu-cube__top,
+.mhu-cube__left,
+.mhu-cube__right {
+  stroke: color-mix(in srgb, t.slot(outline) 75%, transparent);
+  stroke-width: 0.85;
+  stroke-linejoin: bevel;
+  pointer-events: fill;
+  transition:
+    fill-opacity 170ms ease,
+    stroke 170ms ease,
+    stroke-width 170ms ease;
+}
+.mhu-cube__top {
+  fill: t.slot(primary);
+  fill-opacity: 0.4;
+}
+.mhu-cube__left {
+  fill: t.slot(primary);
+  fill-opacity: 0.5;
+}
+.mhu-cube__right {
+  fill: t.slot(primary);
+  fill-opacity: 0.64;
+}
+.mhu-cube__edge {
+  fill: none;
+  stroke: color-mix(in srgb, t.slot(on-surface) 38%, transparent);
+  stroke-width: 0.75;
+  pointer-events: none;
+  transition:
+    stroke 170ms ease,
+    stroke-width 170ms ease;
+}
+.mhu-cube__select:hover .mhu-cube__top,
+.mhu-cube__select:hover .mhu-cube__left,
+.mhu-cube__select:hover .mhu-cube__right,
+.mhu-cube__select:focus-visible .mhu-cube__top,
+.mhu-cube__select:focus-visible .mhu-cube__left,
+.mhu-cube__select:focus-visible .mhu-cube__right {
+  stroke: t.slot(on-surface);
+  stroke-width: 2.3;
+}
+.mhu-cube__select:hover .mhu-cube__edge,
+.mhu-cube__select:focus-visible .mhu-cube__edge {
+  stroke: t.slot(on-surface);
+  stroke-width: 2;
+}
+.mhu-cube__select:hover .mhu-cube__top,
+.mhu-cube__select:focus-visible .mhu-cube__top {
+  fill-opacity: 0.46;
+}
+.mhu-cube__select:hover .mhu-cube__left,
+.mhu-cube__select:focus-visible .mhu-cube__left {
+  fill-opacity: 0.56;
+}
+.mhu-cube__select:hover .mhu-cube__right,
+.mhu-cube__select:focus-visible .mhu-cube__right {
+  fill-opacity: 0.68;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__top,
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__left,
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right {
+  stroke: t.slot(primary);
+  stroke-width: 1.2;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__edge {
+  stroke: t.slot(primary);
+  stroke-width: 1.2;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__top {
+  fill-opacity: 0.9;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__left {
+  fill-opacity: 0.96;
+}
+.mhu-cube__item--selected .mhu-cube__select .mhu-cube__right {
+  fill-opacity: 1;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__top {
+  fill-opacity: 0.08;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__left {
+  fill-opacity: 0.1;
+}
+.mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right {
+  fill-opacity: 0.12;
+}

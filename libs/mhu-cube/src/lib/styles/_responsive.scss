@@ -1,0 +1,161 @@
+@use 'typography' as *;
+
+@container mhu-cube-host (max-width: 64rem) {
+  .mhu-cube {
+    display: flex;
+    min-height: 0;
+    height: auto;
+    padding: clamp(1.5rem, 4cqw, 2.5rem) 0 0;
+    overflow: visible;
+    flex-direction: column;
+  }
+  .mhu-cube__content {
+    display: block;
+    max-width: 45rem;
+    padding: 0;
+  }
+  .mhu-cube__intro {
+    display: block;
+    height: auto;
+    min-height: 0;
+    margin-bottom: 2rem;
+  }
+  .mhu-cube__intro-eyebrow {
+    margin: 0 0 0.875rem;
+  }
+  .mhu-cube__intro-heading {
+    @include typescale(headline-medium);
+    white-space: normal;
+  }
+  .mhu-cube__intro-heading-wide,
+  .mhu-cube__intro-visualization {
+    display: none;
+  }
+  .mhu-cube__intro-heading-compact {
+    display: inline;
+  }
+  .mhu-cube__intro-summary-compact {
+    display: block;
+  }
+  .mhu-cube__stage {
+    display: block;
+    container-type: normal;
+  }
+  .mhu-cube__plot {
+    width: 100%;
+    height: auto;
+    max-height: none;
+  }
+  .mhu-cube__frame,
+  .mhu-cube__axes {
+    display: none;
+  }
+  /* As many card columns as fit, each at least as wide as the designed card (a 14rem image plus padding). */
+  .mhu-cube__list {
+    position: static;
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.125rem), 1fr));
+    gap: 1rem;
+  }
+  .mhu-cube__item {
+    position: static;
+    display: grid;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    pointer-events: auto;
+  }
+  .mhu-cube__select {
+    display: none;
+  }
+  .mhu-cube__details {
+    display: none;
+  }
+  .mhu-cube__unpositioned {
+    display: none;
+  }
+  .mhu-cube__empty,
+  .mhu-cube__plot-unavailable {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mhu-cube__top,
+  .mhu-cube__left,
+  .mhu-cube__right,
+  .mhu-cube__edge,
+  .mhu-cube__card,
+  .mhu-cube__shadow-floor,
+  .mhu-cube__time-marker {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mhu-cube__frame-line,
+  .mhu-cube__top,
+  .mhu-cube__left,
+  .mhu-cube__right,
+  .mhu-cube__edge {
+    stroke: CanvasText;
+  }
+  .mhu-cube__frame-guide,
+  .mhu-cube__frame-floor-guide,
+  .mhu-cube__shadow-drop {
+    stroke: GrayText;
+  }
+  .mhu-cube__shadow-floor {
+    fill: Canvas;
+    stroke: GrayText;
+  }
+  .mhu-cube__time-leader,
+  .mhu-cube__time-bracket {
+    stroke: Highlight;
+  }
+  .mhu-cube__top,
+  .mhu-cube__left,
+  .mhu-cube__right {
+    fill: Canvas;
+    fill-opacity: 1;
+  }
+  .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__top,
+  .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__left,
+  .mhu-cube--has-selection .mhu-cube__item:not(.mhu-cube__item--selected) .mhu-cube__right {
+    fill-opacity: 1;
+  }
+  .mhu-cube__item--selected .mhu-cube__select .mhu-cube__top,
+  .mhu-cube__item--selected .mhu-cube__select .mhu-cube__left,
+  .mhu-cube__item--selected .mhu-cube__select .mhu-cube__right,
+  .mhu-cube__select:hover .mhu-cube__top,
+  .mhu-cube__select:hover .mhu-cube__left,
+  .mhu-cube__select:hover .mhu-cube__right {
+    fill: Highlight;
+    stroke: HighlightText;
+  }
+  .mhu-cube__item--selected .mhu-cube__select .mhu-cube__edge,
+  .mhu-cube__select:hover .mhu-cube__edge {
+    stroke: HighlightText;
+  }
+  .mhu-cube__item--unavailable .mhu-cube__cube {
+    opacity: 1;
+    filter: none;
+  }
+  .mhu-cube__card,
+  .mhu-cube__details-card,
+  .mhu-cube__unpositioned {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+  .mhu-cube__details-action,
+  .mhu-cube__unpositioned-button {
+    border: 1px solid ButtonText;
+  }
+  .mhu-cube__select:focus-visible,
+  .mhu-cube__details-action:focus-visible,
+  .mhu-cube__unpositioned-button:focus-visible {
+    outline-color: Highlight;
+  }
+}

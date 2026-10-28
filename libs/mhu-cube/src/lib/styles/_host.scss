@@ -1,0 +1,35 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
+/// The element's colors. Each entry defines a private slot that reads the public theme hook of the same name, then
+/// the Material system token, then the fallback: `name: sys-token fallback`. Add new theme hooks here.
+$colors: (
+  surface: surface #fcfcfc,
+  surface-container: surface-container #eceff1,
+  surface-container-lowest: surface-container-lowest #ffffff,
+  on-surface: on-surface #1d2429,
+  on-surface-variant: on-surface-variant #354b57,
+  primary: primary #be0f09,
+  on-primary: on-primary #ffffff,
+  primary-container: primary-container #ffdad5,
+  on-primary-container: on-primary-container #6b0f0a,
+  outline: outline #6c7f8a,
+  outline-variant: outline-variant #c0cbd1,
+  focus: primary #be0f09,
+);
+
+mhu-cube {
+  @include t.themeable-colors($colors);
+  display: block;
+  box-sizing: border-box;
+  container: mhu-cube-host / inline-size;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  color: t.slot(on-surface);
+  @include typescale(body-large);
+}
+
+mhu-cube * {
+  box-sizing: border-box;
+}
