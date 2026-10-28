@@ -205,5 +205,6 @@
     "@nx/angular:directive": {
       "prefix": "mhu"
     }
-  }
+  },
+  "nxCloudId": "6ae20acd9d299a7635414d4d"
 }
