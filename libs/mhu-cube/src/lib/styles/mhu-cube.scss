@@ -1,0 +1,21 @@
+// Styles for <mhu-cube>. The element renders into the light DOM, so include this stylesheet once on any page that
+// uses it, for example with `@use "path/to/mhu-cube/src/lib/styles/mhu-cube";` in the site's global SCSS. Rules that
+// come after it can restyle the component's `mhu-cube__*` classes; theme colors and type come from the `--mat-sys-*`
+// and `--mhu-cube-*` custom properties. Partials load in this order so later rules refine earlier ones.
+
+// Core: host properties, layout, visualization, introduction, details, and the responsive and accessibility rules
+// that refine them. These partials split one sequence of rules, so keep them in this order.
+@use 'host';
+@use 'layout';
+@use 'frame';
+@use 'blocks';
+@use 'hover-card';
+@use 'unpositioned';
+@use 'intro';
+@use 'details';
+@use 'utilities';
+@use 'responsive';
+// Dimension key and dataset-detail presentation.
+@use 'data';
+// Compact dataset cards.
+@use 'cards';

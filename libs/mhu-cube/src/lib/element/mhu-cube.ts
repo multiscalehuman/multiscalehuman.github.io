@@ -1,65 +1,27 @@
-import {
-  createCompactCard,
-  createDetails,
-  createIntro,
-  createPreviewCard,
-  getAccessibleDatasetName,
-  updateDetails,
-} from './mhu-cube-cards';
-import {
-  createAccessibleAxisSummary,
-  createAxisLabels,
-  createBlockShadow,
-  createCoordinateFrame,
-  createProjectedCube,
-  getAccessibleItemDescription,
-} from './mhu-cube-visualization';
-import { DetailsTransition } from './details-transition';
-import { DRAWING_AREA_RATIO, layoutPlot, sortItemsForDisplay, type PlotLayout } from './projection';
+import { createDetails, updateDetails } from '../cards/details';
+import { createIntro } from '../cards/intro';
+import { createUnpositionedList } from '../cards/unpositioned-list';
+import { layoutPlot } from '../geometry/layout';
+import { sortItemsForDisplay } from '../geometry/lanes';
+import type { PlotLayout } from '../geometry/types';
+import { DRAWING_AREA_RATIO } from '../geometry/view';
+import { createAccessibleAxisSummary, getAccessibleDatasetName } from '../text/accessible-text';
 import type {
   MhuCubeAxes,
   MhuCubeItem,
   MhuCubeSelectionDetail,
   MhuCubeValidationDetail,
   MhuCubeValidationIssue,
-} from './types';
-import {
-  EMPTY_AXES,
-  canPlotAxes,
-  validateAxes,
-  validateCompactMetadata,
-  validateHoverMetadata,
-  validateItems,
-} from './validation';
-
-export type {
-  MhuCubeAxes,
-  MhuCubeCategoryAxis,
-  MhuCubeItem,
-  MhuCubeItemStatus,
-  MhuCubeMetadataValue,
-  MhuCubePosition,
-  MhuCubeSelectionDetail,
-  MhuCubeTimeAxis,
-  MhuCubeTimeRange,
-  MhuCubeValidationDetail,
-  MhuCubeValidationIssue,
-  MhuCubeValidationSeverity,
-} from './types';
-
-export const MHU_CUBE_SELECTION_EVENT = 'mhu-cube-selection-change';
-export const MHU_CUBE_VALIDATION_EVENT = 'mhu-cube-validation';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mhu-cube': MhuCube;
-  }
-
-  interface GlobalEventHandlersEventMap {
-    'mhu-cube-selection-change': CustomEvent<MhuCubeSelectionDetail>;
-    'mhu-cube-validation': CustomEvent<MhuCubeValidationDetail>;
-  }
-}
+} from '../types';
+import { canPlotAxes, validateAxes } from '../validation/axes';
+import { validateItems } from '../validation/items';
+import { validateCompactMetadata, validateHoverMetadata } from '../validation/metadata';
+import { EMPTY_AXES } from '../validation/primitives';
+import { createAxisLabels } from '../visualization/axis-labels';
+import { createBlockListItem } from '../visualization/block-list-item';
+import { createCoordinateFrame } from '../visualization/frame';
+import { DetailsTransition } from './details-transition';
+import { MHU_CUBE_SELECTION_EVENT, MHU_CUBE_VALIDATION_EVENT } from './events';
 
 const HTMLElementBase = (typeof HTMLElement === 'undefined' ? class {} : HTMLElement) as typeof HTMLElement;
 let instanceCount = 0;
@@ -392,45 +354,6 @@ export class MhuCube extends HTMLElementBase {
   }
 
   /**
-   * Creates the desktop fallback for datasets without usable plot coordinates.
-   * @param items - Validated datasets that cannot be positioned on the cube.
-   * @param itemIndexes - Stable source indexes used to generate unique description IDs.
-   * @returns A selectable fallback region for unpositioned datasets.
-   */
-  #createUnpositionedList(items: MhuCubeItem[], itemIndexes: Map<string, number>) {
-    const region = document.createElement('section');
-    region.className = 'mhu-cube__unpositioned';
-    const heading = document.createElement('h3');
-    heading.className = 'mhu-cube__unpositioned-heading';
-    heading.textContent = 'Not plotted';
-    const guidance = document.createElement('p');
-    guidance.className = 'mhu-cube__unpositioned-guidance';
-    guidance.textContent = 'These datasets do not include usable visualization coordinates.';
-    const list = document.createElement('ul');
-    list.className = 'mhu-cube__unpositioned-list';
-    items.forEach((item) => {
-      const index = itemIndexes.get(item.id) ?? 0;
-      const listItem = document.createElement('li');
-      listItem.className = 'mhu-cube__unpositioned-item';
-      if (item.id === this.#selectedId) {
-        listItem.classList.add('mhu-cube__item--selected');
-      }
-      const description = document.createElement('span');
-      description.className = 'mhu-cube__sr-only';
-      description.id = `${this.#instanceId}-unpositioned-${index}-description`;
-      description.textContent = getAccessibleItemDescription(item, this.#axes);
-      const button = document.createElement('button');
-      button.className = 'mhu-cube__unpositioned-button';
-      button.textContent = item.label;
-      this.#configureSelectionButton(button, item, description.id);
-      listItem.append(description, button);
-      list.append(listItem);
-    });
-    region.append(heading, guidance, list);
-    return region;
-  }
-
-  /**
    * Reconciles validated data with the stable component structure.
    * @returns Nothing.
    */
@@ -478,49 +401,32 @@ export class MhuCube extends HTMLElementBase {
     const layout = axesCanBePlotted ? layoutPlot(this.#items, this.#axes) : new Map<string, PlotLayout>();
     // Source order keeps description IDs stable; display order follows the plot for reading and keyboard use.
     sortItemsForDisplay(this.#items, this.#axes).forEach((item) => {
-      const index = itemIndexes.get(item.id) ?? 0;
-      const status = item.status ?? 'available';
-      const selected = item.id === this.#selectedId;
-      const listItem = document.createElement('li');
-      listItem.className = `mhu-cube__item mhu-cube__item--${status}`;
-      if (selected) {
-        listItem.classList.add('mhu-cube__item--selected');
-      }
-      const block = layout.get(item.id);
-      if (!block) {
-        listItem.classList.add('mhu-cube__item--unpositioned');
-        listItem.append(createCompactCard(item, this.#axes, this.#compactMetadata));
-        list.append(listItem);
-        return;
-      }
-
-      const { bounds } = block.geometry;
-      listItem.classList.add(`mhu-cube__item--card-${block.cardSide}`);
-      listItem.style.setProperty('--cube-left', `${bounds.left}%`);
-      listItem.style.setProperty('--cube-top', `${bounds.top}%`);
-      listItem.style.setProperty('--cube-width', `${bounds.width}%`);
-      listItem.style.setProperty('--cube-height', `${bounds.height}%`);
-      listItem.style.setProperty('--cube-layer', String(block.layer));
-      listItem.style.setProperty('--card-top', `${block.cardTop}%`);
-      const button = document.createElement('button');
-      button.className = 'mhu-cube__select';
-      const description = document.createElement('span');
-      description.className = 'mhu-cube__sr-only';
-      description.id = `${this.#instanceId}-item-${index}-description`;
-      description.textContent = getAccessibleItemDescription(item, this.#axes);
-      this.#configureSelectionButton(button, item, description.id);
-      button.append(
-        createBlockShadow(block),
-        createProjectedCube(block.geometry),
-        createPreviewCard(item, this.#hoverMetadata),
+      list.append(
+        createBlockListItem(item, {
+          block: layout.get(item.id),
+          descriptionId: `${this.#instanceId}-item-${itemIndexes.get(item.id) ?? 0}-description`,
+          selected: item.id === this.#selectedId,
+          axes: this.#axes,
+          compactMetadata: this.#compactMetadata,
+          hoverMetadata: this.#hoverMetadata,
+          configureSelectionButton: (button, selectableItem, descriptionId) =>
+            this.#configureSelectionButton(button, selectableItem, descriptionId),
+        }),
       );
-      listItem.append(description, button, createCompactCard(item, this.#axes, this.#compactMetadata));
-      list.append(listItem);
     });
     this.#plot.append(list);
     const unpositionedItems = this.#items.filter((item) => !layout.has(item.id));
     if (unpositionedItems.length > 0) {
-      this.#stage.append(this.#createUnpositionedList(unpositionedItems, itemIndexes));
+      this.#stage.append(
+        createUnpositionedList(unpositionedItems, {
+          instanceId: this.#instanceId,
+          itemIndexes,
+          selectedId: this.#selectedId,
+          axes: this.#axes,
+          configureSelectionButton: (button, selectableItem, descriptionId) =>
+            this.#configureSelectionButton(button, selectableItem, descriptionId),
+        }),
+      );
     }
   }
 }

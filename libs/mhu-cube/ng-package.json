@@ -4,5 +4,5 @@
   "lib": {
     "entryFile": "src/index.ts"
   },
-  "assets": [{ "input": "src/lib", "glob": "*.scss", "output": "styles" }]
+  "assets": [{ "input": "src/lib/styles", "glob": "**/*.scss", "output": "styles" }]
 }

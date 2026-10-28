@@ -1,34 +1,7 @@
-export interface MhuCubeDimensionCopy {
-  term: string;
-  description: string;
-}
+import type { MhuCubeIntroContent } from './types';
 
-export interface MhuCubeAttributionCopy {
-  beforeLink: string;
-  linkText: string;
-  afterLink: string;
-  href: string;
-}
-
-export interface MhuCubeVisualizationCopy {
-  description: string;
-  dimensionHeadings: [string, string];
-  dimensions: MhuCubeDimensionCopy[];
-  attribution: MhuCubeAttributionCopy;
-}
-
-export interface MhuCubeIntroCopy {
-  eyebrow?: string;
-  /** Desktop heading, beside the visualization; it stays on one line. */
-  heading: string;
-  /** Compact heading, above the dataset cards. */
-  compactHeading: string;
-  /** Compact lead sentence, between the compact heading and the dataset cards. */
-  compactDescription?: string;
-  visualization: MhuCubeVisualizationCopy;
-}
-
-export const MHU_CUBE_INTRO_COPY: MhuCubeIntroCopy = {
+/** The introduction's text. Edit wording here; tests read it rather than repeating it. */
+export const MHU_CUBE_INTRO_CONTENT: MhuCubeIntroContent = {
   eyebrow: 'Explore',
   heading: 'Space Time Organ Graph',
   compactHeading: 'Space Time Organ Datasets',

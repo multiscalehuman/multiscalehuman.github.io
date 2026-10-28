@@ -16,10 +16,11 @@ When its container is wider than `64rem`, the component keeps its introduction v
 
 ```text
 libs/mhu-cube/
-├── harness/            # Manual browser harness for layout and interaction checks
+├── harness/            # Manual browser harness: runner, layout assertions, and suites
 ├── src/
 │   ├── index.ts        # Public exports
-│   └── lib/            # Custom element source, SCSS, and Vitest specs
+│   ├── lib/            # Custom element source in feature folders, SCSS, and Vitest specs
+│   └── testing/        # Shared spec and harness fixtures; not built or measured for coverage
 ├── LICENSE
 ├── ng-package.json     # Library build configuration
 ├── package.json
@@ -30,19 +31,24 @@ libs/mhu-cube/
 
 ### Source responsibilities
 
-| Source                              | Responsibility                                                                                                                           |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/index.ts`                      | Supported package exports.                                                                                                               |
-| `src/lib/mhu-cube.ts`               | Custom-element lifecycle, state, rendering coordination, and events.                                                                     |
-| `src/lib/mhu-cube-cards.ts`         | Intro, preview-card, selected-card, and compact-card markup.                                                                             |
-| `src/lib/mhu-cube-visualization.ts` | SVG frame with time and floor guides, blocks with floor shadows and age markers, axis labels, and accessible visualization descriptions. |
-| `src/lib/projection.ts`             | Framework-independent projection, category spacing, time mapping, lane layout, and paint order.                                          |
-| `src/lib/validation.ts`             | Runtime normalization, alphabetical organ order, URL safety, and validation issues.                                                      |
-| `src/lib/mhu-cube-copy.ts`          | Editable introduction copy.                                                                                                              |
-| `src/lib/mhu-cube.scss`             | Stylesheet entry. Loads the partials below in cascade order.                                                                             |
-| `src/lib/_mhu-cube-core.scss`       | Responsive layout, visualization, and state styling.                                                                                     |
-| `src/lib/_mhu-cube-data.scss`       | Dimension key and dataset-detail presentation.                                                                                           |
-| `src/lib/_mhu-cube-cards.scss`      | Compact dataset cards, including their touch and mouse interactions.                                                                     |
+| Source                                           | Responsibility                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.ts`                                   | Supported package exports. The only barrel; other files import each other directly.                                                                                                                                                                                                      |
+| `src/lib/types.ts`                               | Public data, event-detail, and validation types.                                                                                                                                                                                                                                         |
+| `src/lib/element/mhu-cube.ts`                    | Custom-element lifecycle, state, rendering coordination, and registration.                                                                                                                                                                                                               |
+| `src/lib/element/events.ts`                      | Event names and the global tag and event type declarations.                                                                                                                                                                                                                              |
+| `src/lib/element/details-transition.ts`          | Animated swap between the dimension key and the selected dataset card.                                                                                                                                                                                                                   |
+| `src/lib/cards/`                                 | Intro, selected-card, hover preview-card, compact-card, shared metadata-list, unpositioned-list, and icon markup.                                                                                                                                                                        |
+| `src/lib/visualization/`                         | SVG frame with time and floor guides, axis labels, blocks with floor shadows and age markers, and each block's list item.                                                                                                                                                                |
+| `src/lib/text/`                                  | Metadata and time formatting, and accessible names and descriptions.                                                                                                                                                                                                                     |
+| `src/lib/geometry/`                              | Framework-independent camera view, projection, category spacing, time mapping, lane layout, and paint order.                                                                                                                                                                             |
+| `src/lib/validation/`                            | Runtime normalization of axes, items, and metadata names; alphabetical organ order; URL safety; and validation issues.                                                                                                                                                                   |
+| `src/lib/content/intro-content.ts`               | Editable introduction content; its types are in `content/types.ts`.                                                                                                                                                                                                                      |
+| `src/lib/styles/mhu-cube.scss`                   | Stylesheet entry. Loads the partials below in cascade order.                                                                                                                                                                                                                             |
+| `src/lib/styles/_host.scss` … `_responsive.scss` | Core styles, split by section: host properties, layout, frame and axis labels, blocks, hover cards, unpositioned list, introduction, details, utilities, and the container-query, reduced-motion, and forced-colors rules. They split one sequence of rules, so they load in that order. |
+| `src/lib/styles/_data.scss`                      | Dimension key and dataset-detail presentation.                                                                                                                                                                                                                                           |
+| `src/lib/styles/_cards.scss`                     | Compact dataset cards, including their touch and mouse interactions.                                                                                                                                                                                                                     |
+| `src/testing/`                                   | Shared spec and harness fixtures and Testing Library queries. Excluded from the build and coverage.                                                                                                                                                                                      |
 
 ## Acknowledgment
 
@@ -66,7 +72,7 @@ export const appConfig: ApplicationConfig = {
 The portal's global [`styles.scss`](../../apps/portal/src/styles.scss) includes the component stylesheet once, before any rules that adjust it:
 
 ```scss
-@use '../../../libs/mhu-cube/src/lib/mhu-cube';
+@use '../../../libs/mhu-cube/src/lib/styles/mhu-cube';
 ```
 
 See [Styles](#styles) for overriding the component from the site's stylesheets.
@@ -352,13 +358,13 @@ The host application owns font loading; the portal loads Roboto. Fonts are not r
 
 ### Intro copy
 
-The introduction copy is managed in `src/lib/mhu-cube-copy.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the sample data, so update both when the data changes.
+The introduction copy is managed in `MHU_CUBE_INTRO_CONTENT` in `src/lib/content/intro-content.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the sample data, so update both when the data changes.
 
 The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The sample dataset titles use a consistent organ, space, and time sequence, like the metadata page titles, so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
 
 The structured copy includes the desktop `heading` and `visualization` copy, a `compactHeading`, and a `compactDescription`. `eyebrow` and `compactDescription` are optional, and when absent they leave no empty element; `eyebrow` currently reads “Explore”.
 
-Tests read the expected text from `src/lib/mhu-cube-copy.ts`, so editing the copy doesn't require test changes. `mhu-cube-copy.spec.ts` checks the copy's rules instead: every string has text and single spacing, the desktop heading has at most 28 characters, and when both descriptions state counts, they match. The browser harness also checks that the desktop heading fits its column.
+Tests read the expected text from `src/lib/content/intro-content.ts`, so editing the copy doesn't require test changes. `content/intro-content.spec.ts` checks the copy's rules instead: every string has text and single spacing, the desktop heading has at most 28 characters, and when both descriptions state counts, they match. The browser harness also checks that the desktop heading fits its column.
 
 The copy is internal configuration, not a public custom-element property. It can be exposed as host-provided copy if reuse requires that flexibility.
 
