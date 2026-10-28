@@ -1,5 +1,33 @@
-import type { PlotLayout, Point, ProjectedBoxGeometry } from '../geometry/types';
-import { createSvgElement, toPathData } from './svg';
+import { svg, type Child } from '../dom/create-element';
+import { toPathData, toPointList } from '../dom/svg-path';
+import type { PlotLayout, ProjectedBoxGeometry } from '../geometry/types';
+
+/** Keeps block outlines one pixel wide however far the block's SVG is stretched. */
+const NON_SCALING_STROKE = { 'vector-effect': 'non-scaling-stroke' } as const;
+
+/**
+ * Creates the root of a block-sized decorative SVG, whose coordinates are plot percentages.
+ * @param className - Class for the SVG.
+ * @param bounds - The block's percentage bounds, used as the view box.
+ * @param children - Shapes to draw, with falsy entries skipped.
+ * @returns An SVG that stretches to fill its block.
+ */
+function createBlockSvg(
+  className: string,
+  bounds: ProjectedBoxGeometry['bounds'],
+  children: readonly Child[],
+): SVGSVGElement {
+  return svg(
+    'svg',
+    {
+      class: className,
+      viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,
+      preserveAspectRatio: 'none',
+      'aria-hidden': 'true',
+    },
+    children,
+  );
+}
 
 /**
  * Draws a block's three visible faces from its projected corners; tall blocks become rectangular prisms.
@@ -7,48 +35,36 @@ import { createSvgElement, toPathData } from './svg';
  * @returns The decorative block SVG.
  */
 export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry): SVGSVGElement {
-  const pointList = (...facePoints: Point[]): string => facePoints.map((point) => `${point.x},${point.y}`).join(' ');
-  const path = (...pathPoints: Point[]): string =>
-    pathPoints.map((point, pointIndex) => `${pointIndex === 0 ? 'M' : 'L'}${point.x} ${point.y}`).join('');
-  const svg = createSvgElement('svg', {
-    class: 'mhu-cube__cube',
-    viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,
-    preserveAspectRatio: 'none',
-    'aria-hidden': 'true',
-  });
-  const topFace = [corners.topFront, corners.topLeft, corners.topBack, corners.topRight];
-  const leftFace = [corners.topFront, corners.topLeft, corners.bottomLeft, corners.bottomFront];
-  const rightFace = [corners.topFront, corners.topRight, corners.bottomRight, corners.bottomFront];
-  svg.append(
-    createSvgElement('polygon', {
+  const { topFront, topLeft, topBack, topRight, bottomFront, bottomLeft, bottomRight } = corners;
+  return createBlockSvg('mhu-cube__cube', bounds, [
+    svg('polygon', {
       class: 'mhu-cube__top',
-      points: pointList(...topFace),
-      'vector-effect': 'non-scaling-stroke',
+      points: toPointList([topFront, topLeft, topBack, topRight]),
+      ...NON_SCALING_STROKE,
     }),
-    createSvgElement('polygon', {
+    svg('polygon', {
       class: 'mhu-cube__left',
-      points: pointList(...leftFace),
-      'vector-effect': 'non-scaling-stroke',
+      points: toPointList([topFront, topLeft, bottomLeft, bottomFront]),
+      ...NON_SCALING_STROKE,
     }),
-    createSvgElement('polygon', {
+    svg('polygon', {
       class: 'mhu-cube__right',
-      points: pointList(...rightFace),
-      'vector-effect': 'non-scaling-stroke',
+      points: toPointList([topFront, topRight, bottomRight, bottomFront]),
+      ...NON_SCALING_STROKE,
     }),
-    createSvgElement('path', {
+    svg('path', {
       class: 'mhu-cube__edge',
-      d: [
-        path(corners.topFront, corners.topBack),
-        path(corners.topLeft, corners.topRight),
-        path(corners.topFront, corners.bottomLeft),
-        path(corners.topLeft, corners.bottomFront),
-        path(corners.topFront, corners.bottomRight),
-        path(corners.topRight, corners.bottomFront),
-      ].join(''),
-      'vector-effect': 'non-scaling-stroke',
+      d: toPathData([
+        [topFront, topBack],
+        [topLeft, topRight],
+        [topFront, bottomLeft],
+        [topLeft, bottomFront],
+        [topFront, bottomRight],
+        [topRight, bottomFront],
+      ]),
+      ...NON_SCALING_STROKE,
     }),
-  );
-  return svg;
+  ]);
 }
 
 /**
@@ -59,42 +75,12 @@ export function createProjectedCube({ corners, bounds }: ProjectedBoxGeometry): 
  * @returns A decorative SVG sharing the block's coordinate space, painted beneath every block.
  */
 export function createBlockShadow({ floor, drops, leaders, bracket, geometry: { bounds } }: PlotLayout): SVGSVGElement {
-  const svg = createSvgElement('svg', {
-    class: 'mhu-cube__shadow',
-    viewBox: `${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}`,
-    preserveAspectRatio: 'none',
-    'aria-hidden': 'true',
-  });
-  svg.append(
-    createSvgElement('polygon', {
-      class: 'mhu-cube__shadow-floor',
-      points: floor.map((point) => `${point.x},${point.y}`).join(' '),
-      'vector-effect': 'non-scaling-stroke',
-    }),
-  );
-  if (drops.length > 0) {
-    svg.append(
-      createSvgElement('path', {
-        class: 'mhu-cube__shadow-drop',
-        d: toPathData(drops),
-        'vector-effect': 'non-scaling-stroke',
-      }),
-    );
-  }
-
-  const marker = createSvgElement('g', { class: 'mhu-cube__time-marker' });
-  marker.append(
-    createSvgElement('path', {
-      class: 'mhu-cube__time-leader',
-      d: toPathData(leaders),
-      'vector-effect': 'non-scaling-stroke',
-    }),
-    createSvgElement('path', {
-      class: 'mhu-cube__time-bracket',
-      d: toPathData([bracket]),
-      'vector-effect': 'non-scaling-stroke',
-    }),
-  );
-  svg.append(marker);
-  return svg;
+  return createBlockSvg('mhu-cube__shadow', bounds, [
+    svg('polygon', { class: 'mhu-cube__shadow-floor', points: toPointList(floor), ...NON_SCALING_STROKE }),
+    drops.length > 0 && svg('path', { class: 'mhu-cube__shadow-drop', d: toPathData(drops), ...NON_SCALING_STROKE }),
+    svg('g', { class: 'mhu-cube__time-marker' }, [
+      svg('path', { class: 'mhu-cube__time-leader', d: toPathData(leaders), ...NON_SCALING_STROKE }),
+      svg('path', { class: 'mhu-cube__time-bracket', d: toPathData([bracket]), ...NON_SCALING_STROKE }),
+    ]),
+  ]);
 }

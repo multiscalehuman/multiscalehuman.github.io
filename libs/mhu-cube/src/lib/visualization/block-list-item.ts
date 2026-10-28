@@ -1,5 +1,6 @@
 import { createCompactCard } from '../cards/compact-card';
 import { createPreviewCard } from '../cards/preview-card';
+import { h } from '../dom/create-element';
 import type { PlotLayout } from '../geometry/types';
 import { getAccessibleItemDescription } from '../text/accessible-text';
 import type { MhuCubeAxes, MhuCubeItem } from '../types';
@@ -41,33 +42,41 @@ export interface BlockListItemOptions {
 export function createBlockListItem(item: MhuCubeItem, options: BlockListItemOptions): HTMLLIElement {
   const { block, descriptionId, selected, axes, compactMetadata, hoverMetadata, configureSelectionButton } = options;
   const status = item.status ?? 'available';
-  const listItem = document.createElement('li');
-  listItem.className = `mhu-cube__item mhu-cube__item--${status}`;
-  if (selected) {
-    listItem.classList.add('mhu-cube__item--selected');
-  }
+  const className = [`mhu-cube__item mhu-cube__item--${status}`, selected && 'mhu-cube__item--selected'];
   if (!block) {
-    listItem.classList.add('mhu-cube__item--unpositioned');
-    listItem.append(createCompactCard(item, axes, compactMetadata));
-    return listItem;
+    return h('li', { className: [...className, 'mhu-cube__item--unpositioned'] }, [
+      createCompactCard(item, axes, compactMetadata),
+    ]);
   }
 
   const { bounds } = block.geometry;
-  listItem.classList.add(`mhu-cube__item--card-${block.cardSide}`);
-  listItem.style.setProperty('--cube-left', `${bounds.left}%`);
-  listItem.style.setProperty('--cube-top', `${bounds.top}%`);
-  listItem.style.setProperty('--cube-width', `${bounds.width}%`);
-  listItem.style.setProperty('--cube-height', `${bounds.height}%`);
-  listItem.style.setProperty('--cube-layer', String(block.layer));
-  listItem.style.setProperty('--card-top', `${block.cardTop}%`);
-  const button = document.createElement('button');
-  button.className = 'mhu-cube__select';
-  const description = document.createElement('span');
-  description.className = 'mhu-cube__sr-only';
-  description.id = descriptionId;
-  description.textContent = getAccessibleItemDescription(item, axes);
-  configureSelectionButton(button, item, description.id);
-  button.append(createBlockShadow(block), createProjectedCube(block.geometry), createPreviewCard(item, hoverMetadata));
-  listItem.append(description, button, createCompactCard(item, axes, compactMetadata));
-  return listItem;
+  const button = h('button', { className: 'mhu-cube__select' }, [
+    createBlockShadow(block),
+    createProjectedCube(block.geometry),
+    createPreviewCard(item, hoverMetadata),
+  ]);
+  configureSelectionButton(button, item, descriptionId);
+  return h(
+    'li',
+    {
+      className: [...className, `mhu-cube__item--card-${block.cardSide}`],
+      style: {
+        '--cube-left': `${bounds.left}%`,
+        '--cube-top': `${bounds.top}%`,
+        '--cube-width': `${bounds.width}%`,
+        '--cube-height': `${bounds.height}%`,
+        '--cube-layer': String(block.layer),
+        '--card-top': `${block.cardTop}%`,
+      },
+    },
+    [
+      h('span', {
+        className: 'mhu-cube__sr-only',
+        attrs: { id: descriptionId },
+        text: getAccessibleItemDescription(item, axes),
+      }),
+      button,
+      createCompactCard(item, axes, compactMetadata),
+    ],
+  );
 }
