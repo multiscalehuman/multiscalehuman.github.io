@@ -9,7 +9,10 @@
 <ang-table-of-contents class="toc" tagline="On this page" [items]="tocItems" />
 
 <div class="sections">
-  <!-- Titles are bound from `sections`, not set as static attributes: a static `title` also shows as a hover tooltip. -->
+  <!--
+    Titles are bound from `sections`, not set as static attributes: a static `title` also shows as a hover tooltip.
+    https://github.com/cns-iu/AtlasNG/issues/215
+  -->
   <ang-content-section level="2" id="overview" underlined [title]="sections.overview.tagline">
     <div class="text">
       <ang-content-paragraph>
