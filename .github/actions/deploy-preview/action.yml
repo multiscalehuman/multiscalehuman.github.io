@@ -54,7 +54,9 @@ runs:
       id: netlify
       if: steps.check-build.outputs.exists == 'true'
       shell: bash
+      # With --json the CLI reports failures on stdout, so print the captured output before failing the step.
       run: |
+        STATUS=0
         RESPONSE=$(npx -y netlify-cli@26.0.0 deploy \
           --dir="$DIST_DIR" \
           ${NETLIFY_FILTER:+--filter="$NETLIFY_FILTER"} \
@@ -62,8 +64,12 @@ runs:
           --no-build \
           --json \
           --auth="$NETLIFY_AUTH_TOKEN" \
-          --site="$NETLIFY_SITE_ID")
+          --site="$NETLIFY_SITE_ID") || STATUS=$?
         echo "$RESPONSE"
+        if [[ $STATUS -ne 0 ]]; then
+          echo "::error title=Netlify deploy failed::netlify deploy exited with code $STATUS; see its output above."
+          exit "$STATUS"
+        fi
         echo "url=$(echo "$RESPONSE" | jq -r '.deploy_url')" >> "$GITHUB_OUTPUT"
       env:
         DIST_DIR: ${{ inputs.dist-dir }}
