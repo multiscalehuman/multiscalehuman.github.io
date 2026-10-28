@@ -1,0 +1,110 @@
+// Material 3 type scale. Text styles read the host's Angular Material system typography tokens and fall back to the
+// Material 3 defaults below when the host defines no Material theme.
+@use 'sass:map';
+@use 'tokens' as t;
+
+/// The fallback font stack for every role. The host application owns font loading.
+$_font: (Roboto, Arial, sans-serif);
+
+/// Fallbacks for each type scale role in use, keyed by the Material token suffix. The headline weights are the
+/// approved 600 rather than the Material 3 default.
+$_roles: (
+  body-large: (
+    size: 1rem,
+    weight: 400,
+    line-height: 1.5rem,
+    tracking: 0.03125rem,
+  ),
+  body-medium: (
+    size: 0.875rem,
+    weight: 400,
+    line-height: 1.25rem,
+    tracking: 0.015625rem,
+  ),
+  body-small: (
+    size: 0.75rem,
+    weight: 400,
+    line-height: 1rem,
+    tracking: 0.025rem,
+  ),
+  label-large: (
+    size: 0.875rem,
+    weight: 500,
+    line-height: 1.25rem,
+    tracking: 0.00625rem,
+  ),
+  label-medium: (
+    size: 0.75rem,
+    weight: 500,
+    line-height: 1rem,
+    tracking: 0.03125rem,
+  ),
+  label-small: (
+    size: 0.6875rem,
+    weight: 500,
+    line-height: 1rem,
+    tracking: 0.03125rem,
+  ),
+  title-large: (
+    size: 1.375rem,
+    weight: 400,
+    line-height: 1.75rem,
+    tracking: 0,
+  ),
+  title-medium: (
+    size: 1rem,
+    weight: 500,
+    line-height: 1.5rem,
+    tracking: 0.009375rem,
+  ),
+  title-small: (
+    size: 0.875rem,
+    weight: 500,
+    line-height: 1.25rem,
+    tracking: 0.00625rem,
+  ),
+  headline-large: (
+    size: 2rem,
+    weight: 600,
+    line-height: 2.5rem,
+    tracking: 0,
+  ),
+  headline-medium: (
+    size: 1.75rem,
+    weight: 600,
+    line-height: 2.25rem,
+    tracking: 0,
+  ),
+);
+
+/// Reads one of a role's typography tokens with its fallback.
+/// @param {String} $role - The type scale role, such as `body-large`.
+/// @param {String} $token - The token suffix: `font`, `size`, `weight`, `line-height`, or `tracking`.
+/// @return {String} The `var()` expression for the token.
+/// @throws When the role has no fallbacks in `$_roles`.
+@function typescale-slot($role, $token) {
+  $fallbacks: map.get($_roles, $role);
+  @if $fallbacks == null {
+    @error 'Unknown type scale role `#{$role}`. Add its fallbacks to $_roles in _typography.scss.';
+  }
+  @if $token == font {
+    @return t.sys-slot('#{$role}-font', $_font);
+  }
+  @return t.sys-slot('#{$role}-#{$token}', map.get($fallbacks, $token));
+}
+
+/// Sets font-family, font-size, font-weight, line-height, and letter-spacing, in that order, from a type scale role.
+/// @param {String} $role - The type scale role, such as `body-large` or `label-medium`.
+/// @param {Number | Boolean} $weight [null] - A literal weight, such as an approved 600, that replaces the role's
+///   weight token; `null` uses the token, and `false` leaves font-weight out so the inherited weight applies.
+@mixin typescale($role, $weight: null) {
+  font-family: typescale-slot($role, font);
+  font-size: typescale-slot($role, size);
+  @if $weight == null {
+    font-weight: typescale-slot($role, weight);
+  } @else if $weight != false {
+    font-weight: $weight;
+  }
+  line-height: typescale-slot($role, line-height);
+  letter-spacing: typescale-slot($role, tracking);
+}

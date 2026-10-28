@@ -1,3 +1,6 @@
+@use 'tokens' as t;
+@use 'typography' as *;
+
 .mhu-cube__intro {
   display: flex;
   flex-direction: column;
@@ -7,12 +10,8 @@
 /* The eyebrow style, a short uppercase label above a heading. Each eyebrow's own class sets only its spacing. */
 .mhu-cube__eyebrow {
   margin: 0;
-  color: var(--_primary);
-  font-family: var(--mat-sys-label-medium-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-label-medium-size, 0.75rem);
-  font-weight: 600;
-  line-height: var(--mat-sys-label-medium-line-height, 1rem);
-  letter-spacing: var(--mat-sys-label-medium-tracking, 0.03125rem);
+  color: t.slot(primary);
+  @include typescale(label-medium, 600);
   text-transform: uppercase;
 }
 .mhu-cube__intro-eyebrow,
@@ -21,11 +20,7 @@
 }
 .mhu-cube__intro-heading {
   margin: 0;
-  font-family: var(--mat-sys-headline-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-headline-large-size, 2rem);
-  font-weight: var(--mat-sys-headline-large-weight, 600);
-  line-height: var(--mat-sys-headline-large-line-height, 2.5rem);
-  letter-spacing: var(--mat-sys-headline-large-tracking, 0);
+  @include typescale(headline-large);
   white-space: nowrap;
 }
 .mhu-cube__intro-heading-compact {
@@ -33,20 +28,12 @@
 }
 .mhu-cube__details-heading {
   margin: 0;
-  font-family: var(--mat-sys-title-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-title-large-size, 1.375rem);
-  font-weight: 500;
-  line-height: var(--mat-sys-title-large-line-height, 1.75rem);
-  letter-spacing: var(--mat-sys-title-large-tracking, 0);
+  @include typescale(title-large, 500);
 }
 .mhu-cube__details-unavailable {
   margin: 1rem 0 0;
-  color: var(--_on-surface-variant);
-  font-family: var(--mat-sys-body-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-body-large-size, 1rem);
-  font-weight: var(--mat-sys-body-large-weight, 400);
-  line-height: var(--mat-sys-body-large-line-height, 1.5rem);
-  letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
 }
 .mhu-cube__intro-visualization {
   display: flex;
@@ -54,33 +41,26 @@
   flex-direction: column;
   min-height: 0;
   margin: 0.75rem 0 0;
-  color: var(--_on-surface-variant);
-  font-family: var(--mat-sys-body-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-body-large-size, 1rem);
-  font-weight: var(--mat-sys-body-large-weight, 400);
-  line-height: var(--mat-sys-body-large-line-height, 1.5rem);
-  letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
 }
 .mhu-cube__intro-summary,
 .mhu-cube__intro-attribution {
   margin: 0;
 }
+/// AtlasNG's content paragraph multipliers, which scale body-large; the line height follows the size by default.
+$_paragraph-size: t.custom-slot(ang-content-paragraph-size-multiplier, 1.0625);
+$_paragraph-line-height: t.custom-slot(ang-content-paragraph-line-height-multiplier, $_paragraph-size);
+
 /* The lead paragraph matches AtlasNG's content paragraph: body-large scaled by its multiplier, 17/16 by default. */
 .mhu-cube__intro-summary {
-  font-size: calc(var(--ang-content-paragraph-size-multiplier, 1.0625) * var(--mat-sys-body-large-size, 1rem));
-  line-height: calc(
-    var(--ang-content-paragraph-line-height-multiplier, var(--ang-content-paragraph-size-multiplier, 1.0625)) *
-      var(--mat-sys-body-large-line-height, 1.5rem)
-  );
+  font-size: calc($_paragraph-size * typescale-slot(body-large, size));
+  line-height: calc($_paragraph-line-height * typescale-slot(body-large, line-height));
 }
 /* The compact lead paragraph replaces the desktop guidance at 64rem and below. */
 .mhu-cube__intro-summary-compact {
   display: none;
   margin: 0.75rem 0 0;
-  color: var(--_on-surface-variant);
-  font-family: var(--mat-sys-body-large-font, Roboto, Arial, sans-serif);
-  font-size: var(--mat-sys-body-large-size, 1rem);
-  font-weight: var(--mat-sys-body-large-weight, 400);
-  line-height: var(--mat-sys-body-large-line-height, 1.5rem);
-  letter-spacing: var(--mat-sys-body-large-tracking, 0.03125rem);
+  color: t.slot(on-surface-variant);
+  @include typescale(body-large);
 }

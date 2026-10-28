@@ -49,6 +49,8 @@ libs/mhu-cube/
 | `src/lib/styles/_host.scss` … `_responsive.scss` | Core styles, split by section: host properties, layout, frame and axis labels, blocks, hover cards, unpositioned list, introduction, details, utilities, and the container-query, reduced-motion, and forced-colors rules. They split one sequence of rules, so they load in that order. |
 | `src/lib/styles/_data.scss`                      | Dimension key and dataset-detail presentation.                                                                                                                                                                                                                                           |
 | `src/lib/styles/_cards.scss`                     | Compact dataset cards, including their touch and mouse interactions.                                                                                                                                                                                                                     |
+| `src/lib/styles/_tokens.scss`                    | Helpers that name and read the custom properties: public theme hooks, private slots, and Material system tokens.                                                                                                                                                                         |
+| `src/lib/styles/_typography.scss`                | The `typescale()` mixin and the Material 3 fallbacks for each type scale role in use.                                                                                                                                                                                                    |
 | `src/testing/`                                   | Shared spec and harness fixtures and Testing Library queries. Excluded from the build and coverage.                                                                                                                                                                                      |
 
 ## Acknowledgment
@@ -321,7 +323,7 @@ Axis errors use `axes.invalid`, `axis.invalid`, `axis.label.invalid`, `axis.valu
 
 ## Theming
 
-The component first uses its public CSS custom properties, then matching Angular Material system tokens, then built-in fallbacks:
+The component first uses its public CSS custom properties, then matching Angular Material system tokens, then built-in fallbacks. The equivalent defaults are:
 
 ```css
 mhu-cube {
@@ -340,6 +342,8 @@ mhu-cube {
 }
 ```
 
+Each public property feeds a private slot of the same name, such as `--_surface`, that the component's rules read. The slots are defined from the `$colors` map in `src/lib/styles/_host.scss`, so a new public color property is one map entry: `name: sys-token fallback`.
+
 ### Styles
 
 The element renders into the light DOM rather than a shadow root, so its markup is part of the page and the site's stylesheets apply to it:
@@ -349,11 +353,18 @@ The element renders into the light DOM rather than a shadow root, so its markup 
 - The `mhu-cube__*` classes follow BEM naming. They are stable but are not a versioned API, so keep overrides few and deliberate.
 - Every component rule is scoped to `mhu-cube` or a `mhu-cube__*` class, so the stylesheet never styles the rest of the page. In the other direction, the site's global element rules, such as for `button`, `a`, or `h2`, also reach the component wherever it doesn't set that property itself.
 
+Inside the component's own SCSS, custom properties go through the helpers in `_tokens.scss` rather than raw `var(--…)` reads, and text styles use the `typescale()` mixin from `_typography.scss`:
+
+- `t.slot(name)`, `t.public-slot(name)`, and `t.sys-slot(token)` read a private slot (`--_name`), a public hook (`--mhu-cube-name`), or a Material system token (`--mat-sys-token`), each with an optional fallback. `t.custom-slot(name)` reads any other property, such as the `--cube-left` family the element sets inline or AtlasNG's `--ang-*` properties.
+- `@include t.set(name, value)` defines a private slot, and `t.themeable-colors($colors)` defines the themeable color slots from the map in `_host.scss`.
+- `@include typescale(role)` sets font-family, font-size, font-weight, line-height, and letter-spacing from a Material type scale role, with its Material 3 fallbacks. `typescale(role, 600)` replaces the weight token with an approved literal weight, and `typescale(role, false)` leaves the weight out. `typescale-slot(role, token)` reads a single token, such as `size`, for rules that only set part of a role.
+- `styles/styles.spec.ts` fails if any other partial contains `var(--`, `--mhu-cube-`, or `--mat-sys-`, and `styles/tokens.spec.ts` checks the helpers' output.
+
 The component intentionally has no quantitative color scale. Block height encodes the dataset's time range; block fill communicates interaction and availability states only, so consuming applications should not imply a data value from its intensity.
 
 ### Typography
 
-The component consumes Angular Material system typography properties when the host defines them and uses matching Material 3 fallbacks otherwise. Every eyebrow, such as “Explore” above the heading and “Selected dataset” on the details card, uses one eyebrow style, `.mhu-cube__eyebrow`: `label-medium` with the approved 600 weight, uppercase, in the primary color. The desktop introduction uses `headline-large` for the heading, `body-large` for the dimension key, and `body-medium` for the attribution. Its lead paragraph matches AtlasNG's content paragraph (`ang-content-paragraph`): `body-large` scaled by `--ang-content-paragraph-size-multiplier` and `--ang-content-paragraph-line-height-multiplier`, 17/16 by default, so 17px on a 25.5px line with the Multiscale Human theme. The compact introduction uses `headline-medium` for the heading and `body-large` for its description. Introduction headings use their role-specific weight tokens with an approved 600-weight fallback, while dimension-key headers, eyebrows, and axis titles use the approved 600-weight treatment. Other roles defer to their M3 weight tokens, while the selected-dataset heading and stat terms retain their approved 500-weight treatment. Compact card titles, facts, and metadata labels use the card design's 600 weight. The desktop intro and selected-card column does not create an independent scroll region.
+The component consumes Angular Material system typography properties when the host defines them and uses matching Material 3 fallbacks otherwise. Every eyebrow, such as “Explore” above the heading and “Selected dataset” on the details card, uses one eyebrow style, `.mhu-cube__eyebrow`: `typescale(label-medium, 600)`, so `label-medium` with the approved 600 weight, uppercase, in the primary color. The desktop introduction uses `headline-large` for the heading, `body-large` for the dimension key, and `body-medium` for the attribution. Its lead paragraph matches AtlasNG's content paragraph (`ang-content-paragraph`): `body-large` scaled by `--ang-content-paragraph-size-multiplier` and `--ang-content-paragraph-line-height-multiplier`, 17/16 by default, so 17px on a 25.5px line with the Multiscale Human theme. The compact introduction uses `headline-medium` for the heading and `body-large` for its description. Introduction headings use their role-specific weight tokens with an approved 600-weight fallback, while dimension-key headers, eyebrows, and axis titles use the approved 600-weight treatment. Other roles defer to their M3 weight tokens, while the selected-dataset heading and stat terms retain their approved 500-weight treatment. Compact card titles, facts, and metadata labels use the card design's 600 weight. The desktop intro and selected-card column does not create an independent scroll region.
 
 The host application owns font loading; the portal loads Roboto. Fonts are not runtime dependencies of the web component.
 
