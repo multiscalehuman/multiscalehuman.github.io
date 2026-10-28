@@ -5,7 +5,7 @@ import {
   createPreviewCard,
   getAccessibleDatasetName,
   updateDetails,
-} from './mhu-cube-cards';
+} from '../cards/compact-card';
 import {
   createAccessibleAxisSummary,
   createAxisLabels,
@@ -13,16 +13,16 @@ import {
   createCoordinateFrame,
   createProjectedCube,
   getAccessibleItemDescription,
-} from './mhu-cube-visualization';
+} from '../visualization/blocks';
 import { DetailsTransition } from './details-transition';
-import { DRAWING_AREA_RATIO, layoutPlot, sortItemsForDisplay, type PlotLayout } from './projection';
+import { DRAWING_AREA_RATIO, layoutPlot, sortItemsForDisplay, type PlotLayout } from '../geometry/projection';
 import type {
   MhuCubeAxes,
   MhuCubeItem,
   MhuCubeSelectionDetail,
   MhuCubeValidationDetail,
   MhuCubeValidationIssue,
-} from './types';
+} from '../types';
 import {
   EMPTY_AXES,
   canPlotAxes,
@@ -30,7 +30,7 @@ import {
   validateCompactMetadata,
   validateHoverMetadata,
   validateItems,
-} from './validation';
+} from '../validation/items';
 
 export type {
   MhuCubeAxes,
@@ -45,7 +45,7 @@ export type {
   MhuCubeValidationDetail,
   MhuCubeValidationIssue,
   MhuCubeValidationSeverity,
-} from './types';
+} from '../types';
 
 export const MHU_CUBE_SELECTION_EVENT = 'mhu-cube-selection-change';
 export const MHU_CUBE_VALIDATION_EVENT = 'mhu-cube-validation';

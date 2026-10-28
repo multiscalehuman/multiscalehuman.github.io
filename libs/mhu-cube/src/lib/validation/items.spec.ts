@@ -1,4 +1,4 @@
-import type { MhuCubePosition } from './types';
+import type { MhuCubePosition } from '../types';
 import {
   canPlotAxes,
   isSafeMetadataHref,
@@ -7,7 +7,7 @@ import {
   validateHoverMetadata,
   validateItems,
   type ValidationResult,
-} from './validation';
+} from './items';
 
 const validAxes = {
   time: { label: 'Time', unit: 'years', min: 0, max: 100 },

@@ -1,4 +1,4 @@
-import { MHU_CUBE_INTRO_COPY } from './mhu-cube-copy';
+import { MHU_CUBE_INTRO_COPY } from './intro-content';
 
 // These tests check the rules copy must follow, not its wording, so editing the copy doesn't require test changes.
 

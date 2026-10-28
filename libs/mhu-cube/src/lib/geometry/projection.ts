@@ -1,4 +1,4 @@
-import type { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis, MhuCubeTimeRange } from './types';
+import type { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis, MhuCubeTimeRange } from '../types';
 
 export interface Point {
   x: number;

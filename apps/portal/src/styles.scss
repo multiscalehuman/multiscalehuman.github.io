@@ -4,7 +4,7 @@
 @use './styles/fonts' as fonts;
 @use './styles/theme' as theme;
 // <mhu-cube> renders into the light DOM, so its styles are global. Rules after it can restyle its parts.
-@use '../../../libs/mhu-cube/src/lib/mhu-cube';
+@use '../../../libs/mhu-cube/src/lib/styles/mhu-cube';
 
 :root {
   color-scheme: light dark;

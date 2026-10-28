@@ -8,8 +8,8 @@ import {
   type PlotLayout,
   type Point,
   type ProjectedBoxGeometry,
-} from './projection';
-import type { MhuCubeAxes, MhuCubeItem, MhuCubeMetadataValue, MhuCubeTimeAxis, MhuCubeTimeRange } from './types';
+} from '../geometry/projection';
+import type { MhuCubeAxes, MhuCubeItem, MhuCubeMetadataValue, MhuCubeTimeAxis, MhuCubeTimeRange } from '../types';
 
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 const NUMBER_FORMAT = new Intl.NumberFormat('en', { maximumFractionDigits: 2 });

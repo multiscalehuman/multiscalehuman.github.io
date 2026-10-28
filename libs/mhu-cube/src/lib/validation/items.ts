@@ -7,7 +7,7 @@ import type {
   MhuCubeTimeAxis,
   MhuCubeTimeRange,
   MhuCubeValidationIssue,
-} from './types';
+} from '../types';
 
 export const EMPTY_AXES: MhuCubeAxes = {
   time: { label: 'Time', min: 0, max: 0, ticks: [] },

@@ -1,4 +1,4 @@
-export { MHU_CUBE_SELECTION_EVENT, MHU_CUBE_VALIDATION_EVENT, MhuCube, defineMhuCube } from './lib/mhu-cube';
+export { MHU_CUBE_SELECTION_EVENT, MHU_CUBE_VALIDATION_EVENT, MhuCube, defineMhuCube } from './lib/element/mhu-cube';
 
 export {
   type MhuCubeAxes,
@@ -22,4 +22,4 @@ export {
   validateHoverMetadata,
   validateItems,
   type ValidationResult,
-} from './lib/validation';
+} from './lib/validation/items';

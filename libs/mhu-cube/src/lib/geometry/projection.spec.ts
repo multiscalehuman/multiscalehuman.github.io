@@ -16,7 +16,7 @@ import {
   projectPoint,
   sortItemsForDisplay,
 } from './projection';
-import { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis } from './types';
+import { MhuCubeAxes, MhuCubeItem, MhuCubeTimeAxis } from '../types';
 
 const timeAxis: MhuCubeTimeAxis = { label: 'Time', unit: 'years', min: 0, max: 100, ticks: [0, 20, 40, 60, 80, 100] };
 const axes: MhuCubeAxes = {

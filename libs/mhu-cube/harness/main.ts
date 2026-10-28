@@ -7,9 +7,9 @@ import {
   type MhuCubeItem,
 } from '../src/index';
 // Copy assertions read the configured copy, so editing it needs no test changes.
-import { MHU_CUBE_INTRO_COPY } from '../src/lib/mhu-cube-copy';
+import { MHU_CUBE_INTRO_COPY } from '../src/lib/content/intro-content';
 // The element renders into the light DOM, so the page includes its styles.
-import '../src/lib/mhu-cube.scss';
+import '../src/lib/styles/mhu-cube.scss';
 
 const axes: MhuCubeAxes = {
   time: { label: 'Time', unit: 'years', min: 0, max: 100 },

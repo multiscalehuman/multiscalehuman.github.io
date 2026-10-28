@@ -11,16 +11,16 @@ const read = (file: string) => readFileSync(join(libDir, file), 'utf8');
 const normalize = (stylesheet: string) =>
   stylesheet.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/ \)/g, ')').replace(/'/g, '"');
 
-const rawStyles = read('_mhu-cube-core.scss');
-const rawDataStyles = read('_mhu-cube-data.scss');
-const rawCardStyles = read('_mhu-cube-cards.scss');
+const rawStyles = read('styles/_blocks.scss');
+const rawDataStyles = read('styles/_data.scss');
+const rawCardStyles = read('styles/_cards.scss');
 const styles = normalize(rawStyles);
 const dataStyles = normalize(rawDataStyles);
 const cardStyles = normalize(rawCardStyles);
 
 describe('mhu-cube styles', () => {
   it('the SCSS entry compiles the partials in cascade order', () => {
-    const { css } = compile(join(libDir, 'mhu-cube.scss'));
+    const { css } = compile(join(libDir, 'styles/mhu-cube.scss'));
     const order = ['.mhu-cube__plot {', '.mhu-cube__intro-attribution {', '.mhu-cube__compact-card {'].map((selector) =>
       css.indexOf(selector),
     );
@@ -138,7 +138,7 @@ describe('mhu-cube styles', () => {
   });
 
   it("axis labels are pushed off the frame along each edge's outward normal", () => {
-    const projection = read('projection.ts');
+    const projection = read('geometry/projection.ts');
 
     expect(styles).toMatch(
       /transform: translate\(\s*calc\(var\(--_align-x\) \+ var\(--axis-normal-x, 0\) \* var\(--_offset\)\),\s*calc\(var\(--_align-y\) \+ var\(--axis-normal-y, 0\) \* var\(--_offset\)\)\s*\);/,
@@ -146,7 +146,7 @@ describe('mhu-cube styles', () => {
     // Value alignment and floor-title offsets are set inline from each edge's normal, so CSS only supplies defaults.
     expect(styles).toMatch(/--_align-x: -50%;\s*--_align-y: -50%;\s*--_offset: 0\.5rem;/);
     // Normals are computed for the camera's drawing-area shape, so CSS must size the plot from the same ratio.
-    const element = read('mhu-cube.ts');
+    const element = read('element/mhu-cube.ts');
     expect(styles).toMatch(
       /\.mhu-cube__plot \{[^}]*\/ var\(--_area-ratio, 1\) \+ var\(--_gutter-x\)[^}]*\* var\(--_area-ratio, 1\) \+ var\(--_gutter-y\)/,
     );

@@ -1,7 +1,7 @@
-import type { MhuCubeAxes, MhuCubeItem } from './types';
-import { MHU_CUBE_INTRO_COPY } from './mhu-cube-copy';
-import { formatMetadataValue, formatTimeRange, getMetadataEntries } from './mhu-cube-visualization';
-import { canPlotAxes } from './validation';
+import type { MhuCubeAxes, MhuCubeItem } from '../types';
+import { MHU_CUBE_INTRO_COPY } from '../content/intro-content';
+import { formatMetadataValue, formatTimeRange, getMetadataEntries } from '../visualization/blocks';
+import { canPlotAxes } from '../validation/items';
 
 type MetadataEntry = ReturnType<typeof getMetadataEntries>[number];
 

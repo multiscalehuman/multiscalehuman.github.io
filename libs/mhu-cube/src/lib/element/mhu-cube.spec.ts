@@ -10,7 +10,7 @@ import {
   type MhuCubeSelectionDetail,
   type MhuCubeValidationDetail,
 } from './mhu-cube';
-import { MHU_CUBE_INTRO_COPY } from './mhu-cube-copy';
+import { MHU_CUBE_INTRO_COPY } from '../content/intro-content';
 
 const axes: MhuCubeAxes = {
   time: { label: 'Time', unit: 'years', min: 0, max: 100 },
