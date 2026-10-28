@@ -1,7 +1,7 @@
-import { ApplicationConfig, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, isDevMode, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-// import { provideAnalytics, withGlobalErrorHandler } from '@atlasng/analytics';
-// import { withDefaultBackend } from '@atlasng/analytics/default-backend';
+import { provideAnalytics, withGlobalErrorHandler } from '@atlasng/analytics';
+import { withDefaultBackend } from '@atlasng/analytics/default-backend';
 import { provideLinkHandler, withRouterHandler } from '@atlasng/common';
 import { provideSocialMediaButtons } from '@atlasng/design-system/buttons/social-media-button';
 import { defineMhuCube } from '@mhu/mhu-cube';
@@ -22,12 +22,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideLinkHandler(withRouterHandler()),
     provideSocialMediaButtons(SOCIAL_MEDIA_DEFS),
-    // provideAnalytics(
-    //   { appName: 'multiscalehuman-portal' },
-    //   withGlobalErrorHandler(),
-    //   withDefaultBackend({
-    //     endpoint: 'https://api.atlasng.dev/t',
-    //   }),
-    // ),
+    provideAnalytics(
+      { appName: 'multiscalehuman' },
+      withGlobalErrorHandler(),
+      withDefaultBackend({
+        endpoint: isDevMode() ? 'https://cns.iu.edu/tr-mhu-dev' : 'https://cns.iu.edu/tr-mhu',
+      }),
+    ),
   ],
 };
