@@ -15,7 +15,10 @@ const CARD_ANCHOR_MAX = 88;
  * @param time - The dataset's exact normalized time span.
  * @returns Footprint, drop lines, level lines, and time-axis bracket in plot percentages.
  */
-function getBlockGuides(box: Box, time: { start: number; end: number }) {
+function getBlockGuides(
+  box: Box,
+  time: { start: number; end: number },
+): Pick<PlotLayout, 'floor' | 'drops' | 'leaders' | 'bracket'> {
   const { front, left, right, back } = getNearCorners(box);
   const floor = [front, left, back, right].map(([x, z]) => projectPoint(x, 0, z));
   // The three visible bottom corners drop to the floor, outlining where the block would rest.
@@ -44,7 +47,7 @@ function getBlockGuides(box: Box, time: { start: number; end: number }) {
  * @param axes - Validated, plottable axes.
  * @returns Layout keyed by dataset ID.
  */
-export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
+export function layoutPlot(items: readonly MhuCubeItem[], axes: MhuCubeAxes): Map<string, PlotLayout> {
   const axisLayout = getAxisLayout(axes);
   const { halfSize } = axisLayout;
   const { near } = VIEW;

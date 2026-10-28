@@ -11,7 +11,7 @@ export type MetadataEntry = [string, Exclude<MhuCubeMetadataValue, null | undefi
  * @param item - Dataset whose metadata should be displayed.
  * @returns Label-value entries in their provided order.
  */
-export function getMetadataEntries(item: MhuCubeItem) {
+export function getMetadataEntries(item: MhuCubeItem): MetadataEntry[] {
   return Object.entries(item.metadata ?? {}).filter(
     (entry): entry is MetadataEntry =>
       entry[1] !== null && entry[1] !== undefined && !(Array.isArray(entry[1]) && entry[1].length === 0),
@@ -23,7 +23,7 @@ export function getMetadataEntries(item: MhuCubeItem) {
  * @param value - Displayable metadata value.
  * @returns Text such as "Male" or "Peter W. Zandstra, Fabio M.V. Rossi".
  */
-export function formatMetadataValue(value: Exclude<MhuCubeMetadataValue, null | undefined>) {
+export function formatMetadataValue(value: Exclude<MhuCubeMetadataValue, null | undefined>): string {
   return Array.isArray(value) ? value.join(', ') : String(value);
 }
 
@@ -33,7 +33,7 @@ export function formatMetadataValue(value: Exclude<MhuCubeMetadataValue, null | 
  * @param axis - Time axis supplying the unit.
  * @returns The range's own label, or its formatted values such as "45 years" or "7–47 years".
  */
-export function formatTimeRange(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis) {
+export function formatTimeRange(range: MhuCubeTimeRange, axis: MhuCubeTimeAxis): string {
   if (range.label) {
     return range.label;
   }

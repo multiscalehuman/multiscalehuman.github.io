@@ -13,7 +13,7 @@ export function createMetadataList(
   entries: MetadataEntry[],
   className = 'mhu-cube__details-metadata',
   listsOnSeparateLines = false,
-) {
+): HTMLDListElement | null {
   if (entries.length === 0) {
     return null;
   }
@@ -40,7 +40,7 @@ export function createMetadataList(
  * Explains that a dataset has no metadata destination.
  * @returns A noninteractive availability message.
  */
-export function createUnavailableMessage() {
+export function createUnavailableMessage(): HTMLParagraphElement {
   const unavailable = document.createElement('p');
   unavailable.className = 'mhu-cube__details-unavailable';
   unavailable.textContent = 'Metadata is not currently available for this dataset.';
@@ -53,7 +53,10 @@ export function createUnavailableMessage() {
  * @param actionClassName - CSS class applied when an actionable link is available.
  * @returns A direct link or a noninteractive availability message.
  */
-export function createDestination(item: MhuCubeItem, actionClassName: string) {
+export function createDestination(
+  item: MhuCubeItem,
+  actionClassName: string,
+): HTMLAnchorElement | HTMLParagraphElement {
   const status = item.status ?? 'available';
   if (status === 'unavailable' || !item.href) {
     return createUnavailableMessage();
@@ -76,7 +79,7 @@ export function createDestination(item: MhuCubeItem, actionClassName: string) {
  * @param names - Metadata names, matched ignoring case and surrounding spaces.
  * @returns The matching entries.
  */
-export function getNamedMetadataEntries(item: MhuCubeItem, names: string[]) {
+export function getNamedMetadataEntries(item: MhuCubeItem, names: string[]): MetadataEntry[] {
   const entries = getMetadataEntries(item);
   return names.flatMap((name) => entries.filter(([key]) => key.trim().toLowerCase() === name.toLowerCase()));
 }

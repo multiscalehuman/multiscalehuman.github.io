@@ -8,7 +8,7 @@ export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
  * @param segments - Polylines to draw, each a list of projected points.
  * @returns Path data with one move command per polyline.
  */
-export function toPathData(segments: Point[][]) {
+export function toPathData(segments: Point[][]): string {
   return segments
     .filter((points) => points.length > 1)
     .map((points) => points.map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`).join(''))
@@ -21,7 +21,10 @@ export function toPathData(segments: Point[][]) {
  * @param attributes - Attribute names and values to set, in order.
  * @returns The new, unattached SVG element.
  */
-export function createSvgElement<K extends keyof SVGElementTagNameMap>(tagName: K, attributes: Record<string, string>) {
+export function createSvgElement<K extends keyof SVGElementTagNameMap>(
+  tagName: K,
+  attributes: Record<string, string>,
+): SVGElementTagNameMap[K] {
   const element = document.createElementNS(SVG_NAMESPACE, tagName);
   Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
   return element;

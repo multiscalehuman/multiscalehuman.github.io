@@ -1,5 +1,5 @@
 import type { MhuCubeAxes, MhuCubeTimeAxis } from '../types';
-import type { AxisLayout, Point } from './types';
+import type { AxisEdge, AxisLayout, Point } from './types';
 import { CUBE_EDGES, VIEW, interpolatePlane, type FloorCorner } from './view';
 
 // Share of a categorical cell covered by a block's footprint.
@@ -13,7 +13,7 @@ const SPACE_EDGE_MARGIN = 0.07;
  * @param count - Total categories on the axis.
  * @returns A normalized position between zero and one.
  */
-export function getCategoryCenter(value: number, count: number) {
+export function getCategoryCenter(value: number, count: number): number {
   return count > 0 ? (value + 0.5) / count : 0.5;
 }
 
@@ -24,7 +24,7 @@ export function getCategoryCenter(value: number, count: number) {
  * @param halfSize - Half of a block's footprint, used to keep blocks inside the frame.
  * @returns A normalized position between zero and one; never closer together than equal-width cells.
  */
-export function getSpreadCenter(value: number, count: number, halfSize: number) {
+export function getSpreadCenter(value: number, count: number, halfSize: number): number {
   if (count <= 1) {
     return 0.5;
   }
@@ -55,7 +55,7 @@ export function projectPoint(x: number, y: number, z: number): Point {
  * @param axis - Validated time axis with a positive span.
  * @returns A normalized height between zero and one for in-range values.
  */
-export function getTimeCoordinate(value: number, axis: MhuCubeTimeAxis) {
+export function getTimeCoordinate(value: number, axis: MhuCubeTimeAxis): number {
   return (value - axis.min) / (axis.max - axis.min);
 }
 
@@ -65,7 +65,7 @@ export function getTimeCoordinate(value: number, axis: MhuCubeTimeAxis) {
  * @param organCount - Number of organ categories.
  * @returns Half of a full-width block's normalized footprint.
  */
-export function getFootprintHalfSize(spaceCount: number, organCount: number) {
+export function getFootprintHalfSize(spaceCount: number, organCount: number): number {
   return (0.5 / Math.max(spaceCount, organCount, 1)) * FOOTPRINT_FILL;
 }
 
@@ -128,9 +128,9 @@ export function getOutwardNormal(start: Point, end: Point): Point {
  * Points along each edge are linear in that axis's normalized coordinate.
  * @returns For each axis, its edge's start and end points in plot percentages and its outward unit normal.
  */
-export function getAxisEdges() {
+export function getAxisEdges(): Record<keyof MhuCubeAxes, AxisEdge> {
   const { near, ticks } = VIEW;
-  const edge = (start: [number, number, number], end: [number, number, number]) => {
+  const edge = (start: [number, number, number], end: [number, number, number]): AxisEdge => {
     const from = projectPoint(...start);
     const to = projectPoint(...end);
     return { start: from, end: to, normal: getOutwardNormal(from, to) };

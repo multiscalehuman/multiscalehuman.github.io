@@ -8,7 +8,7 @@ import { createDestination, createMetadataList } from './metadata-list';
  * @param detailsId - Stable ID used by dataset controls to reference the panel.
  * @returns An empty live region populated after a dataset is selected.
  */
-export function createDetails(detailsId: string) {
+export function createDetails(detailsId: string): HTMLDivElement {
   const details = document.createElement('div');
   details.className = 'mhu-cube__details';
   details.id = detailsId;
@@ -30,7 +30,7 @@ export function updateDetails(
   item: MhuCubeItem | null,
   headingId: string,
   closeDetails: () => void,
-) {
+): HTMLElement {
   details.replaceChildren();
   if (!item) {
     return details;

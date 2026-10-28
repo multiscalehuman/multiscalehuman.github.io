@@ -6,7 +6,7 @@ import { NUMBER_FORMAT, formatMetadataValue, formatTimeRange, getMetadataEntries
  * @param item - Dataset whose label and metadata should be described.
  * @returns A descriptive dataset name suitable for controls and links.
  */
-export function getAccessibleDatasetName(item: MhuCubeItem) {
+export function getAccessibleDatasetName(item: MhuCubeItem): string {
   const metadata = getMetadataEntries(item)
     .map(([key, value]) => `${key}: ${formatMetadataValue(value)}`)
     .join(', ');
@@ -18,7 +18,7 @@ export function getAccessibleDatasetName(item: MhuCubeItem) {
  * @param axes - Validated axes.
  * @returns Visually hidden text describing every space category, the time span, and every organ, in that order.
  */
-export function createAccessibleAxisSummary(axes: MhuCubeAxes) {
+export function createAccessibleAxisSummary(axes: MhuCubeAxes): HTMLParagraphElement {
   const summary = document.createElement('p');
   summary.className = 'mhu-cube__sr-only';
   const unit = axes.time.unit ? ` ${axes.time.unit}` : '';
@@ -36,7 +36,7 @@ export function createAccessibleAxisSummary(axes: MhuCubeAxes) {
  * @param axes - Axis definitions used to describe its plotted position.
  * @returns A concise accessible description for the dataset control.
  */
-export function getAccessibleItemDescription(item: MhuCubeItem, axes: MhuCubeAxes) {
+export function getAccessibleItemDescription(item: MhuCubeItem, axes: MhuCubeAxes): string {
   const metadata = getMetadataEntries(item).map(([key, value]) => `${key}: ${formatMetadataValue(value)}`);
   const position = item.position;
   const axisPosition = position

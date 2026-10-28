@@ -8,7 +8,7 @@ import { getNamedMetadataEntries } from './metadata-list';
  * @param hoverMetadata - Metadata names to show, or null for every entry.
  * @returns A presentation-only card containing safely escaped text nodes.
  */
-export function createPreviewCard(item: MhuCubeItem, hoverMetadata: string[] | null = null) {
+export function createPreviewCard(item: MhuCubeItem, hoverMetadata: string[] | null = null): HTMLSpanElement {
   const card = document.createElement('span');
   card.className = 'mhu-cube__card';
   card.setAttribute('aria-hidden', 'true');

@@ -38,7 +38,7 @@ export interface BlockListItemOptions {
  * @param options - Layout, selection state, and element settings for the dataset.
  * @returns The list item for the plot's dataset list.
  */
-export function createBlockListItem(item: MhuCubeItem, options: BlockListItemOptions) {
+export function createBlockListItem(item: MhuCubeItem, options: BlockListItemOptions): HTMLLIElement {
   const { block, descriptionId, selected, axes, compactMetadata, hoverMetadata, configureSelectionButton } = options;
   const status = item.status ?? 'available';
   const listItem = document.createElement('li');

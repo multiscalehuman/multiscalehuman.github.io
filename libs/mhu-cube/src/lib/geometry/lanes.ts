@@ -14,7 +14,7 @@ const OVERLAP_TOLERANCE = 0.02;
  * @param b - Second text.
  * @returns A negative, zero, or positive sort result.
  */
-export function compareText(a: string, b: string) {
+export function compareText(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
@@ -24,7 +24,7 @@ export function compareText(a: string, b: string) {
  * @param axes - Validated axes whose value order defines organ and space order.
  * @returns A new array with positioned datasets first and unpositioned datasets in their original order.
  */
-export function sortItemsForDisplay(items: readonly MhuCubeItem[], axes: MhuCubeAxes) {
+export function sortItemsForDisplay(items: readonly MhuCubeItem[], axes: MhuCubeAxes): MhuCubeItem[] {
   return items
     .map((item, index) => ({ item, index }))
     .sort((a, b) => {
@@ -67,7 +67,7 @@ export interface LaneSlot {
  * @param slots - Lane assignments, updated in place.
  * @returns Nothing.
  */
-function assignClusterLanes(cluster: Placement[], slots: Map<string, LaneSlot>) {
+function assignClusterLanes(cluster: Placement[], slots: Map<string, LaneSlot>): void {
   const lanes: { end: number; tallest: number; members: Placement[] }[] = [];
   cluster.forEach((placement) => {
     let lane = lanes.find((candidate) => placement.y0 >= candidate.end + OVERLAP_TOLERANCE);
@@ -93,7 +93,7 @@ function assignClusterLanes(cluster: Placement[], slots: Map<string, LaneSlot>) 
  * @param placements - Blocks with their drawn time extents.
  * @returns Lane assignments; blocks that overlap nothing keep a single full-width lane.
  */
-export function assignLanes(placements: Placement[]) {
+export function assignLanes(placements: Placement[]): Map<string, LaneSlot> {
   const slots = new Map<string, LaneSlot>();
   const cells = new Map<string, Placement[]>();
   placements.forEach((placement) => {
@@ -152,7 +152,7 @@ export function getLaneExtent(
  * @param z - Normalized organ position.
  * @returns A depth that grows away from the camera.
  */
-export function getDepth(x: number, z: number) {
+export function getDepth(x: number, z: number): number {
   const [nearX, nearZ] = VIEW.near;
   return Math.abs(x - nearX) + Math.abs(z - nearZ);
 }

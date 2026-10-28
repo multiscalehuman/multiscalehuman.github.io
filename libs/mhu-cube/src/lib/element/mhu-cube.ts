@@ -55,7 +55,7 @@ export class MhuCube extends HTMLElementBase {
   #detailsTransition = new DetailsTransition();
 
   /** Normalized datasets currently available to the component. */
-  get items() {
+  get items(): MhuCubeItem[] {
     return this.#items;
   }
   set items(value: MhuCubeItem[]) {
@@ -64,7 +64,7 @@ export class MhuCube extends HTMLElementBase {
     this.#scheduleUpdate(true);
   }
   /** Normalized time, space, and organ axes used by the desktop visualization. */
-  get axes() {
+  get axes(): MhuCubeAxes {
     return this.#axes;
   }
   set axes(value: MhuCubeAxes) {
@@ -72,7 +72,7 @@ export class MhuCube extends HTMLElementBase {
     this.#scheduleUpdate(true);
   }
   /** Metadata names shown on compact cards, in order; null shows every entry the card does not already show. */
-  get compactMetadata() {
+  get compactMetadata(): string[] | null {
     return this.#compactMetadata;
   }
   set compactMetadata(value: string[] | null) {
@@ -80,7 +80,7 @@ export class MhuCube extends HTMLElementBase {
     this.#scheduleUpdate(true);
   }
   /** Metadata names shown on the desktop hover card, in order; null shows every entry. */
-  get hoverMetadata() {
+  get hoverMetadata(): string[] | null {
     return this.#hoverMetadata;
   }
   set hoverMetadata(value: string[] | null) {
@@ -88,7 +88,7 @@ export class MhuCube extends HTMLElementBase {
     this.#scheduleUpdate(true);
   }
   /** Current configuration errors and warnings. */
-  get validationIssues() {
+  get validationIssues(): MhuCubeValidationIssue[] {
     return [
       ...this.#attributeIssues,
       ...this.#compactMetadataIssues,
@@ -98,22 +98,22 @@ export class MhuCube extends HTMLElementBase {
     ];
   }
   /** ID selected in the desktop visualization, or null. */
-  get selectedId() {
+  get selectedId(): string | null {
     return this.#selectedId;
   }
   set selectedId(value: string | null) {
     this.#selectedId = this.#items.some((item) => item.id === value) ? value : null;
     this.#scheduleUpdate(false);
   }
-  connectedCallback() {
+  connectedCallback(): void {
     this.#readJsonAttribute('axes', false);
     this.#readJsonAttribute('items', false);
     this.#scheduleUpdate(true);
   }
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     this.#detailsTransition.cancel();
   }
-  attributeChangedCallback(name: string) {
+  attributeChangedCallback(name: string): void {
     if (name === 'compact-metadata') {
       this.#applyCompactMetadata(this.#parseJsonAttribute(name));
     } else if (name === 'hover-metadata') {
@@ -124,13 +124,13 @@ export class MhuCube extends HTMLElementBase {
     this.#scheduleUpdate(name !== 'label');
   }
 
-  #applyCompactMetadata(value: unknown) {
+  #applyCompactMetadata(value: unknown): void {
     const result = validateCompactMetadata(value);
     this.#compactMetadata = result.value;
     this.#compactMetadataIssues = result.issues;
   }
 
-  #applyHoverMetadata(value: unknown) {
+  #applyHoverMetadata(value: unknown): void {
     const result = validateHoverMetadata(value);
     this.#hoverMetadata = result.value;
     this.#hoverMetadataIssues = result.issues;
@@ -158,7 +158,7 @@ export class MhuCube extends HTMLElementBase {
    * @param reportValidation - Whether this update changes component configuration.
    * @returns Nothing.
    */
-  #scheduleUpdate(reportValidation: boolean) {
+  #scheduleUpdate(reportValidation: boolean): void {
     this.#validationPending ||= reportValidation;
     if (this.#updateScheduled) {
       return;
@@ -177,7 +177,7 @@ export class MhuCube extends HTMLElementBase {
     });
   }
 
-  #applyItems() {
+  #applyItems(): void {
     const result = validateItems(this.#sourceItems, this.#axes);
     this.#items = result.value;
     this.#itemIssues = result.issues;
@@ -186,14 +186,14 @@ export class MhuCube extends HTMLElementBase {
     }
   }
 
-  #applyAxes(value: unknown) {
+  #applyAxes(value: unknown): void {
     const result = validateAxes(value);
     this.#axes = result.value;
     this.#axisIssues = result.issues;
     this.#applyItems();
   }
 
-  #readJsonAttribute(name: 'axes' | 'items', clearWhenMissing: boolean) {
+  #readJsonAttribute(name: 'axes' | 'items', clearWhenMissing: boolean): void {
     this.#attributeIssues = this.#attributeIssues.filter((validationIssue) => validationIssue.path !== name);
     const serializedValue = this.getAttribute(name);
     if (serializedValue === null) {
@@ -227,7 +227,7 @@ export class MhuCube extends HTMLElementBase {
     }
   }
 
-  #reportValidation() {
+  #reportValidation(): void {
     if (!this.isConnected) {
       return;
     }
@@ -246,7 +246,7 @@ export class MhuCube extends HTMLElementBase {
    * @param moveFocusToAction - Whether keyboard activation should focus the resulting metadata link.
    * @returns Nothing.
    */
-  #selectItem(item: MhuCubeItem, moveFocusToAction: boolean) {
+  #selectItem(item: MhuCubeItem, moveFocusToAction: boolean): void {
     const selectionChanged = this.#selectedId !== item.id;
     this.#selectedId = item.id;
     this.#updateSelection();
@@ -276,7 +276,7 @@ export class MhuCube extends HTMLElementBase {
    * Clears the desktop selection, restores the dimension key, and returns focus to its cube.
    * @returns Nothing.
    */
-  #closeDetails() {
+  #closeDetails(): void {
     const selectedId = this.#selectedId;
     if (!selectedId || !this.#details) {
       return;
@@ -302,7 +302,7 @@ export class MhuCube extends HTMLElementBase {
    * Creates the stable regions that survive incremental selection updates, replacing any children the element had.
    * @returns Nothing.
    */
-  #createStructure() {
+  #createStructure(): void {
     const section = document.createElement('section');
     section.className = 'mhu-cube';
     const content = document.createElement('div');
@@ -326,7 +326,7 @@ export class MhuCube extends HTMLElementBase {
    * Synchronizes cube controls and visual selection classes without rebuilding the scene.
    * @returns Nothing.
    */
-  #updateSelection() {
+  #updateSelection(): void {
     const selectedItem = this.#items.find((item) => item.id === this.#selectedId) ?? null;
     this.#section?.classList.toggle('mhu-cube--has-selection', Boolean(selectedItem));
     this.querySelectorAll<HTMLButtonElement>('[data-item-id]').forEach((button) => {
@@ -343,7 +343,7 @@ export class MhuCube extends HTMLElementBase {
    * @param descriptionId - ID of the button's accessible dataset description.
    * @returns Nothing.
    */
-  #configureSelectionButton(button: HTMLButtonElement, item: MhuCubeItem, descriptionId: string) {
+  #configureSelectionButton(button: HTMLButtonElement, item: MhuCubeItem, descriptionId: string): void {
     button.type = 'button';
     button.dataset['itemId'] = item.id;
     button.setAttribute('aria-label', `Select ${getAccessibleDatasetName(item)}`);
@@ -357,7 +357,7 @@ export class MhuCube extends HTMLElementBase {
    * Reconciles validated data with the stable component structure.
    * @returns Nothing.
    */
-  #render() {
+  #render(): void {
     if (!this.#section || !this.#details || !this.#stage || !this.#plot) {
       this.#createStructure();
     }
@@ -435,7 +435,7 @@ export class MhuCube extends HTMLElementBase {
  * Registers the `mhu-cube` custom element once when the Custom Elements API is available.
  * @returns Nothing.
  */
-export function defineMhuCube() {
+export function defineMhuCube(): void {
   if (typeof customElements === 'undefined') {
     return;
   }

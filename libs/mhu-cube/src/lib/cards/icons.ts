@@ -2,7 +2,7 @@
  * Creates the Material close glyph used by the desktop details button.
  * @returns A decorative 24-pixel SVG icon that inherits the button color.
  */
-export function createCloseIcon() {
+export function createCloseIcon(): SVGSVGElement {
   const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   icon.classList.add('mhu-cube__details-close-icon');
   icon.setAttribute('width', '24');

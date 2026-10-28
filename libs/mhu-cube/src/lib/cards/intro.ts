@@ -5,7 +5,7 @@ import { MHU_CUBE_INTRO_CONTENT } from '../content/intro-content';
  * @param details - Persistent desktop details region displayed in place of the dimension key.
  * @returns A heading group containing the configured introduction copy and details region.
  */
-export function createIntro(details: HTMLElement) {
+export function createIntro(details: HTMLElement): HTMLElement {
   const intro = document.createElement('header');
   intro.className = 'mhu-cube__intro';
   if (MHU_CUBE_INTRO_CONTENT.eyebrow) {
