@@ -1,0 +1,106 @@
+# Called by AtlasNG's reusable nx-ci.yml workflow, so the inputs match AtlasNG's deploy-preview action.
+# Unlike AtlasNG's multi-project preview index, the portal is deployed at the root of the preview URL
+# because it is built with a base href of `/`.
+name: Deploy Preview
+description: Deploy a Netlify preview of the portal for a pull request and link it in a pull request comment.
+inputs:
+  issue-number:
+    description: The pull request number for which to deploy the preview
+    required: true
+  commit-sha:
+    description: The commit SHA being deployed
+    required: true
+  netlify-auth-token:
+    description: The authentication token for Netlify
+    required: true
+  netlify-site-id:
+    description: The site ID for the Netlify site to deploy to
+    required: true
+  netlify-filter:
+    description: The Netlify monorepo filter (site package name) to deploy; empty for a single-site repository
+    required: false
+    default: ''
+  dist-dir:
+    description: The directory containing the built portal
+    required: false
+    default: dist/apps/portal/browser
+
+runs:
+  using: 'composite'
+  steps:
+    # The portal is only built when affected, and pull requests from forks do not receive secrets.
+    - name: Check if a preview can be deployed
+      id: check-build
+      shell: bash
+      run: |
+        if [[ -f "$DIST_DIR/index.html" && -n "$NETLIFY_AUTH_TOKEN" ]]; then
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+        fi
+      env:
+        DIST_DIR: ${{ inputs.dist-dir }}
+        NETLIFY_AUTH_TOKEN: ${{ inputs.netlify-auth-token }}
+
+    # Netlify serves _redirects rules, so a catch-all rewrite lets the Angular router handle deep links.
+    - name: Prepare SPA fallback
+      if: steps.check-build.outputs.exists == 'true'
+      shell: bash
+      run: echo '/* /index.html 200' > "$DIST_DIR/_redirects"
+      env:
+        DIST_DIR: ${{ inputs.dist-dir }}
+
+    - name: Deploy to Netlify
+      id: netlify
+      if: steps.check-build.outputs.exists == 'true'
+      shell: bash
+      run: |
+        RESPONSE=$(npx -y netlify-cli@26.0.0 deploy \
+          --dir="$DIST_DIR" \
+          ${NETLIFY_FILTER:+--filter="$NETLIFY_FILTER"} \
+          --alias="pr-$ISSUE_NUMBER" \
+          --no-build \
+          --json \
+          --auth="$NETLIFY_AUTH_TOKEN" \
+          --site="$NETLIFY_SITE_ID")
+        echo "$RESPONSE"
+        echo "url=$(echo "$RESPONSE" | jq -r '.deploy_url')" >> "$GITHUB_OUTPUT"
+      env:
+        DIST_DIR: ${{ inputs.dist-dir }}
+        ISSUE_NUMBER: ${{ inputs.issue-number }}
+        NETLIFY_AUTH_TOKEN: ${{ inputs.netlify-auth-token }}
+        NETLIFY_SITE_ID: ${{ inputs.netlify-site-id }}
+        NETLIFY_FILTER: ${{ inputs.netlify-filter }}
+
+    - name: Get commit info
+      id: commit-info
+      if: steps.check-build.outputs.exists == 'true'
+      shell: bash
+      run: |
+        echo "sha=$(git rev-parse --short "$COMMIT_SHA")" >> "$GITHUB_OUTPUT"
+        echo "message=$(git log -1 --pretty=%s "$COMMIT_SHA")" >> "$GITHUB_OUTPUT"
+      env:
+        COMMIT_SHA: ${{ inputs.commit-sha }}
+
+    - name: Find existing deployment comment
+      id: deployment-comment
+      if: steps.check-build.outputs.exists == 'true'
+      uses: peter-evans/find-comment@v4
+      with:
+        issue-number: ${{ inputs.issue-number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: 'Preview Deploy Report'
+
+    - name: Create or update deployment comment
+      if: steps.check-build.outputs.exists == 'true'
+      uses: peter-evans/create-or-update-comment@v5
+      with:
+        comment-id: ${{ steps.deployment-comment.outputs.comment-id }}
+        issue-number: ${{ inputs.issue-number }}
+        edit-mode: replace
+        body: |
+          # :rocket: Preview Deploy Report
+
+          ✅ Successfully deployed preview [here](${{ steps.netlify.outputs.url }})
+
+          Commit: `${{ steps.commit-info.outputs.sha }}` ${{ steps.commit-info.outputs.message }}
