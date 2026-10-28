@@ -1,3 +1,6 @@
+# Thin caller: CI runs AtlasNG's reusable workflow nx-ci.yml. Triggers, permissions, and concurrency live here.
+# The reusable workflow resolves `./.github/actions/*` against this repository, so setup-nx-workspace and
+# deploy-preview must exist here.
 name: CI
 
 on:
@@ -7,37 +10,23 @@ on:
   pull_request:
 
 permissions:
+  actions: read
   contents: read
+  pull-requests: write
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
-env:
-  HUSKY: 0
-
 jobs:
-  main:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - run: npm ci --no-audit
-
-      - uses: nrwl/nx-set-shas@v5
-
-      - name: Lint commit messages
-        if: github.event_name == 'pull_request'
-        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
-
-      - run: npx nx sync:check
-      - run: npx nx format:check
-      - run: npx nx affected -t lint test build
+  ci:
+    uses: cns-iu/AtlasNG/.github/workflows/nx-ci.yml@e43a35d27b6aa2fac7511da4517bd3319350d7f2
+    with:
+      # Run tasks on the CI runner only; this workspace has no Nx Agents distribution config.
+      distribute-on: ''
+      deploy-preview: true
+      netlify-filter: ''
+    secrets:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
