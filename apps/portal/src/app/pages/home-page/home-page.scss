@@ -1,6 +1,7 @@
 :host {
   display: block;
   padding: 2.5rem;
+  container: home-page / inline-size;
 }
 
 .title {
@@ -21,4 +22,12 @@
   min-height: 40rem;
   margin-top: 2.5rem;
   overflow-x: clip;
+}
+
+// Matches <mhu-cube>'s own breakpoint, where it swaps the graph for dataset cards that set their own height.
+@container home-page (max-width: 64rem) {
+  .space-time-organ-graph {
+    height: auto;
+    min-height: 0;
+  }
 }
