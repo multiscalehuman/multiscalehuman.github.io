@@ -6,6 +6,8 @@
   align-items: center;
   color: white;
   padding: 5.5rem 1.5rem;
+  overflow: clip;
+  view-timeline: --hero block;
 
   @include ds.breakpoint(medium) {
     padding: 5.5rem 2.5rem;
@@ -14,6 +16,24 @@
 
 .illustration {
   object-fit: cover;
+}
+
+// Light parallax: the illustration drifts down 30% of the hero's height while the hero leaves the screen,
+// so it scrolls at 70% of the page's speed.
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .illustration {
+      animation: parallax linear both;
+      animation-timeline: --hero;
+      animation-range: exit;
+    }
+  }
+}
+
+@keyframes parallax {
+  to {
+    transform: translateY(30%);
+  }
 }
 
 .content {
