@@ -52,34 +52,6 @@
       ]
     },
     {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "CELLxGENE: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://cellxgene.cziscience.com/collections/b52eb423-5d0d-4645-b217-e1c6d38b2e72"
-                  },
-                  "content": "https://cellxgene.cziscience.com/collections/b52eb423-5d0d-4645-b217-e1c6d38b2e72"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Paper published on September 24, 2020."]
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [

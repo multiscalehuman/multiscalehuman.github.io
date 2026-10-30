@@ -44,34 +44,6 @@
       ]
     },
     {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "CELLxGENE: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://cellxgene.cziscience.com/collections/059202e1-1f1b-483f-9151-f3a25a380c39"
-                  },
-                  "content": "https://cellxgene.cziscience.com/collections/059202e1-1f1b-483f-9151-f3a25a380c39"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Preprint published on July 4, 2026."]
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [

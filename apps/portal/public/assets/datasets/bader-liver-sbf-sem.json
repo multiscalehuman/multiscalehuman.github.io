@@ -56,34 +56,6 @@
       ]
     },
     {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "EMPIAR: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://doi.org/10.6019/EMPIAR-13356"
-                  },
-                  "content": "https://doi.org/10.6019/EMPIAR-13356"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Preprint published on April 24, 2026."]
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [

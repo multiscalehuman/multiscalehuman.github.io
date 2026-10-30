@@ -71,47 +71,6 @@
       ]
     },
     {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "Mendeley Data: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://doi.org/10.17632/w3z4z4wwv6.1"
-                  },
-                  "content": "https://doi.org/10.17632/w3z4z4wwv6.1"
-                }
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "HRA CDN: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://cdn.humanatlas.io/image-store/cifar-data/peter-zandstra-data/__s3_files-cifar-zandstra.csv"
-                  },
-                  "content": "https://cdn.humanatlas.io/image-store/cifar-data/peter-zandstra-data/__s3_files-cifar-zandstra.csv"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Paper published on October 8, 2024."]
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [

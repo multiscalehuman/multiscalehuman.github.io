@@ -45,34 +45,6 @@
       ]
     },
     {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "ESRF Data Portal: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "http://doi.org/10.15151/ESRF-DC-2008212563"
-                  },
-                  "content": "http://doi.org/10.15151/ESRF-DC-2008212563"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Published in 2024."]
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [
