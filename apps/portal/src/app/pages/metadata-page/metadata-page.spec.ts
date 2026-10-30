@@ -26,7 +26,7 @@ const METADATA: DatasetMetadata = {
             '.',
           ],
         },
-        { component: 'Embed', config: { id: 'gallery' } },
+        { component: 'Embed', config: { id: 'gallery', label: 'Gallery visualization of the lung' } },
       ],
     },
     {
@@ -82,6 +82,16 @@ describe('MetadataPage', () => {
     expect(within(breadcrumbs).getAllByRole('listitem').at(-1)).toHaveTextContent('Lung, 1 mm Scale');
   });
 
+  it('links the CIFAR program breadcrumb to its program page', async () => {
+    await setup();
+
+    const breadcrumbs = screen.getByRole('navigation', { name: 'Breadcrumb' });
+    expect(within(breadcrumbs).getByRole('link', { name: 'CIFAR MacMillan Multiscale Human' })).toHaveAttribute(
+      'href',
+      'https://cifar.ca/research-programs/cifar-macmillan-multiscale-human/',
+    );
+  });
+
   it('renders a heading and table of contents entry for each section', async () => {
     await setup();
 
@@ -122,10 +132,10 @@ describe('MetadataPage', () => {
     expect(within(list as HTMLElement).getByRole('listitem')).toHaveTextContent('Jane Doe, jane@example.com');
   });
 
-  it('renders embeds from content blocks', async () => {
+  it('renders embeds from content blocks, named by their label', async () => {
     await setup();
 
-    expect(await screen.findByRole('img', { name: 'gallery' })).toBeInTheDocument();
+    expect(await screen.findByRole('img', { name: 'Gallery visualization of the lung' })).toBeInTheDocument();
   });
 
   it('renders the last updated date', async () => {

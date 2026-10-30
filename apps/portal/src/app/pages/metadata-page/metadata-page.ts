@@ -16,7 +16,10 @@ import { Title } from '@angular/platform-browser';
 const BASE_CRUMBS: BreadcrumbItem[] = [
   { name: 'Home', command: 'https://cifar.ca/' },
   { name: 'Research Programs', command: 'https://cifar.ca/research-programs/' },
-  { name: 'CIFAR MacMillan Multiscale Human', command: 'https://cifar.ca/research-programs/' },
+  {
+    name: 'CIFAR MacMillan Multiscale Human',
+    command: 'https://cifar.ca/research-programs/cifar-macmillan-multiscale-human/',
+  },
   { name: 'Data Portal', command: '/' },
 ];
 

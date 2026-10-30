@@ -4,6 +4,12 @@
   display: block;
   padding: 1.5rem 1.25rem;
 
+  @include ds.text-link-overrides(
+    (
+      color: ds.sys-slot(primary),
+    )
+  );
+
   .layout {
     display: grid;
     grid-template:
