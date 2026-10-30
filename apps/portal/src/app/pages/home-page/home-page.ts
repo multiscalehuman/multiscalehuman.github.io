@@ -5,13 +5,15 @@ import {
   SAMPLE_DATASETS,
   SAMPLE_HOVER_METADATA,
 } from '../../datasets/sample-datasets';
+import { Hero } from './hero/hero';
 
 /**
- * Landing page. Placeholder until the Figma homepage (hero, Space Time Organ Graph, EUI embed) is built.
- * Renders the `<mhu-cube>` custom element, which the app registers at startup, with the sample datasets.
+ * Landing page: the hero, then the `<mhu-cube>` custom element, which the app registers at startup,
+ * with the sample datasets. The rest of the Figma homepage (EUI embed) is still to come.
  */
 @Component({
   selector: 'mhu-home-page',
+  imports: [Hero],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
