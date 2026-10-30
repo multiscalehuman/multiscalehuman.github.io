@@ -1,0 +1,393 @@
+{
+  "organ": "Kidney",
+  "space": "100 mm",
+  "time": "85 years",
+  "description": "Complete scan at 15 µm of the left kidney of the body donor LADAF-2022-13 in VR.",
+  "sections": [
+    {
+      "title": "Data Overview",
+      "anchor": "data-overview",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "A VR scene showing kidney vasculature inside a 3D outer mesh for complete scan at 15 µm of the left kidney of the body donor LADAF-2022-13."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3D Visualizations Within the Human Reference Atlas",
+      "anchor": "3d-visualizations-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://humanatlas.io/hra-organ-gallery"
+              },
+              "content": "Human Reference Atlas Organ Gallery"
+            },
+            " to explore the human kidney in VR."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "hra-organ-gallery",
+            "label": "Human Reference Atlas Organ Gallery visualization of the kidney"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Data Availability",
+      "anchor": "data-availability",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "ESRF Data Portal: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "http://doi.org/10.15151/ESRF-DC-2008212563"
+                  },
+                  "content": "http://doi.org/10.15151/ESRF-DC-2008212563"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": ["Published in 2024."]
+        }
+      ]
+    },
+    {
+      "title": "Lead Contacts",
+      "anchor": "lead-contacts",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Claire L. Walsh, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:c.walsh.11@ucl.ac.uk"
+                  },
+                  "content": "c.walsh.11@ucl.ac.uk"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Peter D. Lee, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:peter.lee@ucl.ac.uk"
+                  },
+                  "content": "peter.lee@ucl.ac.uk"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Authors",
+      "anchor": "authors",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Joseph Brunet",
+                " — University College London (UCL), Department of Mechanical Engineering; European Synchrotron Radiation Facility (ESRF)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-8424-9510"
+                  },
+                  "content": "0000-0002-8424-9510"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Andrew C. Cook"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Claire L. Walsh",
+                " — University College London (UCL), Department of Mechanical Engineering",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-3769-3392"
+                  },
+                  "content": "0000-0003-3769-3392"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["James Cranley"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Paul Tafforeau",
+                " — European Synchrotron Radiation Facility (ESRF)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-5962-1683"
+                  },
+                  "content": "0000-0002-5962-1683"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Klaus Engel",
+                " — Siemens Healthineers AG, Erlangen, Germany",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0009-0001-1423-898X"
+                  },
+                  "content": "0009-0001-1423-898X"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Camille Berruyer",
+                " — University College London (UCL), Department of Mechanical Engineering; European Synchrotron Radiation Facility (ESRF)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-0046-2972"
+                  },
+                  "content": "0000-0002-0046-2972"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Emer Burke O'Leary",
+                " — University College London (UCL), Department of Mechanical Engineering",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-8831-8077"
+                  },
+                  "content": "0000-0002-8831-8077"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Alexandre Bellier",
+                " — Université Grenoble Alpes, Department of Anatomy (LADAF)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0907-0315"
+                  },
+                  "content": "0000-0003-0907-0315"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Ryo Torii"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Christopher Werlein",
+                " — Hannover Medical School, Institute of Pathology",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-7694-4257"
+                  },
+                  "content": "0000-0002-7694-4257"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Danny D. Jonigk",
+                " — RWTH Aachen University, Institute of Pathology; German Center for Lung Research (DZL)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-5251-2281"
+                  },
+                  "content": "0000-0002-5251-2281"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Maximilian Ackermann",
+                " — RWTH Aachen University, Institute of Pathology; University Medical Center Mainz",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0001-9996-2477"
+                  },
+                  "content": "0000-0001-9996-2477"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Kathleen Dollman",
+                " — European Synchrotron Radiation Facility (ESRF)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-5468-4896"
+                  },
+                  "content": "0000-0002-5468-4896"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Peter D. Lee",
+                " — University College London (UCL), Department of Mechanical Engineering",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-3898-8881"
+                  },
+                  "content": "0000-0002-3898-8881"
+                },
+                ")"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "anchor": "references",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
+                  },
+                  "content": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://www.nature.com/articles/s41467-026-74050-8"
+                  },
+                  "content": "https://www.nature.com/articles/s41467-026-74050-8"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "License",
+      "anchor": "license",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://creativecommons.org/licenses/by/4.0/"
+              },
+              "content": "CC BY 4.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acknowledgments",
+      "anchor": "acknowledgments",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "We extend our gratitude to the prize sponsors of this competition: Kaggle, Canadian Institute for Advanced Research (CIFAR), and Thermo Fisher Scientific. We thank Addison Howard, Ashley Chow, and Ryan Holbrook from the Kaggle Staff team for their expert support throughout the competition. We thank Heidi Schlehlein for assisting with the figures. We thank all the individuals that participated in this citizen science competition and provided their time and expertise to collaboratively develop solutions. The authors sincerely thank those who donated their bodies to science so that anatomical research could be performed. Results from such research can potentially increase humanity’s overall knowledge that can then improve patient care. Therefore, these donors and their families deserve our highest gratitude. K.B. discloses support for the research of this work from the NIH Common Fund through the Office of Strategic Coordination/Office of the NIH Director under awards OT2OD033756 and OT2OD026671, by the Cellular Senescence Network (SenNet) Consortium through the Consortium Organization and Data Coordinating Center (CODCC) under award number U24CA268108, by the Kidney Precision Medicine Project grant U2CDK114886, by the NIDDK under awards U24DK135157 and U01DK133090. P.D.L., P.T., and C.L.W. disclose support for the research of this work from the Chan Zuckerberg Initiative DAF, an advised fund of Silicon Valley Community Foundation under grants CZIF2021-00642, 2020-225394, and 2022-316777 (P.D.L., P.T., and C.L.W.), by ESRF funding proposals md1252 and md1290 (P.D.L.), by the Royal Academy of Engineering (CiET1819/10) (P.D.L.), by MRC (MR/R025673/1) (P.D.L.) and by the NIH BRAIN Initiative CONNECTS program via National Institute Of Neurological Disorders And Stroke (NINDS) and National Institutes Of Health (NIH) award UM1-NS132358 (C.L.W. and P.D.L.). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health."
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-10-30"
+}
