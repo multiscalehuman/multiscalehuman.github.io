@@ -31,43 +31,16 @@
               },
               "content": "Human Reference Atlas Organ Gallery"
             },
-            " to explore the human kidney in VR."
+            " to visualize cell type populations in VR."
           ]
         },
         {
-          "component": "Embed",
+          "component": "Image",
           "config": {
-            "id": "hra-organ-gallery",
-            "label": "Human Reference Atlas Organ Gallery visualization of the kidney"
+            "src": "assets/datasets/lee-kidney-hipct-63-vr.png",
+            "alt": "Blood vessel network of a kidney from a 63-year-old male donor in the Human Reference Atlas Organ Gallery in VR",
+            "maxWidth": 640
           }
-        }
-      ]
-    },
-    {
-      "title": "Data Availability",
-      "anchor": "data-availability",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "ESRF Data Portal: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "http://doi.org/10.15151/ESRF-DC-1773965419"
-                  },
-                  "content": "http://doi.org/10.15151/ESRF-DC-1773965419"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "component": "ContentParagraph",
-          "content": ["Published in 2024."]
         }
       ]
     },
@@ -109,319 +82,59 @@
       ]
     },
     {
-      "title": "Authors",
-      "anchor": "authors",
-      "content": [
-        {
-          "component": "List",
-          "content": [
-            {
-              "component": "ListItem",
-              "content": [
-                "Claire L. Walsh",
-                " — University College London (UCL), Department of Mechanical Engineering",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0003-3769-3392"
-                  },
-                  "content": "0000-0003-3769-3392"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Joseph Brunet",
-                " — University College London (UCL), Department of Mechanical Engineering; European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-8424-9510"
-                  },
-                  "content": "0000-0002-8424-9510"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Camille Berruyer",
-                " — University College London (UCL), Department of Mechanical Engineering; European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-0046-2972"
-                  },
-                  "content": "0000-0002-0046-2972"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Emer Burke O'Leary",
-                " — University College London (UCL), Department of Mechanical Engineering",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-8831-8077"
-                  },
-                  "content": "0000-0002-8831-8077"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Shahrokh Rahmani",
-                " — University College London (UCL)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-5773-7076"
-                  },
-                  "content": "0000-0002-5773-7076"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Alexandre Bellier",
-                " — Université Grenoble Alpes, Department of Anatomy (LADAF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0003-0907-0315"
-                  },
-                  "content": "0000-0003-0907-0315"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": ["Yanis Boukortt", " — Medical University of Grenoble, France"]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Alejandro de Maria",
-                " — European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-1710-8769"
-                  },
-                  "content": "0000-0002-1710-8769"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Marjolaine Bodin",
-                " — European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0003-0321-3952"
-                  },
-                  "content": "0000-0003-0321-3952"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Klaus Engel",
-                " — Siemens Healthineers AG, Erlangen, Germany",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0009-0001-1423-898X"
-                  },
-                  "content": "0009-0001-1423-898X"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Kathleen Dollman",
-                " — European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-5468-4896"
-                  },
-                  "content": "0000-0002-5468-4896"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Joseph Jacob",
-                " — UCL Respiratory, University College London",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-8054-2293"
-                  },
-                  "content": "0000-0002-8054-2293"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Christopher Werlein",
-                " — Hannover Medical School, Institute of Pathology",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-7694-4257"
-                  },
-                  "content": "0000-0002-7694-4257"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Danny D. Jonigk",
-                " — RWTH Aachen University, Institute of Pathology; German Center for Lung Research (DZL)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-5251-2281"
-                  },
-                  "content": "0000-0002-5251-2281"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Maximilian Ackermann",
-                " — RWTH Aachen University, Institute of Pathology; University Medical Center Mainz",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0001-9996-2477"
-                  },
-                  "content": "0000-0001-9996-2477"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Paul Tafforeau",
-                " — European Synchrotron Radiation Facility (ESRF)",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-5962-1683"
-                  },
-                  "content": "0000-0002-5962-1683"
-                },
-                ")"
-              ]
-            },
-            {
-              "component": "ListItem",
-              "content": [
-                "Peter D. Lee",
-                " — University College London (UCL), Department of Mechanical Engineering",
-                " (ORCID: ",
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://orcid.org/0000-0002-3898-8881"
-                  },
-                  "content": "0000-0002-3898-8881"
-                },
-                ")"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "title": "References",
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Walsh, Claire L., Joseph Brunet, Camille Berruyer, Emer Burke O’Leary, Shahrokh Rahmani, Alexandre Bellier, Yanis Boukortt, Alejandro de Maria, Marjolaine Bodin, Klaus Engel, Kathleen Dollman, Joseph Jacob, Christopher Werlein, Danny D. Jonigk, Maximilian Ackermann, Paul Tafforeau, and Peter D. Lee. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                  },
-                  "content": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.15151/ESRF-DC-1773965419"
+              },
+              "content": "Complete Scan at 25.14 µm of the Left Kidney of the Body Donor LADAF-2021-17"
             },
+            ".” Dataset. European Synchrotron Radiation Facility, 2024. doi:10.15151/ESRF-DC-1773965419."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Jain, Yashvardhan, Claire L. Walsh, Ekin Yagis, Shahab Aslani, Sonal Nandanwar, Yang Zhou, Juhyung Ha, Katherine S. Gustilo, Joseph Brunet, Shahrokh Rahmani, Paul Tafforeau, Alexandre Bellier, Griffin M. Weber, Peter D. Lee, and Katy Börner. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.nature.com/articles/s41467-026-74050-8"
-                  },
-                  "content": "https://www.nature.com/articles/s41467-026-74050-8"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1038/s41467-026-74050-8"
+              },
+              "content": "Vasculature Segmentation in 3D Hierarchical Phase-Contrast Tomography Images of Human Kidneys"
             },
+            ".” ",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                  },
-                  "content": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                }
-              ]
-            }
+              "component": "Cite",
+              "content": "Nature Communications"
+            },
+            " 17, no. 1 (2026): 8273. doi:10.1038/s41467-026-74050-8."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Bueckle, Andreas, Chenchen Zhu, Alex Yu Hin Wong, Archibald Enninful, Yang Miao, Negin Farzad, Maria Pedersen, Courteney Mattison, Nicholas Sloan, Jason Mares, Cheng Xing, Bruce W. Herr II, Juhi Khare, Yash Ramesh Kumar, Keyur Parekh, Siddhi Chavan, Paean Luby, Ushma Patel, Yashvardhan Jain, John W. Hickey, Gary D. Bader, Hemali Phatnani, Vilas Menon, Rong Fan, Peter K. Sorger, Michael Snyder, and Katy Börner. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.07.07.737090"
+              },
+              "content": "Multiscale Harmonization, Semantic Integration, and Immersive Exploration of Single-Cell Data in Support of Novel Biological Insights"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.07.07.737090."
           ]
         }
       ]
