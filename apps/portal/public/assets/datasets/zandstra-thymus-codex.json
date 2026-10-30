@@ -1,0 +1,349 @@
+{
+  "organ": "Thymus",
+  "space": "100 µm",
+  "time": "4–5 months",
+  "description": "Cell types in CODEX data of human thymus.",
+  "sections": [
+    {
+      "title": "Data Overview",
+      "anchor": "data-overview",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "CODEX data from this paper was used for visualization in 2D (Cell Distance Explorer) and VR (HRA Organ Gallery) for the thymus. Used here is MultiRun-CombinedData--20201203_Laura_Thymus_2_1."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3D Visualizations Within the Human Reference Atlas",
+      "anchor": "3d-visualizations-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://humanatlas.io/hra-organ-gallery"
+              },
+              "content": "Human Reference Atlas Organ Gallery"
+            },
+            " to explore the human thymus in VR."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "hra-organ-gallery",
+            "label": "Human Reference Atlas Organ Gallery visualization of the thymus"
+          }
+        }
+      ]
+    },
+    {
+      "title": "2D Cell Distance Distributions",
+      "anchor": "2d-cell-distance-distributions",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://apps.humanatlas.io/cde/"
+              },
+              "content": "Cell Distance Explorer"
+            },
+            " to explore how cell types are spatially distributed around endothelial cells."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "cell-distance-explorer",
+            "label": "Cell Distance Explorer visualization of the thymus"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Data Availability",
+      "anchor": "data-availability",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Mendeley Data: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://doi.org/10.17632/w3z4z4wwv6.1"
+                  },
+                  "content": "https://doi.org/10.17632/w3z4z4wwv6.1"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "HRA CDN: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://cdn.humanatlas.io/image-store/cifar-data/peter-zandstra-data/__s3_files-cifar-zandstra.csv"
+                  },
+                  "content": "https://cdn.humanatlas.io/image-store/cifar-data/peter-zandstra-data/__s3_files-cifar-zandstra.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": ["Paper published on October 8, 2024."]
+        }
+      ]
+    },
+    {
+      "title": "Lead Contacts",
+      "anchor": "lead-contacts",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Peter W. Zandstra, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:peter.zandstra@msl.ubc.ca"
+                  },
+                  "content": "peter.zandstra@msl.ubc.ca"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Fabio M.V. Rossi, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:fabio@brc.ubc.ca"
+                  },
+                  "content": "fabio@brc.ubc.ca"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Authors",
+      "anchor": "authors",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": ["Laura N. Stankiewicz", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Kevin Salim",
+                " — Department of Surgery, University of British Columbia; BC Children’s Hospital Research Institute"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Emily A. Flaschner", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Yu Xin Wang",
+                " — Center for Genetic Disorders and Aging, Sanford Burnham Prebys Medical Discovery Institute"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["John M. Edgar", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Lauren J. Durland", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Bruce Z.B. Lin", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Grace C. Bingham", " — Department of Biomedical Engineering, University of Virginia"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Matthew C. Major", " — School of Biomedical Engineering, University of British Columbia"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Ross D. Jones",
+                " — School of Biomedical Engineering, University of British Columbia",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0891-6761"
+                  },
+                  "content": "0000-0003-0891-6761"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Helen M. Blau",
+                " — Baxter Laboratory for Stem Cell Biology, Department of Microbiology and Immunology, Stanford University School of Medicine"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Elizabeth J. Rideout",
+                " — Life Sciences Institute, University of British Columbia",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0012-2828"
+                  },
+                  "content": "0000-0003-0012-2828"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Megan K. Levings",
+                " — School of Biomedical Engineering, University of British Columbia; Department of Surgery, University of British Columbia; BC Children’s Hospital Research Institute",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-0305-5790"
+                  },
+                  "content": "0000-0002-0305-5790"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Peter W. Zandstra",
+                " — School of Biomedical Engineering, University of British Columbia; Michael Smith Laboratories, University of British Columbia",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-9568-733X"
+                  },
+                  "content": "0000-0002-9568-733X"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Fabio M.V. Rossi",
+                " — School of Biomedical Engineering, University of British Columbia; Department of Medical Genetics, University of British Columbia"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "anchor": "references",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://pubmed.ncbi.nlm.nih.gov/39383865/"
+                  },
+                  "content": "https://pubmed.ncbi.nlm.nih.gov/39383865/"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
+                  },
+                  "content": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "License",
+      "anchor": "license",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://creativecommons.org/licenses/by/4.0/"
+              },
+              "content": "CC BY 4.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acknowledgments",
+      "anchor": "acknowledgments",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "We thank the parents of thymus donors for their essential contribution to this research as well as the staff at the British Columbia Children’s Hospital who made this study possible; special thanks to Drs. Sanjiv Gandhi, Andrew Campbell, and Al Aklabi, as well as Allison Jamieson, Melanie Ganshorn, Aliyah Hassan, Lyn Nguyen, and Colleen Ring. We thank Dr. Sabine Ivison for logistical support in tissue collection and Dr. Wilder Scott for his assistance integrating multi-modal sequencing data. We acknowledge T. Stach, Y. Chung, S. Yu, and B. Zhao from the BRC-seq for technical support; M. Williams from the BRC Antibody Lab for technical support and custom reagents; and A. Johnson and J. Wong from UBC FACS for technical support. We thank Jen Ma for technical support with graphics. The cartoon figures were made with BioRender. Funding for this work was provided by Genome BC (SIP031) and Wellcome Leap Human Organs, Physiology, and Engineering (HOPE) program; the Canadian Foundation for Innovation/B.C. Knowledge Development Fund (John Evans Leader’s Fund 38395 to F.M.V.R); and the Canadian Institutes of Health Research (CIHR) (ICC-17644 to M.K.L.). L.N.S. was supported by a National Sciences and Engineering Research Council of Canada (NSERC) Canadian Graduate Scholarship – Doctoral (CGS-D) award and received a Michael Smith Foundation travel award to complete this work. K.S. was supported by Wellcome Leap Inc (AWD-017859). E.A.F. was supported by an NSERC Undergrad Student Research Award. J.M.E. was supported by an NSERC CGS-D award and Zymeworks-Michael Smith Laboratories Fellowship in Advanced Protein Engineering. M.C.M. was funded by an NSERC USRA and CBR summer award. Y.X.W. was supported by CIHR (MFE-152457) and a National Institute of Health (NIH) K99 award (K99 NS120278). L.J.D. is supported by a CIHR CGS-D award and Zymeworks-Michael Smith Labratories Fellowship. G.C.B. is supported by the Raven Fellowship. R.D.J. is supported by the Michael Smith Foundation for Health Research (Trainee Award #RT-2021-1946). H.M.B. was supported by funding from the Baxter Foundation, the Li Ka Shing Foundation, and the NIH (R01 AG069858 and R01 AG075436). E.J.R. holds a CIHR Sex and Gender Science Chair in Genetics and is a Michael Smith Foundation for Health Research Scholar. M.K.L. is a Canada Research Chair in Engineered Immune Tolerance and receives a Scientist Salary Award from the BC Children’s Hospital Research Institute. F.M.V.R. is supported by CIHR (FDN-159908). P.W.Z. is a Canada Research Chair in Stem Cell Bioengineering."
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-10-30"
+}
