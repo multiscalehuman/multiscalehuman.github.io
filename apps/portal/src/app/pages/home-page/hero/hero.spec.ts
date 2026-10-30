@@ -46,10 +46,7 @@ describe('Hero', () => {
 
     expect(illustration).toHaveAttribute('alt', '');
     expect(illustration.getAttribute('src')).toMatch(/hero-2880\.webp$/);
-    expect(illustration).toHaveAttribute(
-      'sizes',
-      expect.stringContaining('(min-width: 960px) max(100vw, 102.7rem), max(100vw, 128.4rem)'),
-    );
+    expect(illustration).toHaveAttribute('sizes', 'max(100vw, 2050px)');
     expect(illustration.getAttribute('srcset')).toContain('assets/images/hero-640.webp 640w');
     expect(illustration.getAttribute('srcset')).toContain('assets/images/hero-2880.webp 2880w');
   });

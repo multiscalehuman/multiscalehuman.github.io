@@ -1,3 +1,4 @@
+import { DeferBlockState } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
 import { BodyVisualization } from './body-visualization';
 
@@ -15,12 +16,12 @@ describe('BodyVisualization', () => {
 
     expect(screen.getByRole('note')).toHaveTextContent('Larger screen recommended');
     expect(screen.getByRole('note')).toHaveTextContent(
-      'For the best experience, use a desktop browser window at least 1400px wide.',
+      'For the best experience, use a desktop browser window at least 1280px wide.',
     );
   });
 
   it('renders the EUI', async () => {
-    const { container } = await render(BodyVisualization);
+    const { container } = await render(BodyVisualization, { deferBlockStates: DeferBlockState.Complete });
 
     expect(container.querySelector('ccf-eui')).toBeInTheDocument();
   });

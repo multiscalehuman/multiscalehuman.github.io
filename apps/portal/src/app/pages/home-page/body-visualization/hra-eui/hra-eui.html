@@ -1,7 +1,11 @@
-<ccf-eui
-  [baseHref]="baseHref"
-  [dataSources]="dataSources()"
-  [selectedOrgans]="selectedOrgans"
-  [loginDisabled]="true"
-  [disableScreenSizeNotice]="true"
-/>
+@defer (on viewport) {
+  <ccf-eui
+    [baseHref]="baseHref"
+    [dataSources]="dataSources()"
+    [selectedOrgans]="selectedOrgans"
+    [loginDisabled]="true"
+    [disableScreenSizeNotice]="true"
+  />
+} @placeholder {
+  <div>Loading...</div>
+}

@@ -1,4 +1,5 @@
-import { render } from '@testing-library/angular';
+import { DeferBlockState } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
 import { HraEui, MHU_ORGAN_IRIS } from './hra-eui';
 
 const EUI_CDN_URL = 'https://cdn.humanatlas.io/ui/ccf-eui/';
@@ -6,7 +7,7 @@ const EUI_CDN_URL = 'https://cdn.humanatlas.io/ui/ccf-eui/';
 type EuiElement = HTMLElement & Record<string, unknown>;
 
 async function renderEui(inputs: Record<string, unknown> = {}) {
-  const { container } = await render(HraEui, { inputs });
+  const { container } = await render(HraEui, { inputs, deferBlockStates: DeferBlockState.Complete });
   return container.querySelector('ccf-eui') as EuiElement;
 }
 
@@ -31,6 +32,13 @@ describe('HraEui', () => {
     expect(stylesheets[0]).toHaveAttribute('rel', 'stylesheet');
     expect(scripts).toHaveLength(1);
     expect(scripts[0]).toHaveAttribute('type', 'module');
+  });
+
+  it('shows a loading placeholder until the EUI scrolls into view', async () => {
+    const { container } = await render(HraEui);
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(container.querySelector('ccf-eui')).not.toBeInTheDocument();
   });
 
   it('renders the EUI with the MHU organs, login disabled, and assets from the CDN', async () => {

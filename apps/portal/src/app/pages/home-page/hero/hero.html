@@ -1,4 +1,12 @@
-<img class="illustration" ngSrc="assets/images/hero" fill priority alt="" [sizes]="sizes" />
+<img
+  class="illustration"
+  ngSrc="assets/images/hero"
+  ngSrcset="640w, 750w, 828w, 1080w, 1200w, 1920w, 2048w, 2880w"
+  sizes="max(100vw, 2050px)"
+  fill
+  priority
+  alt=""
+/>
 
 <div class="content">
   <ang-breadcrumbs class="breadcrumbs" [items]="crumbs" />
