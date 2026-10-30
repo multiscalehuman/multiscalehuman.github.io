@@ -37,6 +37,26 @@ ang-footer {
   );
 }
 
+// AtlasNG sizes the logo's wrapper but not the image, and Material's dialog title strut (::before) becomes a
+// flex item in the header, so space-between centers the logo instead of pinning it left. The modal's styles load
+// after this file, so these selectors must outrank AtlasNG's.
+.ang-cookie-modal .ang-cookie-modal--header {
+  align-items: center;
+
+  &::before {
+    display: none;
+  }
+
+  .ang-cookie-modal--logo {
+    height: 32px;
+  }
+
+  img {
+    display: block;
+    height: 100%;
+  }
+}
+
 body {
   margin: 0;
   min-width: 20rem;
