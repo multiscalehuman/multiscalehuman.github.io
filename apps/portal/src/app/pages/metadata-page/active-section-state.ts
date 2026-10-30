@@ -222,11 +222,12 @@ export class ActiveSectionState {
 
   /**
    * Checks whether the window is scrolled to the bottom of the page.
-   * @returns Whether no further scrolling down is possible
+   * @returns Whether no further scrolling down is possible; never at the top, where a page that is not yet taller
+   *   than the viewport (for example before its content blocks load) would otherwise count as scrolled to the bottom
    */
   #isScrolledToBottom(): boolean {
     const view = this.#document.defaultView;
-    if (!view) {
+    if (!view || view.scrollY <= 0) {
       return false;
     }
     return Math.ceil(view.scrollY + view.innerHeight) >= this.#document.documentElement.scrollHeight - 1;

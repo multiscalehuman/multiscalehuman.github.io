@@ -86,6 +86,15 @@ describe('ActiveSectionState', () => {
     expect(state.activeSectionAnchor()).toBe('three');
   });
 
+  it('activates the first section at the top of a page no taller than the viewport', async () => {
+    const state = await setup();
+    layout({ one: 0, two: 100, three: 200 }, 0);
+    Object.defineProperty(document.documentElement, 'scrollHeight', { configurable: true, value: 800 });
+    await scroll();
+
+    expect(state.activeSectionAnchor()).toBe('one');
+  });
+
   it('keeps a selected section active while scrolling to it', async () => {
     const state = await setup();
     state.selectSection('three');
