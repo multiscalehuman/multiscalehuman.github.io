@@ -1,19 +1,11 @@
 import { Component } from '@angular/core';
-import { AnyLink, AnyLinkCommand } from '@atlasng/common';
-import { Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
+import { AnyLink } from '@atlasng/common';
+import { BreadcrumbItem, Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 import { ContentHeader } from '@atlasng/design-system/content/content-header';
 import { ContentParagraph } from '@atlasng/design-system/content/content-paragraph';
 import { ContentSection } from '@atlasng/design-system/content/content-section';
 import { TextLink } from '@atlasng/design-system/links/text-link';
 import { TableOfContents, TableOfContentsItem } from '@atlasng/design-system/table-of-contents';
-
-/** Breadcrumb trail item, in the shape {@link Breadcrumbs} accepts. */
-interface BreadcrumbItem {
-  /** Text shown for the crumb. */
-  name: string;
-  /** Link target. The current page's crumb has none. */
-  command?: AnyLinkCommand;
-}
 
 /** Trail from the portal homepage to this page. */
 const CRUMBS: BreadcrumbItem[] = [{ name: 'Home', command: '/' }, { name: 'Privacy Policy' }];
@@ -64,7 +56,6 @@ export const PRIVACY_POLICY_SECTIONS: TableOfContentsItem[] = Object.values(SECT
   imports: [AnyLink, Breadcrumbs, ContentHeader, ContentParagraph, ContentSection, TableOfContents, TextLink],
   templateUrl: './privacy-policy-page.html',
   styleUrl: './privacy-policy-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrivacyPolicyPage {
   /** Breadcrumb trail shown above the title. */

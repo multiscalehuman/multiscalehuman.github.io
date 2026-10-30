@@ -9,11 +9,7 @@
 <ang-table-of-contents class="toc" tagline="On this page" [items]="tocItems" />
 
 <div class="sections">
-  <!--
-    Titles are bound from `sections`, not set as static attributes: a static `title` also shows as a hover tooltip.
-    https://github.com/cns-iu/AtlasNG/issues/215
-  -->
-  <ang-content-section level="2" id="overview" underlined [title]="sections.overview.tagline">
+  <ang-content-section level="2" id="overview" underlined [tagline]="sections.overview.tagline">
     <div class="text">
       <ang-content-paragraph>
         At Indiana University (IU), we are committed to protecting the privacy and confidentiality of personal
@@ -44,7 +40,7 @@
     </div>
   </ang-content-section>
 
-  <ang-content-section level="2" id="changes" underlined [title]="sections.changes.tagline">
+  <ang-content-section level="2" id="changes" underlined [tagline]="sections.changes.tagline">
     <div class="text">
       <ang-content-paragraph>
         Because Internet technologies continue to evolve rapidly, Cyberinfrastructure for Network Science Center may
@@ -54,12 +50,12 @@
     </div>
   </ang-content-section>
 
-  <ang-content-section level="2" id="collection-and-use" underlined [title]="sections.collectionAndUse.tagline">
+  <ang-content-section level="2" id="collection-and-use" underlined [tagline]="sections.collectionAndUse.tagline">
     <ang-content-section
       level="3"
       id="passive-automatic-collection"
       underlined
-      [title]="sections.passiveAutomaticCollection.tagline"
+      [tagline]="sections.passiveAutomaticCollection.tagline"
     >
       <div class="text">
         <ang-content-paragraph>
@@ -86,7 +82,7 @@
       level="3"
       id="active-manual-voluntary-collection"
       underlined
-      [title]="sections.activeManualVoluntaryCollection.tagline"
+      [tagline]="sections.activeManualVoluntaryCollection.tagline"
     >
       <div class="text">
         <ang-content-paragraph>
@@ -96,7 +92,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="information-usage" underlined [title]="sections.informationUsage.tagline">
+    <ang-content-section level="3" id="information-usage" underlined [tagline]="sections.informationUsage.tagline">
       <div class="text">
         <ang-content-paragraph>This information is:</ang-content-paragraph>
         <ul>
@@ -105,7 +101,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="information-sharing" underlined [title]="sections.informationSharing.tagline">
+    <ang-content-section level="3" id="information-sharing" underlined [tagline]="sections.informationSharing.tagline">
       <div class="text">
         <ang-content-paragraph
           >We may share aggregate, non-personally identifiable information with other entities or
@@ -123,7 +119,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="cookies" underlined [title]="sections.cookies.tagline">
+    <ang-content-section level="3" id="cookies" underlined [tagline]="sections.cookies.tagline">
       <div class="text">
         <ang-content-paragraph>
           For more information on how we use cookies, please review the
@@ -132,7 +128,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="children" underlined [title]="sections.children.tagline">
+    <ang-content-section level="3" id="children" underlined [tagline]="sections.children.tagline">
       <div class="text">
         <ang-content-paragraph>
           This site is not directed to children under 13 years of age, does not sell products or services intended for
@@ -144,7 +140,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="third-party-services" underlined [title]="sections.thirdPartyServices.tagline">
+    <ang-content-section level="3" id="third-party-services" underlined [tagline]="sections.thirdPartyServices.tagline">
       <div class="text">
         <ang-content-paragraph>
           This website utilizes <em>Amazon Web Services</em>, a web analytics service. More information about this
@@ -154,7 +150,7 @@
       </div>
     </ang-content-section>
 
-    <ang-content-section level="3" id="social-media" underlined [title]="sections.socialMedia.tagline">
+    <ang-content-section level="3" id="social-media" underlined [tagline]="sections.socialMedia.tagline">
       <div class="text">
         <ang-content-paragraph>
           Third-party social media sites may collect information from this site. Indiana University is not responsible
@@ -172,7 +168,7 @@
     </ang-content-section>
   </ang-content-section>
 
-  <ang-content-section level="2" id="security" underlined [title]="sections.security.tagline">
+  <ang-content-section level="2" id="security" underlined [tagline]="sections.security.tagline">
     <div class="text">
       <ang-content-paragraph>
         Due to the rapidly evolving nature of information technologies, no transmission of information over the Internet
@@ -202,7 +198,7 @@
     level="2"
     id="links-to-non-university-sites"
     underlined
-    [title]="sections.linksToNonUniversitySites.tagline"
+    [tagline]="sections.linksToNonUniversitySites.tagline"
   >
     <div class="text">
       <ang-content-paragraph>
@@ -213,7 +209,12 @@
     </div>
   </ang-content-section>
 
-  <ang-content-section level="2" id="privacy-notice-changes" underlined [title]="sections.privacyNoticeChanges.tagline">
+  <ang-content-section
+    level="2"
+    id="privacy-notice-changes"
+    underlined
+    [tagline]="sections.privacyNoticeChanges.tagline"
+  >
     <div class="text">
       <ang-content-paragraph>
         From time to time, we may use visitor information for new, unanticipated uses not previously disclosed in our
@@ -236,7 +237,7 @@
     </div>
   </ang-content-section>
 
-  <ang-content-section level="2" id="contact-information" underlined [title]="sections.contactInformation.tagline">
+  <ang-content-section level="2" id="contact-information" underlined [tagline]="sections.contactInformation.tagline">
     <div class="text">
       <ang-content-paragraph
         >If you have questions or concerns about this policy, please contact us.</ang-content-paragraph
