@@ -1,0 +1,330 @@
+{
+  "organ": "Liver",
+  "space": "100 µm",
+  "time": "45 years",
+  "description": "SBF-SEM data for regions of the liver.",
+  "sections": [
+    {
+      "title": "Data Overview",
+      "anchor": "data-overview",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "This human liver tissue highlights the 3D architecture of the periportal region using serial block-face scanning electron microscopy (SBF-SEM) at nanometer resolution. Shown are 3 anatomical landmarks: the portal vein, the bile duct, and hepatocyte organelle structures (on a subcellular scale) with mitochondria, cell nuclei, plasma membranes, and the endoplasmic reticulum."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3D Visualizations Within the Human Reference Atlas",
+      "anchor": "3d-visualizations-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://humanatlas.io/hra-organ-gallery"
+              },
+              "content": "Human Reference Atlas Organ Gallery"
+            },
+            " to explore the human liver in VR."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "hra-organ-gallery",
+            "label": "Human Reference Atlas Organ Gallery visualization of the liver"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Video Demo",
+      "anchor": "video-demo",
+      "content": [
+        {
+          "component": "YouTubePlayer",
+          "config": {
+            "videoId": "tw3xERUPt7U"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Data Availability",
+      "anchor": "data-availability",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "EMPIAR: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://doi.org/10.6019/EMPIAR-13356"
+                  },
+                  "content": "https://doi.org/10.6019/EMPIAR-13356"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": ["Preprint published on April 24, 2026."]
+        }
+      ]
+    },
+    {
+      "title": "Lead Contacts",
+      "anchor": "lead-contacts",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Cheng Xing, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:cheng.xing@mail.utoronto.ca"
+                  },
+                  "content": "cheng.xing@mail.utoronto.ca"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Authors",
+      "anchor": "authors",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Cheng Xing",
+                " — University of Toronto",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-2184-1656"
+                  },
+                  "content": "0000-0002-2184-1656"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Ronald Xie",
+                " — University of Toronto, Vector Institute, NVIDIA",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-3336-245X"
+                  },
+                  "content": "0000-0002-3336-245X"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Ben Mulcahy",
+                " — Lunenfeld-Tanenbaum Research Institute, Sinai Health System",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-4688-0333"
+                  },
+                  "content": "0000-0003-4688-0333"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Ali Darbandi",
+                " — Nanoscale Biomedical Imaging Facility, Hospital for Sick Children",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0009-0004-8181-319X"
+                  },
+                  "content": "0009-0004-8181-319X"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Cornelia Thoeni",
+                " — University of Toronto",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0009-0001-0951-5030"
+                  },
+                  "content": "0009-0001-0951-5030"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Ishaan Singh Chandok", " — Harvard University"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Yuna Lee", " — University of Toronto"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Jun Ma", " — Princess Margaret Cancer Centre, University Health Network"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Fez Ali", " — University of Toronto"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Ian D. McGilvray",
+                " — Toronto General Hospital Research Institute, University Health Network"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Sonya MacParland",
+                " — University of Toronto, University Health Network",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0086-9622"
+                  },
+                  "content": "0000-0003-0086-9622"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Mei Zhen",
+                " — University of Toronto, Lunenfeld-Tanenbaum Research Institute, Sinai Health System"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Gary D. Bader",
+                " — University of Toronto, University Health Network, CIFAR",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0185-8861"
+                  },
+                  "content": "0000-0003-0185-8861"
+                },
+                ")"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "anchor": "references",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
+                  },
+                  "content": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://doi.org/10.64898/2026.04.22.719970"
+                  },
+                  "content": "https://doi.org/10.64898/2026.04.22.719970"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "License",
+      "anchor": "license",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://creativecommons.org/publicdomain/zero/1.0/"
+              },
+              "content": "CC0 1.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acknowledgments",
+      "anchor": "acknowledgments",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "All authors thank the Digital Research Alliance of Canada for high-performance computing access."
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-10-30"
+}

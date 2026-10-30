@@ -1,0 +1,545 @@
+{
+  "organ": "Heart",
+  "space": "100 µm",
+  "time": "~40–70 years",
+  "description": "HRA Cell Type Populations (HRApop) visualized in VR.",
+  "sections": [
+    {
+      "title": "Data Overview",
+      "anchor": "data-overview",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Data from this paper was used to compute cell type populations of the healthy, adult, male and female human heart for HRApop. The result was visualized in VR, supported by grant ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://reporter.nih.gov/search/oQWN8hJ2EkWfCtqXHyTq0A/project-details/11123677"
+              },
+              "content": "1R03OD039970-01"
+            },
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3D Visualizations Within the Human Reference Atlas",
+      "anchor": "3d-visualizations-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Created with the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://humanatlas.io/hra-organ-gallery"
+              },
+              "content": "Human Reference Atlas Organ Gallery"
+            },
+            " to explore the human heart in VR."
+          ]
+        },
+        {
+          "component": "Embed",
+          "config": {
+            "id": "hra-organ-gallery",
+            "label": "Human Reference Atlas Organ Gallery visualization of the heart"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Data Availability",
+      "anchor": "data-availability",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "CELLxGENE: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://cellxgene.cziscience.com/collections/b52eb423-5d0d-4645-b217-e1c6d38b2e72"
+                  },
+                  "content": "https://cellxgene.cziscience.com/collections/b52eb423-5d0d-4645-b217-e1c6d38b2e72"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": ["Paper published on September 24, 2020."]
+        }
+      ]
+    },
+    {
+      "title": "Lead Contacts",
+      "anchor": "lead-contacts",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Michela Noseda, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:m.noseda@imperial.ac.uk"
+                  },
+                  "content": "m.noseda@imperial.ac.uk"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Sarah A. Teichmann, ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "mailto:sat1003@cam.ac.uk"
+                  },
+                  "content": "sat1003@cam.ac.uk"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Authors",
+      "anchor": "authors",
+      "content": [
+        {
+          "component": "List",
+          "content": [
+            {
+              "component": "ListItem",
+              "content": [
+                "Monika Litviňuková",
+                " — Wellcome Sanger Institute; Max Delbrück Center for Molecular Medicine (MDC)"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Carlos Talavera-López", " — Wellcome Sanger Institute; EMBL-EBI"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Henrike Maatz", " — Max Delbrück Center for Molecular Medicine (MDC)"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Daniel Reichart",
+                " — Harvard Medical School; University Heart & Vascular Center, University of Hamburg"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Catherine L. Worth",
+                " — Max Delbrück Center for Molecular Medicine (MDC)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-1796-9606"
+                  },
+                  "content": "0000-0002-1796-9606"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Eric L. Lindberg", " — Max Delbrück Center for Molecular Medicine (MDC)"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Masatoshi Kanda",
+                " — Max Delbrück Center for Molecular Medicine (MDC); Sapporo Medical University",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-3468-3586"
+                  },
+                  "content": "0000-0003-3468-3586"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Krzysztof Polanski",
+                " — Wellcome Sanger Institute",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-2586-9576"
+                  },
+                  "content": "0000-0002-2586-9576"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Matthias Heinig",
+                " — Institute of Computational Biology (ICB), HMGU; Technical University of Munich (TUM)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-5612-1720"
+                  },
+                  "content": "0000-0002-5612-1720"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Michael Lee",
+                " — Imperial College London",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-0186-4439"
+                  },
+                  "content": "0000-0002-0186-4439"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Emily R. Nadelmann", " — Harvard Medical School"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Kenny Roberts",
+                " — Wellcome Sanger Institute",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0001-6155-0821"
+                  },
+                  "content": "0000-0001-6155-0821"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Liz Tuck", " — Wellcome Sanger Institute"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Eirini S. Fasouli", " — Wellcome Sanger Institute"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Daniel M. DeLaughter", " — Harvard Medical School"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Barbara McDonough",
+                " — Harvard Medical School; Brigham and Women’s Hospital; Howard Hughes Medical Institute"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Hiroko Wakimoto",
+                " — Harvard Medical School",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0225-6424"
+                  },
+                  "content": "0000-0003-0225-6424"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Joshua M. Gorham", " — Harvard Medical School"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Sara Samari", " — Imperial College London"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Krishnaa T. Mahbubani",
+                " — University of Cambridge; NIHR Cambridge Biomedical Centre; Cambridge Biorepository for Translational Medicine",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-1327-2334"
+                  },
+                  "content": "0000-0002-1327-2334"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Kourosh Saeb-Parsy",
+                " — University of Cambridge; NIHR Cambridge Biomedical Centre; Cambridge Biorepository for Translational Medicine",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-0633-3696"
+                  },
+                  "content": "0000-0002-0633-3696"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Giannino Patone",
+                " — Max Delbrück Center for Molecular Medicine (MDC)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-7242-0341"
+                  },
+                  "content": "0000-0002-7242-0341"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Joseph J. Boyle",
+                " — Imperial College London",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-4337-3320"
+                  },
+                  "content": "0000-0002-4337-3320"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Hongbo Zhang", " — Wellcome Sanger Institute; Sun Yat-sen University"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Hao Zhang", " — University of Alberta; Mazankowski Alberta Heart Institute"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Anissa Viveiros", " — University of Alberta; Mazankowski Alberta Heart Institute"]
+            },
+            {
+              "component": "ListItem",
+              "content": ["Gavin Y. Oudit", " — University of Alberta; Mazankowski Alberta Heart Institute"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Omer Ali Bayraktar",
+                " — Wellcome Sanger Institute",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0001-6055-277X"
+                  },
+                  "content": "0000-0001-6055-277X"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": ["J. G. Seidman", " — Harvard Medical School"]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Christine E. Seidman",
+                " — Harvard Medical School; Brigham and Women’s Hospital; Howard Hughes Medical Institute",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0001-6380-1209"
+                  },
+                  "content": "0000-0001-6380-1209"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Michela Noseda",
+                " — Imperial College London; British Heart Foundation Centre of Regenerative Medicine / Centre of Research Excellence",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-9553-5029"
+                  },
+                  "content": "0000-0002-9553-5029"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Norbert Hubner",
+                " — Max Delbrück Center for Molecular Medicine (MDC); German Centre for Cardiovascular Research (DZHK); Charité-Universitätsmedizin Berlin; Berlin Institute of Health (BIH)",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-1218-6223"
+                  },
+                  "content": "0000-0002-1218-6223"
+                },
+                ")"
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                "Sarah A. Teichmann",
+                " — Wellcome Sanger Institute; University of Cambridge",
+                " (ORCID: ",
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-6294-6366"
+                  },
+                  "content": "0000-0002-6294-6366"
+                },
+                ")"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "anchor": "references",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Litviňuková, Monika, Carlos Talavera-López, Henrike Maatz, Daniel Reichart, Catherine L. Worth, Eric L. Lindberg, Masatoshi Kanda, Krzysztof Polanski, Matthias Heinig, Michael Lee, Emily R. Nadelmann, Kenny Roberts, Liz Tuck, Eirini S. Fasouli, Daniel M. DeLaughter, Barbara McDonough, Hiroko Wakimoto, Joshua M. Gorham, Sara Samari, Krishnaa T. Mahbubani, Kourosh Saeb-Parsy, Giannino Patone, Joseph J. Boyle, Hongbo Zhang, Hao Zhang, Anissa Viveiros, Gavin Y. Oudit, Omer Ali Bayraktar, J. G. Seidman, Christine E. Seidman, Michela Noseda, Norbert Hubner, and Sarah A. Teichmann. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1038/s41586-020-2797-4"
+              },
+              "content": "Cells of the Adult Human Heart"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "Nature"
+            },
+            " 588, no. 7838 (2020): 466–472. doi:10.1038/s41586-020-2797-4."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Bueckle, Andreas, Chenchen Zhu, Alex Yu Hin Wong, Archibald Enninful, Yang Miao, Negin Farzad, Maria Pedersen, Courteney Mattison, Nicholas Sloan, Jason Mares, Cheng Xing, Bruce W. Herr II, Juhi Khare, Yash Ramesh Kumar, Keyur Parekh, Siddhi Chavan, Paean Luby, Ushma Patel, Yashvardhan Jain, John W. Hickey, Gary D. Bader, Hemali Phatnani, Vilas Menon, Rong Fan, Peter K. Sorger, Michael Snyder, and Katy Börner. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.07.07.737090"
+              },
+              "content": "Multiscale Harmonization and Semantic Integration of Biomedical Data Enable Biological Insights through Immersive Exploration"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.07.07.737090."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "License",
+      "anchor": "license",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://creativecommons.org/licenses/by/4.0/"
+              },
+              "content": "CC BY 4.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Acknowledgments",
+      "anchor": "acknowledgments",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "This visualization work was funded by NIH awards OT2OD026671, OT2OD033756, and 1R03OD039970 as well as CIFAR Catalyst."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "This publication is part of the Human Cell Atlas (www.humancellatlas.org/publications). We acknowledge the Sanger Flow Cytometry Facility, Sanger Cellular Generation and Phenotyping (CGaP) Core Facility, and Sanger Core Sequencing pipeline for support with sample processing and sequencing library preparation. We acknowledge the HMS MicRoN Core for their support and assistance in this work. We thank J. Eliasova for graphical images; M. Prete, V. Kiselev and O. Tarkowska for IT support; S. Aldridge for editing the manuscript; C. Domínguez-Conde, J. Park, K. James, K. Tuong, R. Elmentaite and M. Haniffa for discussions about immune cell annotation, and M. Luecken, M. Lotfollahi, D. Fischer and F. Theis for discussions on computational analyses. We thank T. R. W. Oliver and L. Campos for their assistance with orientation of basic cardiac histology. M.N. is the recipient of a British Heart Foundation (BHF) grant (PG/16/47/32156) and J.J.B. is recipient of a BHF grant (FS/13/12/30037, PG/15/57/31580, PG/17/71/33242). M.N., N.H. and S.A.T. are funded by a BHF/DZHK grant (SP/19/1/34461). N.H. is the recipient of an ERC Advanced Grant under the European Union Horizon 2020 Research and Innovation Program (grant agreement AdG788970) and the Federal Ministry of Education and Research of Germany in the framework of CaRNAtion (031L0075A). N.H., C.E.S. and J.G.S. are supported by grants from the Leducq Fondation (16CVD03). D.R. is supported by the German Research Foundation (DFG). H.Z. is supported by the long-term Chinese Council Scholarship (CSC). M.K. received funding provided by the Alexander von Humboldt Foundation. H.Z. was supported by an EMBO long-term postdoctoral fellowship. G.O. received funding provided by the CIHR Canadian Institutes for Health Research, HSF Heart and Stroke Foundation and AI Alberta Innovates. This project has been made possible in part by grant number 2019-202666 from the Chan Zuckerberg Initiative (C.E.S., J.G.S., M.N., M.H., N.H. and S.A.T.). C.T.-L., K.P., E.F., E.T., K.R., O.B., H.Z. and S.A.T. are supported by the Wellcome Sanger Institute grant (WT206194) and the Wellcome Science Strategic Support for a Pilot for the Human Cell Atlas (WT211276/Z/18/Z)). J.G.S. and C.E.S. are supported by NIH grants (2R01HL080494, 2R01HL080494, 1UM1HL098166). J.G.S. and C.E.S. are supported by Engineering Research Centers Program of the National Science Foundation under NSF Cooperative Agreement no. EEC-1647837. C.E.S. and B.M. are supported by the Howard Hughes Medical Institute. We are grateful to the deceased donors and their families, the Human Organ Procurement and Exchange Program (HOPE) and to the Cambridge Biorepository for Translational Medicine (CBTM) for access to human tissue. E.R.N. was supported by a fellowship from the Sarnoff Cardiovascular Research Foundation."
+          ]
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-10-30"
+}

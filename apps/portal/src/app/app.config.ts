@@ -3,9 +3,13 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 import { provideAnalytics, withGlobalErrorHandler } from '@atlasng/analytics';
 import { withDefaultBackend } from '@atlasng/analytics/default-backend';
 import { provideLinkHandler, withRouterHandler } from '@atlasng/common';
+import { provideContentBlocks, withDefinitions } from '@atlasng/content-blocks';
+import { DESIGN_SYSTEM_DEFINITIONS } from '@atlasng/content-blocks/definitions/design-system';
 import { provideSocialMediaButtons } from '@atlasng/design-system/buttons/social-media-button';
+import { provideAngIcons } from '@atlasng/design-system/icons';
 import { defineMhuCube } from '@mhu/mhu-cube';
 import { appRoutes } from './app.routes';
+import { PORTAL_DEFINITIONS } from './content-blocks/definitions';
 import { SOCIAL_MEDIA_DEFS } from './social-media';
 
 export const appConfig: ApplicationConfig = {
@@ -21,6 +25,7 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideLinkHandler(withRouterHandler()),
+    provideContentBlocks({}, withDefinitions(DESIGN_SYSTEM_DEFINITIONS), withDefinitions(PORTAL_DEFINITIONS)),
     provideSocialMediaButtons(SOCIAL_MEDIA_DEFS),
     provideAnalytics(
       { appName: 'multiscalehuman' },
@@ -29,5 +34,6 @@ export const appConfig: ApplicationConfig = {
         endpoint: `https://cns.iu.edu/tr-mhu${isDevMode() ? '-dev' : ''}`,
       }),
     ),
+    provideAngIcons(),
   ],
 };
