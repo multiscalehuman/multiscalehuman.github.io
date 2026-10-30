@@ -1,10 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { AnyLinkCommand } from '@atlasng/common';
 import { ContentBlock } from '@atlasng/content-blocks';
 import { CONTENT_DOCUMENT_VERSION, ContentDocument } from '@atlasng/content-blocks/types';
-import { Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
+import { BreadcrumbItem, Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 import { ContentHeader } from '@atlasng/design-system/content/content-header';
 import { ContentParagraph } from '@atlasng/design-system/content/content-paragraph';
 import { ContentSection } from '@atlasng/design-system/content/content-section';
@@ -13,20 +12,12 @@ import { ActiveSectionState } from './active-section-state';
 import { DatasetMetadata, MetadataSection } from './dataset-metadata';
 
 /** Trail from the CIFAR site to the portal homepage. */
-const BASE_CRUMBS = [
+const BASE_CRUMBS: BreadcrumbItem[] = [
   { name: 'Home', command: 'https://cifar.ca/' },
   { name: 'Research Programs', command: 'https://cifar.ca/research-programs/' },
   { name: 'CIFAR MacMillan Multiscale Human', command: 'https://cifar.ca/research-programs/' },
   { name: 'Data Portal', command: '/' },
 ];
-
-/** Breadcrumb item */
-export interface BreadcrumbItem {
-  /** Name of item */
-  name: string;
-  /** Command to execute when the breadcrumb is clicked */
-  command?: AnyLinkCommand;
-}
 
 /** Section with its body as a content document. */
 interface RenderedSection extends MetadataSection {
