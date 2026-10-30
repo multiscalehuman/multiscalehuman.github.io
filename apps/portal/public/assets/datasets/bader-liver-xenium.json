@@ -17,33 +17,6 @@
       ]
     },
     {
-      "title": "2D Cell Distance Distributions",
-      "anchor": "2d-cell-distance-distributions",
-      "content": [
-        {
-          "component": "ContentParagraph",
-          "content": [
-            "Created with the ",
-            {
-              "component": "TextLink",
-              "config": {
-                "href": "https://apps.humanatlas.io/cde/"
-              },
-              "content": "Cell Distance Explorer"
-            },
-            " to explore how cell types are spatially distributed around endothelial cells."
-          ]
-        },
-        {
-          "component": "Embed",
-          "config": {
-            "id": "cell-distance-explorer",
-            "label": "Cell Distance Explorer visualization of the liver"
-          }
-        }
-      ]
-    },
-    {
       "title": "Lead Contacts",
       "anchor": "lead-contacts",
       "content": [
