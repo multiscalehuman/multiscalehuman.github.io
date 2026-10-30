@@ -38,7 +38,8 @@
           "component": "Image",
           "config": {
             "src": "assets/datasets/lee-kidney-hipct-63-vr.png",
-            "alt": "Blood vessel network of a kidney from a 63-year-old male donor in the Human Reference Atlas Organ Gallery in VR"
+            "alt": "Blood vessel network of a kidney from a 63-year-old male donor in the Human Reference Atlas Organ Gallery in VR",
+            "maxWidth": 640
           }
         }
       ]

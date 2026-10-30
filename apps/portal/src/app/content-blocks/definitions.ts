@@ -9,6 +9,13 @@ const stringSchema = createSchema<string, ConfigValue>((value) =>
   typeof value === 'string' ? { value } : { issues: [{ message: 'Expected a string.' }] },
 );
 
+/** Schema accepting a positive number config value, or no value. */
+const optionalPositiveNumberSchema = createSchema<number | undefined, ConfigValue>((value) =>
+  value === undefined || (typeof value === 'number' && value > 0)
+    ? { value }
+    : { issues: [{ message: 'Expected a positive number.' }] },
+);
+
 /** `List`: a bulleted list. Content: `ListItem` nodes. */
 export const LIST_DEFINITION = {
   name: 'List',
@@ -43,12 +50,15 @@ export const EMBED_DEFINITION = {
   config: { id: stringSchema, label: stringSchema },
 } satisfies ContentDefinition;
 
-/** `Image`: an image shown at full width. Config: `src` (URL relative to the app's base URL) and `alt` (text alternative). */
+/**
+ * `Image`: an image shown at full width. Config: `src` (URL relative to the app's base URL), `alt` (text alternative),
+ * and optionally `maxWidth` (width cap in pixels, such as `640` for square images).
+ */
 export const IMAGE_DEFINITION = {
   name: 'Image',
   component: () => import('./image').then((m) => m.ContentImage),
   host: 'img',
-  config: { src: stringSchema, alt: stringSchema },
+  config: { src: stringSchema, alt: stringSchema, maxWidth: optionalPositiveNumberSchema },
 } satisfies ContentDefinition;
 
 /** Portal definitions, registered alongside the design-system definitions. */

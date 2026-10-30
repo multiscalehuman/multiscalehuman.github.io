@@ -17,6 +17,7 @@ import { Component, input } from '@angular/core';
     decoding: 'async',
     '[src]': 'src()',
     '[alt]': 'alt()',
+    '[style.max-width.px]': 'maxWidth()',
   },
 })
 export class ContentImage {
@@ -24,4 +25,6 @@ export class ContentImage {
   readonly src = input.required<string>();
   /** Text alternative describing the image. */
   readonly alt = input.required<string>();
+  /** Width cap in pixels, such as `640` for square images. The image fills its section when unset. */
+  readonly maxWidth = input<number>();
 }
