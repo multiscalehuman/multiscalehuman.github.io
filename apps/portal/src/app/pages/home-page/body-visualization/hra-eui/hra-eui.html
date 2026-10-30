@@ -1,0 +1,12 @@
+@defer (on viewport) {
+  <ccf-eui
+    home-url="https://multiscalehuman.github.io"
+    [baseHref]="baseHref"
+    [dataSources]="dataSources()"
+    [selectedOrgans]="selectedOrgans"
+    [loginDisabled]="true"
+    [disableScreenSizeNotice]="true"
+  />
+} @placeholder {
+  <div>Loading...</div>
+}

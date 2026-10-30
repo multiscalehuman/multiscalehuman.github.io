@@ -1,4 +1,4 @@
-import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
+import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { BreadcrumbItem, Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 
@@ -25,12 +25,6 @@ const HERO_CRUMBS: BreadcrumbItem[] = [
   styleUrl: './hero.scss',
   providers: [
     {
-      provide: IMAGE_CONFIG,
-      useValue: {
-        breakpoints: [640, 750, 828, 1080, 1200, 1920, 2048, 2880],
-      },
-    },
-    {
       provide: IMAGE_LOADER,
       useValue: ({ src, width }: ImageLoaderConfig) => `${src}-${width ?? 2880}.webp`,
     },
@@ -39,12 +33,4 @@ const HERO_CRUMBS: BreadcrumbItem[] = [
 export class Hero {
   /** Breadcrumb trail shown above the logo. */
   protected readonly crumbs = HERO_CRUMBS;
-
-  /**
-   * Rendered width of the illustration. `cover` renders it at the larger of the viewport width and
-   * 2880 / 561 (about 5.13) times the hero's height. The hero has no fixed height; its padding and text make it
-   * about 25rem tall, or 20rem from 960px, where the title wraps less, so the image is about 128.4rem or 102.7rem wide.
-   * Update these widths if changes to the hero's padding or text change its height.
-   */
-  protected readonly sizes = '(min-width: 960px) max(100vw, 102.7rem), max(100vw, 128.4rem)';
 }
