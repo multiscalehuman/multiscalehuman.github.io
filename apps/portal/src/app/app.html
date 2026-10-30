@@ -1,4 +1,14 @@
-<ang-skip-to-content-button anchorId="main-content" />
+<!-- TODO: add a skip link once cns-iu/AtlasNG#230 is fixed -->
+
+<ang-cookie-banner
+  closeOnClick="false"
+  [opened]="!hasDecision()"
+  (allowAll)="allowAllCookies()"
+  (allowNecessary)="allowNecessaryCookies()"
+  (customize)="openPrivacyPreferences()"
+>
+  <a angCookieBannerPrivacyPolicy angTextLink angAnyLink="/privacy-policy" target="_blank">Privacy policy</a>
+</ang-cookie-banner>
 
 <main id="main-content" class="page-content" tabindex="-1">
   <router-outlet />
@@ -12,13 +22,3 @@
   (openPrivacyPolicy)="openPrivacyPolicy()"
   (openPrivacyPreferences)="openPrivacyPreferences()"
 />
-
-@if (!hasDecision()) {
-  <ang-cookie-banner
-    (allowAll)="allowAllCookies()"
-    (allowNecessary)="allowNecessaryCookies()"
-    (customize)="openPrivacyPreferences()"
-  >
-    <a angCookieBannerPrivacyPolicy angTextLink angAnyLink="/privacy-policy" target="_blank">Privacy policy</a>
-  </ang-cookie-banner>
-}

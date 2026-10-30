@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AnyLink } from '@atlasng/common';
 import { TextLink } from '@atlasng/design-system/links/text-link';
 import {
@@ -16,7 +16,6 @@ import {
   imports: [AnyLink, TextLink],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage {
