@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 @use '@atlasng/design-system' as ds;
+@use '@atlasng/icons';
 @use './styles/fonts' as fonts;
 @use './styles/theme' as theme;
 // <mhu-cube> renders into the light DOM, so its styles are global. Rules after it can restyle its parts.

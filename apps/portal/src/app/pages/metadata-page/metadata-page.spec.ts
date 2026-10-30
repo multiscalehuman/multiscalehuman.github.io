@@ -69,6 +69,12 @@ describe('MetadataPage', () => {
     expect(screen.getByText('Test description.')).toBeInTheDocument();
   });
 
+  it('sets the browser title to the dataset title', async () => {
+    await setup();
+
+    expect(document.title).toBe('Lung, 1 mm, ~20–30 years | Multiscale Human Data Portal');
+  });
+
   it('ends the breadcrumbs with the organ and scale', async () => {
     await setup();
 

@@ -10,6 +10,7 @@ import { ContentSection } from '@atlasng/design-system/content/content-section';
 import { TableOfContents, TableOfContentsItem } from '@atlasng/design-system/table-of-contents';
 import { ActiveSectionState } from './active-section-state';
 import { DatasetMetadata, MetadataSection } from './dataset-metadata';
+import { Title } from '@angular/platform-browser';
 
 /** Trail from the CIFAR site to the portal homepage. */
 const BASE_CRUMBS: BreadcrumbItem[] = [
@@ -77,17 +78,22 @@ export class MetadataPage {
   /** Tracks the section being read, updated on scroll and when a table of contents entry is clicked. */
   protected readonly activeSection = inject(ActiveSectionState);
 
+  /** Sets the browser tab title to the dataset title. */
+  protected readonly browserTitle = inject(Title);
+
   /** Table of contents entry highlighted for the active section. */
   protected readonly activeTocItem = computed(() =>
     this.tocItems().find((item) => item.anchor === this.activeSection.activeSectionAnchor()),
   );
 
-  /** Keeps the active section service in sync with the rendered sections. */
+  /** Keeps the active section service and the browser title in sync with the dataset. */
   constructor() {
     effect(() => {
       const sections = this.sections();
       this.activeSection.initialize();
       this.activeSection.setSections(sections);
     });
+
+    effect(() => this.browserTitle.setTitle(`${this.title()} | Multiscale Human Data Portal`));
   }
 }

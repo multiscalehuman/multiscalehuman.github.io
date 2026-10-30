@@ -1,6 +1,4 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AnyLink } from '@atlasng/common';
-import { TextLink } from '@atlasng/design-system/links/text-link';
 import {
   SAMPLE_COMPACT_METADATA,
   SAMPLE_DATASET_AXES,
@@ -13,7 +11,6 @@ import {
  */
 @Component({
   selector: 'mhu-home-page',
-  imports: [AnyLink, TextLink],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

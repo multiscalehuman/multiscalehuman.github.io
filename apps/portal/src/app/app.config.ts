@@ -6,6 +6,7 @@ import { provideLinkHandler, withRouterHandler } from '@atlasng/common';
 import { provideContentBlocks, withDefinitions } from '@atlasng/content-blocks';
 import { DESIGN_SYSTEM_DEFINITIONS } from '@atlasng/content-blocks/definitions/design-system';
 import { provideSocialMediaButtons } from '@atlasng/design-system/buttons/social-media-button';
+import { provideAngIcons } from '@atlasng/design-system/icons';
 import { defineMhuCube } from '@mhu/mhu-cube';
 import { appRoutes } from './app.routes';
 import { PORTAL_DEFINITIONS } from './content-blocks/definitions';
@@ -33,5 +34,6 @@ export const appConfig: ApplicationConfig = {
         endpoint: `https://cns.iu.edu/tr-mhu${isDevMode() ? '-dev' : ''}`,
       }),
     ),
+    provideAngIcons(),
   ],
 };
