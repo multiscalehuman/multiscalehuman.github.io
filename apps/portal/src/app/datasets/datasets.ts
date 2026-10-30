@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { ResolveFn } from '@angular/router';
-import { Observable } from 'rxjs';
+import { RedirectCommand, ResolveFn, Router } from '@angular/router';
+import { catchError, Observable, of } from 'rxjs';
 import { DatasetMetadata } from '../pages/metadata-page/dataset-metadata';
 
-/** Loads dataset metadata from `assets/datasets`. Each dataset is requested at most once and then cached. */
+/** Loads dataset metadata from `assets/datasets`. */
 @Service()
 export class Datasets {
   /** HTTP client used to fetch dataset files. */
@@ -12,7 +12,6 @@ export class Datasets {
 
   /**
    * Loads the dataset stored in `assets/datasets/<id>.json`.
-   * Failed requests are not cached, so a later call retries.
    * @param id Dataset ID
    * @returns Dataset metadata; errors when the file is missing or cannot be loaded
    */
@@ -21,12 +20,19 @@ export class Datasets {
   }
 }
 
+/** Path that matches no route, so the wildcard route renders the not-found page. */
+const NOT_FOUND_PATH = '/not-found';
+
 /**
  * Resolves the dataset named by the route's `datasetId` parameter.
  * @param route Activated route snapshot
- * @returns Dataset metadata for the route
+ * @returns Dataset metadata for the route; when the parameter is missing, names no dataset, or the file fails to
+ *   load, a redirect to the not-found page that keeps the requested URL in the address bar
  */
 export const datasetResolver: ResolveFn<DatasetMetadata> = (route) => {
+  const router = inject(Router);
   const id = route.paramMap.get('datasetId') ?? '';
-  return inject(Datasets).getDataset(id);
+  return inject(Datasets)
+    .getDataset(id)
+    .pipe(catchError(() => of(new RedirectCommand(router.parseUrl(NOT_FOUND_PATH), { skipLocationChange: true }))));
 };
