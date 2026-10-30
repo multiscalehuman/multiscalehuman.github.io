@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AnyLinkCommand } from '@atlasng/common';
 import { ContentBlock } from '@atlasng/content-blocks';
@@ -53,7 +53,6 @@ interface RenderedSection extends MetadataSection {
   templateUrl: './metadata-page.html',
   styleUrl: './metadata-page.scss',
   providers: [ActiveSectionState],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataPage {
   /** Dataset content to render. */

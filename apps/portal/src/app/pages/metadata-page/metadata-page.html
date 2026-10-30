@@ -24,7 +24,7 @@
 
   <div class="content">
     @for (section of sections(); track section.anchor) {
-      <ang-content-section level="2" [title]="section.title" [id]="section.anchor">
+      <ang-content-section level="2" [tagline]="section.title" [id]="section.anchor">
         <ang-content-block class="section-body" [document]="section.document" />
       </ang-content-section>
     }
