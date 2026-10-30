@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterOutlet } from '@angular/router';
 import { AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
@@ -16,7 +16,6 @@ import { SOCIAL_MEDIA_IDS } from './social-media';
   imports: [RouterOutlet, AnyLink, CookieBanner, CookieBannerPrivacyPolicy, Footer, SkipToContentButton, TextLink],
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   /** Dialog service used to open the cookie preferences modal. */
