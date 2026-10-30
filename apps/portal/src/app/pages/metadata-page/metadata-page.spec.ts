@@ -27,6 +27,7 @@ const METADATA: DatasetMetadata = {
           ],
         },
         { component: 'Embed', config: { id: 'gallery', label: 'Gallery visualization of the lung' } },
+        { component: 'Image', config: { src: 'assets/lung.png', alt: 'Lung in VR', maxWidth: 640 } },
       ],
     },
     {
@@ -148,6 +149,14 @@ describe('MetadataPage', () => {
     await setup();
 
     expect(await screen.findByRole('img', { name: 'Gallery visualization of the lung' })).toBeInTheDocument();
+  });
+
+  it('renders images from content blocks with their source, alt text, and width cap', async () => {
+    await setup();
+
+    const image = await screen.findByRole('img', { name: 'Lung in VR' });
+    expect(image).toHaveAttribute('src', 'assets/lung.png');
+    expect(image).toHaveStyle({ maxWidth: '640px' });
   });
 
   it('renders the last updated date', async () => {
