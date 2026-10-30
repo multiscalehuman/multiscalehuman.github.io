@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AnyLink, AnyLinkCommand } from '@atlasng/common';
 import { Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 import { ContentHeader } from '@atlasng/design-system/content/content-header';

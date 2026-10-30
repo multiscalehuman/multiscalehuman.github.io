@@ -42,6 +42,11 @@ describe('App', () => {
     };
   }
 
+  // jsdom never fires animationend, so a closing banner is detected by its animation class.
+  function getCookieBanner(): HTMLElement | null {
+    return screen.getByRole('region', { name: /privacy preferences/i }).parentElement;
+  }
+
   it('renders the main content landmark and the footer', async () => {
     await setup({ hasDecision: true });
 
@@ -64,7 +69,7 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: /customize/i })).toBeInTheDocument();
   });
 
-  it('accepts all cookies and hides the banner', async () => {
+  it('accepts all cookies and closes the banner', async () => {
     const { fixture, permissionsManager } = await setup();
     const app = fixture.componentInstance as unknown as { allowAllCookies(): void };
 
@@ -72,10 +77,10 @@ describe('App', () => {
     await fixture.whenStable();
 
     expect(permissionsManager.setFullPermissions).toHaveBeenCalled();
-    expect(screen.queryByRole('button', { name: /customize/i })).not.toBeInTheDocument();
+    expect(getCookieBanner()).toHaveClass('ang-cookie-banner--closed');
   });
 
-  it('accepts only necessary cookies and hides the banner', async () => {
+  it('accepts only necessary cookies and closes the banner', async () => {
     const { fixture, permissionsManager } = await setup();
     const app = fixture.componentInstance as unknown as { allowNecessaryCookies(): void };
 
@@ -83,7 +88,7 @@ describe('App', () => {
     await fixture.whenStable();
 
     expect(permissionsManager.setDefaultPermissions).toHaveBeenCalled();
-    expect(screen.queryByRole('button', { name: /customize/i })).not.toBeInTheDocument();
+    expect(getCookieBanner()).toHaveClass('ang-cookie-banner--closed');
   });
 
   it('saves the permissions chosen in the cookie preferences dialog', async () => {
@@ -116,12 +121,13 @@ describe('App', () => {
     expect(navigate).toHaveBeenCalledWith(['/privacy-policy']);
   });
 
-  it('opens the privacy preferences from the cookie banner', async () => {
+  it('opens the privacy preferences from the cookie banner and keeps it open until a decision', async () => {
     const user = userEvent.setup();
     const { dialog } = await setup();
 
     await user.click(screen.getByRole('button', { name: /customize/i }));
 
     expect(dialog.open).toHaveBeenCalled();
+    expect(getCookieBanner()).not.toHaveClass('ang-cookie-banner--closed');
   });
 });

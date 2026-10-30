@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   SAMPLE_COMPACT_METADATA,
   SAMPLE_DATASET_AXES,
@@ -14,7 +14,6 @@ import {
   selector: 'mhu-home-page',
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage {
