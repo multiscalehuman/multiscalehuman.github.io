@@ -20,4 +20,10 @@ describe('HomePage', () => {
     expect(await screen.findByRole('region', { name: 'Organ imaging datasets' })).toBeInTheDocument();
     expect(await screen.findAllByRole('button', { name: /^Select / })).toHaveLength(SAMPLE_DATASETS.length);
   });
+
+  it('renders the 3D Human Body Visualization section', async () => {
+    await render(HomePage);
+
+    expect(screen.getByRole('heading', { level: 2, name: '3D Human Body Visualization' })).toBeInTheDocument();
+  });
 });

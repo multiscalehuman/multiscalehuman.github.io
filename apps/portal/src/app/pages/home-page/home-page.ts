@@ -5,15 +5,16 @@ import {
   SAMPLE_DATASETS,
   SAMPLE_HOVER_METADATA,
 } from '../../datasets/sample-datasets';
+import { BodyVisualization } from './body-visualization/body-visualization';
 import { Hero } from './hero/hero';
 
 /**
- * Landing page: the hero, then the `<mhu-cube>` custom element, which the app registers at startup,
- * with the sample datasets. The rest of the Figma homepage (EUI embed) is still to come.
+ * Landing page: the hero, the `<mhu-cube>` custom element, which the app registers at startup,
+ * with the sample datasets, and the 3D Human Body Visualization section with the embedded HRA EUI.
  */
 @Component({
   selector: 'mhu-home-page',
-  imports: [Hero],
+  imports: [BodyVisualization, Hero],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

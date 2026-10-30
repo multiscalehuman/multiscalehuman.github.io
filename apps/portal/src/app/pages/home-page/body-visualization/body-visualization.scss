@@ -1,0 +1,45 @@
+@use '@atlasng/design-system' as ds;
+
+:host {
+  display: block;
+  padding: 2.5rem 1.5rem;
+
+  @include ds.breakpoint(medium) {
+    padding: 2.5rem;
+  }
+}
+
+.intro {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.screen-size-notice {
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+
+  @include ds.breakpoint(medium) {
+    display: none;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: ds.sys-slot(primary);
+  font: ds.sys-slot(label-medium);
+  font-weight: 600;
+  letter-spacing: ds.sys-slot(label-medium-tracking);
+  text-transform: uppercase;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font: ds.sys-slot(headline-large);
+  letter-spacing: ds.sys-slot(headline-large-tracking);
+}
+
+.description {
+  margin: 0;
+  color: ds.sys-slot(on-surface-variant);
+  font: ds.sys-slot(body-large);
+}
