@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject, input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject, input, Renderer2 } from '@angular/core';
 
 /** ID of the EUI's `<script>` element, used to add the stylesheet and script only once. */
 const EUI_SCRIPT_ID = 'ccf-eui-script';
@@ -33,18 +33,27 @@ export class HraEui {
   /** Organs selected when the EUI starts. */
   protected readonly selectedOrgans = MHU_ORGAN_IRIS;
 
+  protected readonly document = inject(DOCUMENT);
+  protected readonly renderer = inject(Renderer2);
+
   /** Adds the EUI's stylesheet and script to the page the first time the EUI is shown. */
   constructor() {
-    const document = inject(DOCUMENT);
-    if (!document.getElementById(EUI_SCRIPT_ID)) {
-      document.head.append(
-        Object.assign(document.createElement('link'), { rel: 'stylesheet', href: `${this.baseHref}styles.css` }),
-        Object.assign(document.createElement('script'), {
-          id: EUI_SCRIPT_ID,
-          type: 'module',
-          src: `${this.baseHref}wc.js`,
-        }),
-      );
+    this.addEuiAssets();
+  }
+
+  /** Adds the EUI stylesheet and script if they have not already been added. */
+  protected addEuiAssets(): void {
+    if (!this.document.getElementById(EUI_SCRIPT_ID)) {
+      const stylesheet = this.renderer.createElement('link');
+      this.renderer.setAttribute(stylesheet, 'rel', 'stylesheet');
+      this.renderer.setAttribute(stylesheet, 'href', `${this.baseHref}styles.css`);
+      this.renderer.appendChild(this.document.head, stylesheet);
+
+      const script = this.renderer.createElement('script');
+      this.renderer.setAttribute(script, 'id', EUI_SCRIPT_ID);
+      this.renderer.setAttribute(script, 'type', 'module');
+      this.renderer.setAttribute(script, 'src', `${this.baseHref}wc.js`);
+      this.renderer.appendChild(this.document.head, script);
     }
   }
 }
