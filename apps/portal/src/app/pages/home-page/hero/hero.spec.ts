@@ -1,15 +1,9 @@
 import { render, screen, within } from '@testing-library/angular';
-import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { Hero } from './hero';
-
-const IMAGE_PROVIDERS = [
-  { provide: IMAGE_CONFIG, useValue: { breakpoints: [640, 2880] } },
-  { provide: IMAGE_LOADER, useValue: ({ src, width }: ImageLoaderConfig) => `${src}-${width ?? 2880}.webp` },
-];
 
 describe('Hero', () => {
   it('renders the portal title as the only h1', async () => {
-    await render(Hero, { providers: IMAGE_PROVIDERS });
+    await render(Hero);
 
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(
@@ -18,13 +12,13 @@ describe('Hero', () => {
   });
 
   it('renders the tagline', async () => {
-    await render(Hero, { providers: IMAGE_PROVIDERS });
+    await render(Hero);
 
     expect(screen.getByText('Explore data across space, time, and organs.')).toBeInTheDocument();
   });
 
   it('renders the breadcrumbs to cifar.ca with Data Portal as plain text', async () => {
-    await render(Hero, { providers: IMAGE_PROVIDERS });
+    await render(Hero);
     const nav = within(screen.getByRole('navigation', { name: 'Breadcrumb' }));
 
     expect(nav.getByRole('link', { name: 'Home' })).toHaveAttribute('href', 'https://cifar.ca/');
@@ -41,13 +35,13 @@ describe('Hero', () => {
   });
 
   it('renders the CIFAR logo', async () => {
-    await render(Hero, { providers: IMAGE_PROVIDERS });
+    await render(Hero);
 
     expect(screen.getByRole('img', { name: 'CIFAR' })).toHaveAttribute('src', 'assets/logos/cifar.svg');
   });
 
   it('renders the illustration as a decorative image', async () => {
-    await render(Hero, { providers: IMAGE_PROVIDERS });
+    await render(Hero);
     const illustration = screen.getByRole('presentation');
 
     expect(illustration).toHaveAttribute('alt', '');
