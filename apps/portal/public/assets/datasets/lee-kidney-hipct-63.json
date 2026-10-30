@@ -31,14 +31,14 @@
               },
               "content": "Human Reference Atlas Organ Gallery"
             },
-            " to explore the human kidney in VR."
+            " to visualize cell type populations in VR."
           ]
         },
         {
-          "component": "Embed",
+          "component": "Image",
           "config": {
-            "id": "hra-organ-gallery",
-            "label": "Human Reference Atlas Organ Gallery visualization of the kidney"
+            "src": "assets/datasets/lee-kidney-hipct-63-vr.png",
+            "alt": "Blood vessel network of a kidney from a 63-year-old male donor in the Human Reference Atlas Organ Gallery in VR"
           }
         }
       ]

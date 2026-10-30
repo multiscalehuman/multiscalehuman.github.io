@@ -31,14 +31,14 @@
               },
               "content": "Human Reference Atlas Organ Gallery"
             },
-            " to explore the human thymus in VR."
+            " to visualize cell type populations in VR."
           ]
         },
         {
-          "component": "Embed",
+          "component": "Image",
           "config": {
-            "id": "hra-organ-gallery",
-            "label": "Human Reference Atlas Organ Gallery visualization of the thymus"
+            "src": "assets/datasets/zandstra-thymus-codex-vr.png",
+            "alt": "Thymus cells colored by cell type in the Human Reference Atlas Organ Gallery in VR"
           }
         }
       ]

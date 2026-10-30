@@ -43,10 +43,19 @@ export const EMBED_DEFINITION = {
   config: { id: stringSchema, label: stringSchema },
 } satisfies ContentDefinition;
 
+/** `Image`: an image shown at full width. Config: `src` (URL relative to the app's base URL) and `alt` (text alternative). */
+export const IMAGE_DEFINITION = {
+  name: 'Image',
+  component: () => import('./image').then((m) => m.ContentImage),
+  host: 'img',
+  config: { src: stringSchema, alt: stringSchema },
+} satisfies ContentDefinition;
+
 /** Portal definitions, registered alongside the design-system definitions. */
 export const PORTAL_DEFINITIONS: ContentDefinition[] = [
   LIST_DEFINITION,
   LIST_ITEM_DEFINITION,
   CITE_DEFINITION,
   EMBED_DEFINITION,
+  IMAGE_DEFINITION,
 ];

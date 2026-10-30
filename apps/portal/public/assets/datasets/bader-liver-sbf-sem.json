@@ -31,14 +31,14 @@
               },
               "content": "Human Reference Atlas Organ Gallery"
             },
-            " to explore the human liver in VR."
+            " to visualize cell type populations in VR."
           ]
         },
         {
-          "component": "Embed",
+          "component": "Image",
           "config": {
-            "id": "hra-organ-gallery",
-            "label": "Human Reference Atlas Organ Gallery visualization of the liver"
+            "src": "assets/datasets/bader-liver-sbf-sem-vr.png",
+            "alt": "Portal vein, bile duct, and hepatocyte boundary reconstructions of the liver in the Human Reference Atlas Organ Gallery in VR"
           }
         }
       ]
