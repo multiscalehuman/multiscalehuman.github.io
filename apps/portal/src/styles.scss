@@ -25,14 +25,14 @@
     @include ds.ext-level-colors($name, $palette, color-scheme);
   }
 
-  @include ds.mat-all-defaults;
+  @include ds.defaults;
 }
 
 // In the Figma design the footer sits on the page surface, not on surface-variant.
 ang-footer {
   @include ds.footer-overrides(
     (
-      background-color: var(--mat-sys-surface),
+      background-color: ds.sys-slot(surface),
     )
   );
 }
@@ -40,14 +40,14 @@ ang-footer {
 body {
   margin: 0;
   min-width: 20rem;
-  background-color: var(--mat-sys-background);
-  color: var(--mat-sys-on-background);
-  font: var(--mat-sys-body-large);
+  background-color: ds.sys-slot(background);
+  color: ds.sys-slot(on-background);
+  font: ds.sys-slot(body-large);
 }
 
 mhu-cube {
   // The component paints its own surface, so it takes the page's background to sit flush with it.
-  --mhu-cube-surface: var(--mat-sys-background);
+  --mhu-cube-surface: #{ds.sys-slot(background)};
 
   display: block;
   width: 100%;
