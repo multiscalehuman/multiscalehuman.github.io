@@ -112,32 +112,41 @@
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Bueckle, Andreas, Chenchen Zhu, Alex Yu Hin Wong, Archibald Enninful, Yang Miao, Negin Farzad, Maria Pedersen, Courteney Mattison, Nicholas Sloan, Jason Mares, Cheng Xing, Bruce W. Herr II, Juhi Khare, Yash Ramesh Kumar, Keyur Parekh, Siddhi Chavan, Paean Luby, Ushma Patel, Yashvardhan Jain, John W. Hickey, Gary D. Bader, Hemali Phatnani, Vilas Menon, Rong Fan, Peter K. Sorger, Michael Snyder, and Katy Börner. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                  },
-                  "content": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.07.07.737090"
+              },
+              "content": "Multiscale Harmonization, Semantic Integration, and Immersive Exploration of Single-Cell Data in Support of Novel Biological Insights"
             },
+            ".” ",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://doi.org/10.64898/2026.04.22.719970"
-                  },
-                  "content": "https://doi.org/10.64898/2026.04.22.719970"
-                }
-              ]
-            }
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.07.07.737090."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Xing, Cheng, Ronald Xie, Ben Mulcahy, Ali Darbandi, Cornelia Thoeni, Ishaan Singh Chandok, Yuna Lee, Jun Ma, Fez Ali, Ian D. McGilvray, Sonya MacParland, Mei Zhen, and Gary D. Bader. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.04.22.719970"
+              },
+              "content": "Multiscale Volume Electron Microscopy of the Human Liver Maps Vascular-Cellular Architecture, Organelle Dynamics and Inter-organelle Communication"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.04.22.719970."
           ]
         }
       ]

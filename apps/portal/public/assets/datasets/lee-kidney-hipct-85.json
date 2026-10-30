@@ -114,32 +114,36 @@
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Walsh, Claire L., Joseph Brunet, Camille Berruyer, Emer Burke O’Leary, Shahrokh Rahmani, Alexandre Bellier, Yanis Boukortt, Alejandro de Maria, Marjolaine Bodin, Klaus Engel, Kathleen Dollman, Joseph Jacob, Christopher Werlein, Danny D. Jonigk, Maximilian Ackermann, Paul Tafforeau, and Peter D. Lee. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                  },
-                  "content": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.15151/ESRF-DC-1773965419"
+              },
+              "content": "Complete Scan at 25.14 µm of the Left Kidney of the Body Donor LADAF-2021-17"
             },
+            ".” Dataset. European Synchrotron Radiation Facility, 2024. doi:10.15151/ESRF-DC-1773965419."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Jain, Yashvardhan, Claire L. Walsh, Ekin Yagis, Shahab Aslani, Sonal Nandanwar, Yang Zhou, Juhyung Ha, Katherine S. Gustilo, Joseph Brunet, Shahrokh Rahmani, Paul Tafforeau, Alexandre Bellier, Griffin M. Weber, Peter D. Lee, and Katy Börner. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.nature.com/articles/s41467-026-74050-8"
-                  },
-                  "content": "https://www.nature.com/articles/s41467-026-74050-8"
-                }
-              ]
-            }
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1038/s41467-026-74050-8"
+              },
+              "content": "Vasculature Segmentation in 3D Hierarchical Phase-Contrast Tomography Images of Human Kidneys"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "Nature Communications"
+            },
+            " 17, no. 1 (2026): 8273. doi:10.1038/s41467-026-74050-8."
           ]
         }
       ]

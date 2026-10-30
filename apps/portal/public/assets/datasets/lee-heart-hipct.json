@@ -86,32 +86,36 @@
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Walsh, Claire L., Joseph Brunet, Camille Berruyer, Emer Burke O’Leary, Shahrokh Rahmani, Alexandre Bellier, Yanis Boukortt, Alejandro de Maria, Marjolaine Bodin, Klaus Engel, Kathleen Dollman, Joseph Jacob, Christopher Werlein, Danny D. Jonigk, Maximilian Ackermann, Paul Tafforeau, and Peter D. Lee. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                  },
-                  "content": "https://human-organ-atlas.esrf.fr/datasets/1773965003"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.15151/ESRF-DC-1773965419"
+              },
+              "content": "Complete Scan at 25.14 µm of the Left Kidney of the Body Donor LADAF-2021-17"
             },
+            ".” Dataset. European Synchrotron Radiation Facility, 2024. doi:10.15151/ESRF-DC-1773965419."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Brunet, Joseph, Andrew C. Cook, Claire L. Walsh, James Cranley, Paul Tafforeau, Klaus Engel, Owen Arthurs, Camille Berruyer, Emer Burke O’Leary, Alexandre Bellier, Ryo Torii, Christopher Werlein, Danny D. Jonigk, Maximilian Ackermann, Kathleen Dollman, and Peter D. Lee. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://doi.org/10.1148/radiol.232731"
-                  },
-                  "content": "https://doi.org/10.1148/radiol.232731"
-                }
-              ]
-            }
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1148/radiol.232731"
+              },
+              "content": "Multidimensional Analysis of the Adult Human Heart in Health and Disease Using Hierarchical Phase-Contrast Tomography"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "Radiology"
+            },
+            " 312, no. 1 (2024): e232731. doi:10.1148/radiol.232731."
           ]
         }
       ]

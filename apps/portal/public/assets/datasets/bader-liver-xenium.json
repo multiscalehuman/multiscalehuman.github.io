@@ -100,20 +100,22 @@
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Edgar, Rachel D., Jordan R. Portman, Hongru Hu, Delaram Pouyabahar, Raza R. Rahman, Daniel Stueckmann, Yongin Choi, Drew R. Neavin, Jawairia Atif, Zoe A. Clarke, Ran Gao, Shruti Khare, Ziyi Li, Liesbet Martens, Abhishek Murti, Diana Nakib, Niranjan Shirgaonkar, Stefan Thomann, Tinne Thoné, John R. Wilson-Kanamori, Katja Breitkopf-Heinlein, Elias Isaac Lattouf, Ruoxin Li, Renee Napoliello, Nuh N. Rahbari, Mehrshad Sadria, Oran Yakubovsky, Tallulah Andrews, Bruce J. Aronow, Alex G. Cuenca, Erica A. K. DePasquale, Stacey S. Huppert, Shalev Itzkovitz, Georg M. Lauer, Krupa R. Mysore, Joseph E. Powell, Robert E. Schwartz, Ankur Sharma, Sarah A. Taylor, Ludovic Vallier, Bruce Wang, Ramanuj Dasgupta, Dominic Grün, Martin Guilliams, Neil C. Henderson, Sonya A. MacParland, Charlotte L. Scott, Alan Mullen, Gerald Quon, and Gary D. Bader. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.biorxiv.org/content/10.64898/2026.06.30.735539"
-                  },
-                  "content": "https://www.biorxiv.org/content/10.64898/2026.06.30.735539"
-                }
-              ]
-            }
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.06.30.735539"
+              },
+              "content": "HLiCA: An Integrated Cell Atlas of the Healthy Human Liver"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.06.30.735539."
           ]
         }
       ]

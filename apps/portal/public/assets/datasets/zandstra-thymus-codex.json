@@ -153,32 +153,41 @@
       "anchor": "references",
       "content": [
         {
-          "component": "List",
+          "component": "ContentParagraph",
           "content": [
+            "Stankiewicz, Laura N., Kevin Salim, Emily A. Flaschner, Yu Xin Wang, John M. Edgar, Lauren J. Durland, Bruce Z. B. Lin, Grace C. Bingham, Matthew C. Major, Ross D. Jones, Helen M. Blau, Elizabeth J. Rideout, Megan K. Levings, Peter W. Zandstra, and Fabio M. V. Rossi. “",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://pubmed.ncbi.nlm.nih.gov/39383865/"
-                  },
-                  "content": "https://pubmed.ncbi.nlm.nih.gov/39383865/"
-                }
-              ]
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.1016/j.devcel.2024.09.011"
+              },
+              "content": "Sex-Biased Human Thymic Architecture Guides T Cell Development through Spatially Defined Niches"
             },
+            ".” ",
             {
-              "component": "ListItem",
-              "content": [
-                {
-                  "component": "TextLink",
-                  "config": {
-                    "href": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                  },
-                  "content": "https://www.biorxiv.org/content/10.64898/2026.07.07.737090"
-                }
-              ]
-            }
+              "component": "Cite",
+              "content": "Developmental Cell"
+            },
+            " 60, no. 1 (2025): 152–169.e8. doi:10.1016/j.devcel.2024.09.011."
+          ]
+        },
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Bueckle, Andreas, Chenchen Zhu, Alex Yu Hin Wong, Archibald Enninful, Yang Miao, Negin Farzad, Maria Pedersen, Courteney Mattison, Nicholas Sloan, Jason Mares, Cheng Xing, Bruce W. Herr II, Juhi Khare, Yash Ramesh Kumar, Keyur Parekh, Siddhi Chavan, Paean Luby, Ushma Patel, Yashvardhan Jain, John W. Hickey, Gary D. Bader, Hemali Phatnani, Vilas Menon, Rong Fan, Peter K. Sorger, Michael Snyder, and Katy Börner. “",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://doi.org/10.64898/2026.07.07.737090"
+              },
+              "content": "Multiscale Harmonization, Semantic Integration, and Immersive Exploration of Single-Cell Data in Support of Novel Biological Insights"
+            },
+            ".” ",
+            {
+              "component": "Cite",
+              "content": "bioRxiv"
+            },
+            ", 2026. doi:10.64898/2026.07.07.737090."
           ]
         }
       ]
