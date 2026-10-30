@@ -1,12 +1,6 @@
 import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
-import { Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
-
-/** A crumb in the hero's breadcrumb trail. AtlasNG doesn't export its `BreadcrumbItem` type. */
-interface BreadcrumbItem {
-  name: string;
-  command?: string;
-}
+import { BreadcrumbItem, Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 
 /** Breadcrumb trail from cifar.ca down to the portal, which is the current page and has no link. */
 const HERO_CRUMBS: BreadcrumbItem[] = [
