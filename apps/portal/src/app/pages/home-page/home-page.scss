@@ -1,35 +1,20 @@
-@use '@atlasng/design-system' as ds;
-
 :host {
   display: block;
-  padding: 2.5rem;
   container: home-page / inline-size;
-}
 
-.title {
-  margin: 0 0 1rem;
-  font: ds.sys-slot(display-medium);
-  letter-spacing: ds.sys-slot(display-medium-tracking);
-}
-
-.tagline {
-  margin: 0;
-  font: ds.sys-slot(body-large);
-  color: ds.sys-slot(on-surface-variant);
-}
-
-.space-time-organ-graph {
-  height: 100vh;
-  height: 100svh;
-  min-height: 40rem;
-  margin-top: 2.5rem;
-  overflow-x: clip;
-}
-
-// Matches <mhu-cube>'s own breakpoint, where it swaps the graph for dataset cards that set their own height.
-@container home-page (max-width: 64rem) {
   .space-time-organ-graph {
-    height: auto;
-    min-height: 0;
+    height: 100vh;
+    height: 100svh;
+    min-height: 40rem;
+    padding: 2.5rem;
+    overflow-x: clip;
+  }
+
+  // Matches <mhu-cube>'s own breakpoint, where it swaps the graph for dataset cards that set their own height.
+  @container home-page (max-width: 64rem) {
+    .space-time-organ-graph {
+      height: auto;
+      min-height: 0;
+    }
   }
 }

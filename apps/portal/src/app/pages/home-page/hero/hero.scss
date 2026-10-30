@@ -1,0 +1,78 @@
+@use '@atlasng/design-system' as ds;
+
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 5.5rem 1.5rem;
+  overflow: clip;
+  view-timeline: --hero block;
+
+  @include ds.breakpoint(medium) {
+    padding: 5.5rem 2.5rem;
+  }
+}
+
+.illustration {
+  object-fit: cover;
+}
+
+// Light parallax: the illustration drifts down 30% of the hero's height while the hero leaves the screen,
+// so it scrolls at 70% of the page's speed.
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .illustration {
+      animation: parallax linear both;
+      animation-timeline: --hero;
+      animation-range: exit;
+    }
+  }
+}
+
+@keyframes parallax {
+  to {
+    transform: translateY(30%);
+  }
+}
+
+.content {
+  position: relative;
+  max-width: 100rem;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.breadcrumbs {
+  margin-bottom: 2.5rem;
+
+  @include ds.breadcrumbs-overrides(
+    (
+      crumb-color: white,
+      separator-color: white,
+    )
+  );
+  @include ds.text-link-overrides(
+    (
+      color: white,
+    )
+  );
+}
+
+.logo {
+  display: block;
+  width: 3.75rem;
+  height: auto;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font: ds.sys-slot(display-large);
+  letter-spacing: ds.sys-slot(display-large-tracking);
+}
+
+.tagline {
+  margin: 0;
+  font: ds.sys-slot(title-large);
+}
