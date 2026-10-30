@@ -39,15 +39,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
     background: #da291c; //Brand
     color: ds.sys-slot(on-primary);
+
+    mat-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 2.5rem;
+    }
   }
 
   .toc {
     grid-area: toc;
     align-self: start;
+
+    // AtlasNG builds items from one-line Material list items, which have a fixed height and truncate long titles.
+    ::ng-deep .ang-table-of-contents--item {
+      height: auto;
+      min-height: ds.table-of-contents-slot(item-height);
+      padding-block: 0.75rem;
+
+      .mdc-list-item__content,
+      .mdc-list-item__primary-text {
+        white-space: normal;
+      }
+    }
   }
 
   .content {
