@@ -1,11 +1,19 @@
 :host {
   display: block;
-}
 
-.space-time-organ-graph {
-  height: 100vh;
-  height: 100svh;
-  min-height: 40rem;
-  padding: 2.5rem;
-  overflow-x: clip;
+  .space-time-organ-graph {
+    height: 100vh;
+    height: 100svh;
+    min-height: 40rem;
+    padding: 2.5rem;
+    overflow-x: clip;
+  }
+
+  // Matches <mhu-cube>'s own breakpoint, where it swaps the graph for dataset cards that set their own height.
+  @container home-page (max-width: 64rem) {
+    .space-time-organ-graph {
+      height: auto;
+      min-height: 0;
+    }
+  }
 }

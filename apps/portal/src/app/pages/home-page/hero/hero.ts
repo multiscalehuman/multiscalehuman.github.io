@@ -1,9 +1,12 @@
 import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Breadcrumbs } from '@atlasng/design-system/buttons/breadcrumbs';
 
 /** A crumb in the hero's breadcrumb trail. AtlasNG doesn't export its `BreadcrumbItem` type. */
-type BreadcrumbItem = ReturnType<Breadcrumbs['items']>[number];
+interface BreadcrumbItem {
+  name: string;
+  command?: string;
+}
 
 /** Breadcrumb trail from cifar.ca down to the portal, which is the current page and has no link. */
 const HERO_CRUMBS: BreadcrumbItem[] = [
@@ -23,6 +26,8 @@ const HERO_CRUMBS: BreadcrumbItem[] = [
 @Component({
   selector: 'mhu-hero',
   imports: [Breadcrumbs, NgOptimizedImage],
+  templateUrl: './hero.html',
+  styleUrl: './hero.scss',
   providers: [
     {
       provide: IMAGE_CONFIG,
@@ -35,9 +40,6 @@ const HERO_CRUMBS: BreadcrumbItem[] = [
       useValue: ({ src, width }: ImageLoaderConfig) => `${src}-${width ?? 2880}.webp`,
     },
   ],
-  templateUrl: './hero.html',
-  styleUrl: './hero.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Hero {
   /** Breadcrumb trail shown above the logo. */
