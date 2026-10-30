@@ -15,10 +15,12 @@ import { Component, input } from '@angular/core';
   `,
   host: {
     role: 'img',
-    '[attr.aria-label]': 'id()',
+    '[attr.aria-label]': 'label()',
   },
 })
 export class Embed {
-  /** Name of the embedded content, also its accessible name. */
+  /** Machine ID of the embedded content, such as `hra-organ-gallery`. */
   readonly id = input.required<string>();
+  /** Human-readable description of the embedded content, used as its accessible name. */
+  readonly label = input.required<string>();
 }

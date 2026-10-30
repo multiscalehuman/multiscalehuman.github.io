@@ -33,11 +33,14 @@ export const CITE_DEFINITION = {
   content: { content: '*' },
 } satisfies ContentDefinition;
 
-/** `Embed`: embedded content, such as a visualization, shown as a placeholder for now. Config: `id`. */
+/**
+ * `Embed`: embedded content, such as a visualization, shown as a placeholder for now. Config: `id` (machine ID) and
+ * `label` (accessible name).
+ */
 export const EMBED_DEFINITION = {
   name: 'Embed',
   component: () => import('./embed').then((m) => m.Embed),
-  config: { id: stringSchema },
+  config: { id: stringSchema, label: stringSchema },
 } satisfies ContentDefinition;
 
 /** Portal definitions, registered alongside the design-system definitions. */
