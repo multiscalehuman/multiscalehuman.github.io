@@ -3,9 +3,12 @@
   container: home-page / inline-size;
 
   .space-time-organ-graph {
+    box-sizing: border-box;
+    max-width: 100rem;
     height: 100vh;
     height: 100svh;
     min-height: 40rem;
+    margin: 0 auto;
     padding: 2.5rem;
     overflow-x: clip;
   }
