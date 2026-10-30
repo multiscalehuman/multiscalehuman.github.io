@@ -1,11 +1,76 @@
 @use '@atlasng/design-system' as ds;
 
 :host {
-  display: block;
-  padding: 2.5rem;
+  display: grid;
+  grid-template:
+    'header'
+    'toc'
+    'sections'
+    / minmax(0, 1fr);
+  gap: 3rem 2.5rem;
+  box-sizing: border-box;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.125rem;
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
 }
 
 .title {
-  margin: 0 0 1rem;
-  font: ds.sys-slot(headline-large);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toc {
+  grid-area: toc;
+  align-self: start;
+}
+
+.sections {
+  grid-area: sections;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  ul,
+  address {
+    margin: 0;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  // AtlasNG text links are inline-flex, which keeps long link text such as URLs from wrapping.
+  a {
+    display: inline;
+    overflow-wrap: anywhere;
+  }
+}
+
+@include ds.breakpoint(medium) {
+  :host {
+    grid-template:
+      'header toc' auto
+      'sections toc' 1fr
+      / minmax(0, 1fr) minmax(15rem, 18.75rem);
+    padding: 2.5rem;
+  }
+
+  .toc {
+    position: sticky;
+    top: 2.5rem;
+  }
 }
