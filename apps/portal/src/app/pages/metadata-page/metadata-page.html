@@ -7,7 +7,7 @@
     <header class="header">
       <!-- Placeholder until AtlasNG's icon display component is available -->
       <div class="organ-icon" aria-hidden="true">
-        <mat-icon fontSet="ang-icons">heart</mat-icon>
+        <mat-icon fontSet="ang-icons">{{ organIcon() }}</mat-icon>
       </div>
       <ang-content-header level="1" [tagline]="title()" />
       <ang-content-paragraph>{{ data.description }}</ang-content-paragraph>

@@ -8,6 +8,7 @@ import { ContentHeader } from '@atlasng/design-system/content/content-header';
 import { ContentParagraph } from '@atlasng/design-system/content/content-paragraph';
 import { ContentSection } from '@atlasng/design-system/content/content-section';
 import { TableOfContents, TableOfContentsItem } from '@atlasng/design-system/table-of-contents';
+import type { IconName } from '@atlasng/icons/manifest';
 import { ActiveSectionState } from './active-section-state';
 import { DatasetMetadata, MetadataSection } from './dataset-metadata';
 import { Title } from '@angular/platform-browser';
@@ -23,6 +24,18 @@ const BASE_CRUMBS: BreadcrumbItem[] = [
   { name: 'Data Portal', command: '/' },
 ];
 
+/** AtlasNG icon for each organ, keyed by the organ name used in dataset metadata. */
+const ORGAN_ICONS: Record<string, IconName> = {
+  Heart: 'heart',
+  Kidney: 'kidneys',
+  Liver: 'liver',
+  Lung: 'lungs',
+  Thymus: 'thymus',
+};
+
+/** Icon for organs missing from {@link ORGAN_ICONS}. */
+const DEFAULT_ORGAN_ICON: IconName = 'all-organs';
+
 /** Section with its body as a content document. */
 interface RenderedSection extends MetadataSection {
   /** Section body as a content document for `ang-content-block`. */
@@ -31,7 +44,6 @@ interface RenderedSection extends MetadataSection {
 
 /**
  * Metadata page for one dataset, rendered from the {@link DatasetMetadata} passed as `metadata`.
- * The organ icon is a placeholder.
  */
 @Component({
   selector: 'mhu-metadata-page',
@@ -64,6 +76,9 @@ export class MetadataPage {
     const { organ, space, time } = this.metadata();
     return `${organ}, ${space}, ${time}`;
   });
+
+  /** AtlasNG icon for the dataset's organ. */
+  protected readonly organIcon = computed(() => ORGAN_ICONS[this.metadata().organ] ?? DEFAULT_ORGAN_ICON);
 
   /** Sections with their body documents, in display order. */
   protected readonly sections = computed<RenderedSection[]>(() =>

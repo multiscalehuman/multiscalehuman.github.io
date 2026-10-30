@@ -69,6 +69,18 @@ describe('MetadataPage', () => {
     expect(screen.getByText('Test description.')).toBeInTheDocument();
   });
 
+  it("shows the organ's icon", async () => {
+    await setup();
+
+    expect(screen.getByText('lungs')).toBeInTheDocument();
+  });
+
+  it('shows the all-organs icon for organs without one', async () => {
+    await render(MetadataPage, { inputs: { metadata: { ...METADATA, organ: 'Unknown' } }, providers: PROVIDERS });
+
+    expect(screen.getByText('all-organs')).toBeInTheDocument();
+  });
+
   it('sets the browser title to the dataset title', async () => {
     await setup();
 
