@@ -1,3 +1,5 @@
+@use '@atlasng/design-system' as ds;
+
 :host {
   display: block;
   padding: 2.5rem;
@@ -6,14 +8,14 @@
 
 .title {
   margin: 0 0 1rem;
-  font: var(--mat-sys-display-medium);
-  letter-spacing: var(--mat-sys-display-medium-tracking);
+  font: ds.sys-slot(display-medium);
+  letter-spacing: ds.sys-slot(display-medium-tracking);
 }
 
 .tagline {
   margin: 0;
-  font: var(--mat-sys-body-large);
-  color: var(--mat-sys-on-surface-variant);
+  font: ds.sys-slot(body-large);
+  color: ds.sys-slot(on-surface-variant);
 }
 
 .space-time-organ-graph {
