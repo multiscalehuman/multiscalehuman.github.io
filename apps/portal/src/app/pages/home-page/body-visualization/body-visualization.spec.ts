@@ -16,7 +16,7 @@ describe('BodyVisualization', () => {
 
     expect(screen.getByRole('note')).toHaveTextContent('Larger screen recommended');
     expect(screen.getByRole('note')).toHaveTextContent(
-      'For the best experience, use a desktop browser window at least 1280px wide.',
+      'For the best experience, use a desktop browser window at least 1400px wide.',
     );
   });
 

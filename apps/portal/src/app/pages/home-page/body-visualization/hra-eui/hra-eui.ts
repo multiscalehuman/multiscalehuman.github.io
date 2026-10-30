@@ -3,13 +3,14 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject, input, Renderer2 }
 /** ID of the EUI's `<script>` element, used to add the stylesheet and script only once. */
 const EUI_SCRIPT_ID = 'ccf-eui-script';
 
-/** Organs the MHU datasets cover, as the UBERON IRIs the EUI uses for organ IDs: heart, both kidneys, liver, thymus. */
+/** Organs the MHU datasets cover, as the UBERON IRIs the EUI uses for organ IDs: heart, both kidneys, liver, thymus, skin. */
 export const MHU_ORGAN_IRIS: string[] = [
   'http://purl.obolibrary.org/obo/UBERON_0000948',
   'http://purl.obolibrary.org/obo/UBERON_0004538',
   'http://purl.obolibrary.org/obo/UBERON_0004539',
   'http://purl.obolibrary.org/obo/UBERON_0002107',
   'http://purl.obolibrary.org/obo/UBERON_0002370',
+  'http://purl.obolibrary.org/obo/UBERON_0002097',
 ];
 
 /**

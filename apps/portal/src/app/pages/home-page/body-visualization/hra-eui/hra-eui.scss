@@ -5,9 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100svh;
-  min-height: 40rem;
-  max-height: 60rem;
   border: 1px solid ds.sys-slot(outline-variant);
   overflow: hidden;
 
@@ -17,11 +14,155 @@
     @include mat.sidenav-overrides(
       (
         content-background-color: ds.sys-slot(surface-container-low),
+        content-text-color: ds.sys-slot(on-surface),
+      )
+    );
+
+    @include mat.button-toggle-overrides(
+      (
+        selected-state-text-color: ds.sys-slot(on-secondary-fixed),
+        selected-state-background-color: ds.sys-slot(secondary-fixed),
+        divider-color: ds.sys-slot(outline),
+      )
+    );
+
+    @include mat.form-field-overrides(
+      (
+        filled-label-text-color: ds.sys-slot(on-surface-variant),
+      )
+    );
+
+    @include mat.button-overrides(
+      (
+        filled-container-color: ds.sys-slot(primary),
       )
     );
 
     display: block;
     width: 100%;
     height: 100%;
+
+    ::ng-deep .hra-logo {
+      display: none !important;
+    }
+
+    // The design highlights the selected tree node with the primary 16% state layer.
+    ::ng-deep .node-content.selected {
+      background: color-mix(in srgb, #{ds.sys-slot(primary)} 16%, transparent);
+    }
+
+    // The EUI sets the tree's text tokens on its root, `.hra-app`, so they're overridden there.
+    ::ng-deep .hra-app {
+      @include mat.tree-overrides(
+        (
+          node-text-font: ds.sys-slot(body-small-font),
+          node-text-weight: ds.sys-slot(body-small-weight),
+        )
+      );
+
+      mat-tree {
+        letter-spacing: ds.sys-slot(body-small-tracking);
+      }
+    }
+
+    ::ng-deep .page-content {
+      --scrollbar-thumb-color: #{ds.sys-slot(on-surface-variant)};
+
+      min-height: 24.375rem;
+      max-height: 67.5rem;
+      aspect-ratio: 1520 / 800;
+      grid-template-rows: 0 0 5rem minmax(0, 1fr);
+
+      .left-panel,
+      .content,
+      .right-panel {
+        min-height: 0;
+      }
+
+      .left-panel {
+        grid-template-rows: 3.375rem 3rem minmax(0, 1fr);
+      }
+
+      // The EUI sizes this list from the viewport height, so it overflows the shorter embedded layout.
+      .left-panel .ontologies {
+        min-height: 0;
+        max-height: none;
+      }
+
+      .left-panel .filter-data .filter-text {
+        color: ds.sys-slot(on-surface) !important;
+      }
+
+      .left-panel mat-button-toggle-group {
+        --mat-button-toggle-selected-state-text-color: #{ds.sys-slot(on-secondary-fixed)};
+
+        @include mat.button-toggle-overrides(
+          (
+            label-text-font: ds.sys-slot(label-small-font),
+            label-text-size: ds.sys-slot(label-small-size),
+            label-text-line-height: ds.sys-slot(label-small-line-height),
+            label-text-weight: ds.sys-slot(label-small-weight),
+            label-text-tracking: ds.sys-slot(label-small-tracking),
+          )
+        );
+      }
+
+      .vis-panel .tagline {
+        font: ds.sys-slot(title-medium);
+        letter-spacing: ds.sys-slot(title-medium-tracking);
+      }
+
+      ccf-ontology-tree {
+        color: ds.sys-slot(on-surface-variant);
+
+        .header {
+          color: ds.sys-slot(on-surface);
+          font: ds.sys-slot(title-small);
+          letter-spacing: ds.sys-slot(title-small-tracking);
+        }
+
+        .header-num-results {
+          font: ds.sys-slot(label-small);
+          letter-spacing: ds.sys-slot(label-small-tracking);
+        }
+
+        .num-results {
+          color: ds.sys-slot(on-surface);
+        }
+      }
+
+      mat-label {
+        color: ds.sys-slot(on-surface-variant);
+      }
+
+      .results-browser-container .results-header {
+        font: ds.sys-slot(title-medium);
+        letter-spacing: ds.sys-slot(title-medium-tracking);
+      }
+
+      .results-browser-container .stat-box #title {
+        color: ds.sys-slot(on-surface);
+        font: ds.sys-slot(title-small);
+        letter-spacing: ds.sys-slot(title-small-tracking);
+      }
+
+      .results-browser-container .stat-box .stat-row {
+        font: ds.sys-slot(body-small);
+        color: ds.sys-slot(on-surface-variant);
+      }
+
+      ccf-donor-card {
+        ccf-metadata-card {
+          background-color: ds.sys-slot(surface-container);
+        }
+
+        .title {
+          color: ds.sys-slot(on-surface);
+        }
+        .label {
+          color: ds.sys-slot(on-surface-variant);
+        }
+      }
+    }
   }
 }
