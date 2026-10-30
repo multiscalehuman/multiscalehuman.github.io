@@ -4,7 +4,7 @@ import { Component, effect, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { ActiveSectionService } from './active-section-service';
+import { ActiveSectionState } from './active-section-state';
 
 @Component({
   template: `
@@ -13,11 +13,11 @@ import { ActiveSectionService } from './active-section-service';
       <h2 [id]="section.anchor">{{ section.anchor }}</h2>
     }
   `,
-  providers: [ActiveSectionService],
+  providers: [ActiveSectionState],
 })
 class TestHost {
   readonly sections = [{ anchor: 'one' }, { anchor: 'two' }, { anchor: 'three' }];
-  readonly activeSection = inject(ActiveSectionService);
+  readonly activeSection = inject(ActiveSectionState);
 
   constructor() {
     effect(() => {
@@ -27,8 +27,8 @@ class TestHost {
   }
 }
 
-describe('ActiveSectionService', () => {
-  async function setup(): Promise<ActiveSectionService> {
+describe('ActiveSectionState', () => {
+  async function setup(): Promise<ActiveSectionState> {
     const { fixture } = await render(TestHost, { providers: [provideLocationMocks()] });
     layout({ one: 0, two: 900, three: 1500 });
     await nextFrame();
@@ -61,70 +61,70 @@ describe('ActiveSectionService', () => {
   });
 
   it('activates the first section by default', async () => {
-    const service = await setup();
+    const state = await setup();
     layout({ one: 300, two: 900, three: 1500 });
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('one');
-    expect(service.isSectionActive('one')).toBe(true);
+    expect(state.activeSectionAnchor()).toBe('one');
+    expect(state.isSectionActive('one')).toBe(true);
   });
 
   it('activates the last section whose heading passed the activation line', async () => {
-    const service = await setup();
+    const state = await setup();
     layout({ one: -500, two: 50, three: 700 });
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('two');
-    expect(service.isSectionActive('one')).toBe(false);
+    expect(state.activeSectionAnchor()).toBe('two');
+    expect(state.isSectionActive('one')).toBe(false);
   });
 
   it('activates the last section at the bottom of the page', async () => {
-    const service = await setup();
+    const state = await setup();
     layout({ one: -500, two: 300, three: 600 }, 4200);
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('three');
+    expect(state.activeSectionAnchor()).toBe('three');
   });
 
   it('keeps a selected section active while scrolling to it', async () => {
-    const service = await setup();
-    service.selectSection('three');
+    const state = await setup();
+    state.selectSection('three');
     layout({ one: -500, two: 50, three: 400 });
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('three');
+    expect(state.activeSectionAnchor()).toBe('three');
   });
 
   it('follows scrolling again once the selected section is reached', async () => {
-    const service = await setup();
-    service.selectSection('three');
+    const state = await setup();
+    state.selectSection('three');
     layout({ one: -1500, two: -600, three: 20 });
     await scroll();
     layout({ one: -500, two: 50, three: 700 });
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('two');
+    expect(state.activeSectionAnchor()).toBe('two');
   });
 
   it('follows scrolling again after the selection expires', async () => {
-    const service = await setup();
-    service.selectSection('three');
+    const state = await setup();
+    state.selectSection('three');
     vi.spyOn(Date, 'now').mockReturnValue(Date.now() + 5000);
     layout({ one: -500, two: 50, three: 700 });
     await scroll();
 
-    expect(service.activeSectionAnchor()).toBe('two');
+    expect(state.activeSectionAnchor()).toBe('two');
   });
 
   it('scrolls to sections linked with local anchors and updates the URL fragment', async () => {
-    const service = await setup();
+    const state = await setup();
     const heading = screen.getByRole('heading', { name: 'three' });
     heading.scrollIntoView = vi.fn();
 
     await userEvent.click(screen.getByRole('link', { name: 'Jump to three' }));
 
     expect(heading.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
-    expect(service.activeSectionAnchor()).toBe('three');
+    expect(state.activeSectionAnchor()).toBe('three');
     expect(TestBed.inject(Location).path(true)).toBe('/#three');
   });
 });

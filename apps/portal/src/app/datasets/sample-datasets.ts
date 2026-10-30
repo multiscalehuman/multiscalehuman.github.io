@@ -57,8 +57,7 @@ function createDataset(id: string, position: MhuCubePosition, sex: string, autho
   return {
     id,
     label: `${position.organ}, ${position.space}, ${time}`,
-    // Placeholder until the dataset metadata pages exist.
-    href: `datasets/${id}`,
+    href: `dataset/${id}`,
     ...(image ? { image } : {}),
     metadata: {
       Space: position.space,

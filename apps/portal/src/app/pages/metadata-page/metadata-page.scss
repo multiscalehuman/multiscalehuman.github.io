@@ -1,3 +1,5 @@
+@use '@atlasng/design-system' as ds;
+
 :host {
   display: block;
   padding: 1.5rem 1rem;
@@ -34,8 +36,8 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
+  background: ds.sys-slot(primary);
+  color: ds.sys-slot(on-primary);
 }
 
 .toc {
@@ -63,8 +65,8 @@
 
 .last-updated {
   margin: 0;
-  font: var(--mat-sys-label-large);
-  color: var(--mat-sys-on-surface-variant);
+  font: ds.sys-slot(label-large);
+  color: ds.sys-slot(on-surface-variant);
 }
 
 @media (min-width: 960px) {

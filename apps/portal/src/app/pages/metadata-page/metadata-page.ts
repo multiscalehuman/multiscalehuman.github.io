@@ -9,7 +9,7 @@ import { ContentHeader } from '@atlasng/design-system/content/content-header';
 import { ContentParagraph } from '@atlasng/design-system/content/content-paragraph';
 import { ContentSection } from '@atlasng/design-system/content/content-section';
 import { TableOfContents, TableOfContentsItem } from '@atlasng/design-system/table-of-contents';
-import { ActiveSectionService } from './active-section-service';
+import { ActiveSectionState } from './active-section-state';
 import { DatasetMetadata, MetadataSection } from './dataset-metadata';
 
 /** Trail from the CIFAR site to the portal homepage. */
@@ -52,7 +52,7 @@ interface RenderedSection extends MetadataSection {
   ],
   templateUrl: './metadata-page.html',
   styleUrl: './metadata-page.scss',
-  providers: [ActiveSectionService],
+  providers: [ActiveSectionState],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataPage {
@@ -85,7 +85,7 @@ export class MetadataPage {
   );
 
   /** Tracks the section being read, updated on scroll and when a table of contents entry is clicked. */
-  protected readonly activeSection = inject(ActiveSectionService);
+  protected readonly activeSection = inject(ActiveSectionState);
 
   /** Table of contents entry highlighted for the active section. */
   protected readonly activeTocItem = computed(() =>

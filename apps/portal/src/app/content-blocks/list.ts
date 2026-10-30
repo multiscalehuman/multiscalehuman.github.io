@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 /** Bulleted list content block. Its content should be `ListItem` nodes. */
 @Component({
@@ -13,6 +13,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       font: var(--mat-sys-body-large);
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class List {}

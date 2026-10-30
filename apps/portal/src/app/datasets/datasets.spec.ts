@@ -3,16 +3,16 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import { DatasetMetadata } from '../pages/metadata-page/dataset-metadata';
-import { DatasetService } from './datasets';
+import { Datasets } from './datasets';
 
-describe('DatasetService', () => {
+describe('Datasets', () => {
   const heart = { organ: 'Heart' } as DatasetMetadata;
-  let service: DatasetService;
+  let service: Datasets;
   let httpTesting: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
-    service = TestBed.inject(DatasetService);
+    service = TestBed.inject(Datasets);
     httpTesting = TestBed.inject(HttpTestingController);
   });
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 /** Embedded content block, such as a visualization. Placeholder that reserves space until embeds are available. */
 @Component({
@@ -13,7 +13,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       background: var(--mat-sys-surface-container-high);
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'img',
     '[attr.aria-label]': 'id()',
