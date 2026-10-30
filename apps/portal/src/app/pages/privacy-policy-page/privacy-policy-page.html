@@ -1,2 +1,268 @@
-<h1 class="title">Privacy Policy</h1>
-<p>The privacy policy for the Multiscale Human Data Portal is coming soon.</p>
+<header class="header">
+  <ang-breadcrumbs [items]="crumbs" />
+  <div class="title">
+    <ang-content-header level="1" tagline="Privacy Policy" />
+    <ang-content-paragraph>Effective: 2026-10-28</ang-content-paragraph>
+  </div>
+</header>
+
+<ang-table-of-contents class="toc" tagline="On this page" [items]="tocItems" />
+
+<div class="sections">
+  <ang-content-section level="2" id="overview" underlined [tagline]="sections.overview.tagline">
+    <div class="text">
+      <ang-content-paragraph>
+        At Indiana University (IU), we are committed to protecting the privacy and confidentiality of personal
+        information entrusted to us. By accessing and using IU's services, you acknowledge and consent to the practices
+        described in our global privacy statement here:
+        <a angTextLink angAnyLink="https://privacy.iu.edu/privacy/global.html"
+          >https://privacy.iu.edu/privacy/global.html</a
+        >.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        For additional information outlining how Cyberinfrastructure for Network Science Center collects, uses, and
+        safeguards personal information obtained specifically through our website (<a
+          angTextLink
+          angAnyLink="https://multiscalehuman.github.io/"
+          >https://multiscalehuman.github.io/</a
+        >), please also review the information below.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        Continued use of our website indicates consent to the collection, use, and disclosure of this information as
+        described in this notice.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        Visitors to other IU websites should review the privacy notices for the sites they visit, as other units at the
+        university may collect and use visitor information in different ways. Cyberinfrastructure for Network Science
+        Center is not responsible for the content of other websites or for the privacy practices of websites outside the
+        scope of this notice.
+      </ang-content-paragraph>
+    </div>
+  </ang-content-section>
+
+  <ang-content-section level="2" id="changes" underlined [tagline]="sections.changes.tagline">
+    <div class="text">
+      <ang-content-paragraph>
+        Because Internet technologies continue to evolve rapidly, Cyberinfrastructure for Network Science Center may
+        make appropriate changes to this notice in the future. Any such changes will be consistent with our commitment
+        to respecting visitor privacy, and will be clearly posted in a revised privacy notice.
+      </ang-content-paragraph>
+    </div>
+  </ang-content-section>
+
+  <ang-content-section level="2" id="collection-and-use" underlined [tagline]="sections.collectionAndUse.tagline">
+    <ang-content-section
+      level="3"
+      id="passive-automatic-collection"
+      underlined
+      [tagline]="sections.passiveAutomaticCollection.tagline"
+    >
+      <div class="text">
+        <ang-content-paragraph>
+          In addition to any information outlined in the global statement, our server and/or site collects the
+          following:
+        </ang-content-paragraph>
+        <ul>
+          <li><ang-content-paragraph>Your IP address</ang-content-paragraph></li>
+          <li><ang-content-paragraph>The domain name from which you visit our site</ang-content-paragraph></li>
+          <li><ang-content-paragraph>Aggregate information on pages visited</ang-content-paragraph></li>
+          <li><ang-content-paragraph>The referring website</ang-content-paragraph></li>
+          <li><ang-content-paragraph>The date and time of visit</ang-content-paragraph></li>
+          <li><ang-content-paragraph>The duration of visit</ang-content-paragraph></li>
+          <li><ang-content-paragraph>Your browser type</ang-content-paragraph></li>
+          <li><ang-content-paragraph>Your screen resolution</ang-content-paragraph></li>
+        </ul>
+        <ang-content-paragraph
+          >Some technical information is retained in aggregate for up to 365 days.</ang-content-paragraph
+        >
+      </div>
+    </ang-content-section>
+
+    <ang-content-section
+      level="3"
+      id="active-manual-voluntary-collection"
+      underlined
+      [tagline]="sections.activeManualVoluntaryCollection.tagline"
+    >
+      <div class="text">
+        <ang-content-paragraph>
+          We will not attempt to collect any information from you through the use of forms or other types of manual
+          input.
+        </ang-content-paragraph>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="information-usage" underlined [tagline]="sections.informationUsage.tagline">
+      <div class="text">
+        <ang-content-paragraph>This information is:</ang-content-paragraph>
+        <ul>
+          <li><ang-content-paragraph>Used for internal review and is then discarded</ang-content-paragraph></li>
+        </ul>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="information-sharing" underlined [tagline]="sections.informationSharing.tagline">
+      <div class="text">
+        <ang-content-paragraph
+          >We may share aggregate, non-personally identifiable information with other entities or
+          organizations.</ang-content-paragraph
+        >
+        <ang-content-paragraph>
+          Except as described in the
+          <a angTextLink angAnyLink="https://privacy.iu.edu/privacy/global.html">IU Privacy statement</a>, we will not
+          share any information with any other entities or organizations for any reason.
+        </ang-content-paragraph>
+        <ang-content-paragraph>
+          Except as provided in the sections below, we do not attempt to use the technical information discussed in this
+          section to identify individual visitors.
+        </ang-content-paragraph>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="cookies" underlined [tagline]="sections.cookies.tagline">
+      <div class="text">
+        <ang-content-paragraph>
+          For more information on how we use cookies, please review the
+          <a angTextLink angAnyLink="https://privacy.iu.edu/privacy/global.html">IU Privacy statement</a>.
+        </ang-content-paragraph>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="children" underlined [tagline]="sections.children.tagline">
+      <div class="text">
+        <ang-content-paragraph>
+          This site is not directed to children under 13 years of age, does not sell products or services intended for
+          purchase by children, and does not knowingly collect or store any personal information, even in aggregate,
+          about children under the age of 13. We encourage parents and teachers to be involved in children's Internet
+          explorations. It is particularly important for parents to guide their children when they are asked to provide
+          personal information online.
+        </ang-content-paragraph>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="third-party-services" underlined [tagline]="sections.thirdPartyServices.tagline">
+      <div class="text">
+        <ang-content-paragraph>
+          This website utilizes <em>Amazon Web Services</em>, a web analytics service. More information about this
+          service can be found here:
+          <a angTextLink angAnyLink="https://aws.amazon.com/privacy">https://aws.amazon.com/privacy</a>
+        </ang-content-paragraph>
+      </div>
+    </ang-content-section>
+
+    <ang-content-section level="3" id="social-media" underlined [tagline]="sections.socialMedia.tagline">
+      <div class="text">
+        <ang-content-paragraph>
+          Third-party social media sites may collect information from this site. Indiana University is not responsible
+          for their privacy practices. This site embeds features from third-party social media sites:
+        </ang-content-paragraph>
+        <ul>
+          <li>
+            <ang-content-paragraph>
+              YouTube (visit YouTube's privacy policy at:
+              <a angTextLink angAnyLink="https://policies.google.com/privacy">https://policies.google.com/privacy</a>)
+            </ang-content-paragraph>
+          </li>
+        </ul>
+      </div>
+    </ang-content-section>
+  </ang-content-section>
+
+  <ang-content-section level="2" id="security" underlined [tagline]="sections.security.tagline">
+    <div class="text">
+      <ang-content-paragraph>
+        Due to the rapidly evolving nature of information technologies, no transmission of information over the Internet
+        can be guaranteed to be completely secure. While Indiana University is committed to protecting user privacy, IU
+        cannot guarantee the security of any information users transmit to university sites, and users do so at their
+        own risk.
+      </ang-content-paragraph>
+      <ul>
+        <li>
+          <ang-content-paragraph>
+            Once we receive user information, we will use reasonable safeguards consistent with prevailing industry
+            standards and commensurate with the sensitivity of the data being stored to maintain the security of that
+            information on our systems.
+          </ang-content-paragraph>
+        </li>
+        <li>
+          <ang-content-paragraph>
+            We will comply with all applicable federal, state and local laws regarding the privacy and security of user
+            information.
+          </ang-content-paragraph>
+        </li>
+      </ul>
+    </div>
+  </ang-content-section>
+
+  <ang-content-section
+    level="2"
+    id="links-to-non-university-sites"
+    underlined
+    [tagline]="sections.linksToNonUniversitySites.tagline"
+  >
+    <div class="text">
+      <ang-content-paragraph>
+        Indiana University is not responsible for the availability, content, or privacy practices of non-university
+        sites. Non-university sites are not bound by this site privacy notice policy and may or may not have their own
+        privacy policies.
+      </ang-content-paragraph>
+    </div>
+  </ang-content-section>
+
+  <ang-content-section
+    level="2"
+    id="privacy-notice-changes"
+    underlined
+    [tagline]="sections.privacyNoticeChanges.tagline"
+  >
+    <div class="text">
+      <ang-content-paragraph>
+        From time to time, we may use visitor information for new, unanticipated uses not previously disclosed in our
+        privacy notice.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        We will post the policy changes to our Website to notify you of these changes, but only data collected from the
+        time of the policy change forward will be used for these new purposes. If you are concerned about how your
+        information is used, you should check back at our Website periodically.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        Visitors may prevent their information from being used for purposes other than those for which it was originally
+        collected by:
+      </ang-content-paragraph>
+      <ul>
+        <li><ang-content-paragraph>Sending us email at the listed address</ang-content-paragraph></li>
+        <li><ang-content-paragraph>Calling us at the listed telephone number</ang-content-paragraph></li>
+        <li><ang-content-paragraph>Writing to us at the listed address</ang-content-paragraph></li>
+      </ul>
+    </div>
+  </ang-content-section>
+
+  <ang-content-section level="2" id="contact-information" underlined [tagline]="sections.contactInformation.tagline">
+    <div class="text">
+      <ang-content-paragraph
+        >If you have questions or concerns about this policy, please contact us.</ang-content-paragraph
+      >
+      <address>
+        <ang-content-paragraph>
+          Multiscale Human Data Portal<br />
+          ATTN: Cyberinfrastructure for Network Science Center<br />
+          700 N Woodlawn Ave Luddy Hall Suite 4018<br />
+          Bloomington, IN<br />
+          47408<br />
+          <a angTextLink angAnyLink="mailto:cnscntr@iu.edu">cnscntr@iu.edu</a><br />
+          812-856-7034
+        </ang-content-paragraph>
+      </address>
+      <ang-content-paragraph>
+        If you feel as though this site's privacy practices differ from the information stated, you may contact us at
+        the listed address or phone number.
+      </ang-content-paragraph>
+      <ang-content-paragraph>
+        If you feel that this site is not following its stated policy and communicating with the owner of this site does
+        not resolve the matter, or if you have general questions or concerns about privacy or information technology
+        policy at Indiana University, please contact the chief privacy officer through the University Information Policy
+        Office, 812-855-UIPO, <a angTextLink angAnyLink="mailto:privacy@iu.edu">privacy@iu.edu</a>.
+      </ang-content-paragraph>
+    </div>
+  </ang-content-section>
+</div>
