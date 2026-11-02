@@ -51,10 +51,12 @@ describe('HraEui', () => {
     expect(eui['disableScreenSizeNotice']).toBe(true);
   });
 
-  it('leaves the data sources unset by default', async () => {
+  it('defaults the data sources to the CIFAR registrations', async () => {
     const eui = await renderEui();
 
-    expect(eui['dataSources']).toBeUndefined();
+    expect(eui['dataSources']).toEqual([
+      'https://hubmapconsortium.github.io/hra-registrations/cifar/rui_locations.jsonld',
+    ]);
   });
 
   it('passes the data sources to the EUI', async () => {
