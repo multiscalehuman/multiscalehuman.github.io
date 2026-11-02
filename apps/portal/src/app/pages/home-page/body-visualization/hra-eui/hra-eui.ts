@@ -26,8 +26,10 @@ export const MHU_ORGAN_IRIS: string[] = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HraEui {
-  /** URLs of the data sources the EUI queries. When unset, the EUI uses the default HRA API data. */
-  readonly dataSources = input<string[]>();
+  /** URLs of the data sources the EUI queries. */
+  readonly dataSources = input<string[]>([
+    'https://hubmapconsortium.github.io/hra-registrations/cifar/rui_locations.jsonld',
+  ]);
 
   /** Base URL for the EUI's relative asset URLs. */
   protected readonly baseHref = 'https://cdn.humanatlas.io/ui/ccf-eui/';
