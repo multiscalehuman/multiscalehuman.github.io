@@ -26,7 +26,10 @@ const METADATA: DatasetMetadata = {
             '.',
           ],
         },
-        { component: 'Embed', config: { id: 'gallery', label: 'Gallery visualization of the lung' } },
+        {
+          component: 'CellDistanceExplorer',
+          config: { nodes: 'assets/lung-cde.csv', nodeTargetSelector: 'Endothelial cells' },
+        },
         { component: 'Image', config: { src: 'assets/lung.png', alt: 'Lung in VR', maxWidth: 640 } },
       ],
     },
@@ -145,10 +148,10 @@ describe('MetadataPage', () => {
     expect(within(list as HTMLElement).getByRole('listitem')).toHaveTextContent('Jane Doe, jane@example.com');
   });
 
-  it('renders embeds from content blocks, named by their label', async () => {
+  it('renders the cell distance explorer from content blocks', async () => {
     await setup();
 
-    expect(await screen.findByRole('img', { name: 'Gallery visualization of the lung' })).toBeInTheDocument();
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
   });
 
   it('renders images from content blocks with their source, alt text, and width cap', async () => {

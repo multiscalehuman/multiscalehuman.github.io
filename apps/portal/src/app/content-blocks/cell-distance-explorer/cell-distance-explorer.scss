@@ -1,0 +1,150 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../../../styles/theme';
+
+// The CDE's stylesheet sets its own theme tokens on the CDE's root, so the portal's tokens resolve to HRA values in
+// here. These rules take the portal's light-theme values at compile time instead.
+
+/// Colors from the portal palettes, named after the system roles they fill in the light theme.
+$_colors: (
+  on-surface: map.get(theme.$primary-palette, neutral, 10),
+  on-surface-variant: map.get(theme.$primary-palette, neutral-variant, 30),
+  primary: map.get(theme.$primary-palette, 40),
+  outline-variant: map.get(theme.$primary-palette, neutral-variant, 80),
+);
+
+/// Returns a portal color by system role.
+/// @param {String} $role - System color role, such as `on-surface`.
+/// @returns {Color} The role's light-theme color.
+@function _color($role) {
+  @return map.get($_colors, $role);
+}
+
+/// Returns a portal type-scale value, such as `title-small` (the font shorthand) or `title-small-tracking`.
+/// @param {String} $token - Type-scale token name.
+/// @returns The token's value.
+@function _type($token) {
+  @return map.get(theme.$typography-overrides, $token);
+}
+
+:host {
+  height: 48rem;
+  border: 1px solid _color(outline-variant);
+  overflow: auto;
+
+  ::ng-deep cde-visualization {
+    --scrollbar-thumb-color: #{_color(on-surface-variant)};
+
+    min-width: 1020px;
+    grid-template-columns: 19.25rem minmax(44.5rem, 1fr);
+
+    @include mat.icon-button-overrides(
+      (
+        icon-color: _color(on-surface),
+      )
+    );
+
+    .header {
+      font: _type(title-small) !important;
+      letter-spacing: _type(title-small-tracking) !important;
+      color: _color(on-surface) !important;
+    }
+
+    cde-metadata {
+      .metadata-row {
+        gap: 0.5rem !important;
+      }
+
+      .metadata-row-label {
+        font: _type(body-medium) !important;
+        color: _color(on-surface) !important;
+      }
+
+      .metadata-row-value {
+        font: _type(body-medium) !important;
+        color: _color(primary) !important;
+      }
+    }
+
+    cde-cell-types {
+      .total-ct-label,
+      .total-cells,
+      .total-cell-links {
+        font: _type(body-small) !important;
+        letter-spacing: _type(body-small-tracking);
+        color: _color(on-surface);
+
+        > span {
+          font: _type(title-small) !important;
+          letter-spacing: _type(title-small-tracking) !important;
+          color: _color(on-surface-variant) !important;
+        }
+      }
+
+      @include mat.table-overrides(
+        (
+          row-item-label-text-font: _type(body-small-font),
+          row-item-label-text-weight: _type(body-small-weight),
+          row-item-label-text-size: _type(body-small-size),
+          row-item-label-text-line-height: _type(body-small-line-height),
+        )
+      );
+
+      table {
+        .mdc-data-table__cell:nth-child(2) {
+          max-width: 7.5rem !important;
+        }
+
+        .mdc-data-table__cell:nth-last-child(-n + 2) {
+          color: _color(on-surface-variant) !important;
+        }
+
+        .mat-sort-header-container .mat-sort-header-content,
+        .label {
+          font: _type(body-small) !important;
+        }
+      }
+    }
+
+    cde-node-dist-visualization-controls {
+      mat-button-toggle {
+        @include mat.button-toggle-overrides(
+          (
+            label-text-line-height: 2rem,
+          )
+        );
+      }
+
+      .mat-button-toggle-label-content {
+        padding: 0 0.5rem;
+        font: _type(label-large) !important;
+        letter-spacing: _type(label-large-tracking) !important;
+      }
+    }
+
+    .visualizations .top {
+      cde-node-dist-visualization {
+        min-width: 368px !important;
+
+        .delete {
+          display: none;
+        }
+      }
+
+      cde-violin {
+        min-width: 336px;
+        max-width: 620px;
+      }
+
+      cde-node-dist-visualization,
+      cde-violin {
+        flex: 1 1 0;
+        width: auto;
+      }
+    }
+
+    .marks {
+      background-color: inherit !important;
+    }
+  }
+}
