@@ -1,10 +1,15 @@
+@use 'sass:map';
 @use '@atlasng/design-system' as ds;
+@use '../../../../styles/theme';
+
+$_text-color: map.get(theme.$primary-palette, secondary, 100);
 
 :host {
   position: relative;
   display: flex;
   align-items: center;
-  color: white;
+  background-color: map.get(theme.$primary-palette, secondary, 40);
+  color: $_text-color;
   padding: 5.5rem 1.5rem;
   overflow: clip;
   view-timeline: --hero block;
@@ -16,10 +21,9 @@
 
 .illustration {
   object-fit: cover;
+  opacity: 0.6;
 }
 
-// Light parallax: the illustration drifts down 30% of the hero's height while the hero leaves the screen,
-// so it scrolls at 70% of the page's speed.
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .illustration {
@@ -48,13 +52,13 @@
 
   @include ds.breadcrumbs-overrides(
     (
-      crumb-color: white,
-      separator-color: white,
+      crumb-color: $_text-color,
+      separator-color: $_text-color,
     )
   );
   @include ds.text-link-overrides(
     (
-      color: white,
+      color: $_text-color,
     )
   );
 }

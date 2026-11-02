@@ -34,10 +34,10 @@ describe('Hero', () => {
     expect(nav.queryByRole('link', { name: 'Data Portal' })).not.toBeInTheDocument();
   });
 
-  it('renders the CIFAR logo', async () => {
+  it('renders the red CIFAR logo', async () => {
     await render(Hero);
 
-    expect(screen.getByRole('img', { name: 'CIFAR' })).toHaveAttribute('src', 'assets/logos/cifar.svg');
+    expect(screen.getByRole('img', { name: 'CIFAR' })).toHaveAttribute('src', 'assets/logos/cifar-red.svg');
   });
 
   it('renders the illustration as a decorative image', async () => {

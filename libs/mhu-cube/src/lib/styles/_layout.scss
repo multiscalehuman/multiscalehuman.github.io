@@ -1,17 +1,21 @@
 @use 'tokens' as t;
 
-/* Spacing scales with the host's width (cqw), like the layout breakpoints, not with the browser window. */
+/* Spacing scales with the host's width (cqw), like the layout breakpoints, not with the browser window. The page
+   owns the inline gutters. */
 .mhu-cube {
   display: grid;
-  /* The content column widens with the host up to 35rem, keeping its earlier 28rem on narrower desktops. */
-  grid-template-columns: minmax(22rem, clamp(28rem, 31%, 35rem)) minmax(0, 1fr);
+  /* The content column widens with the host up to 35rem, keeping its earlier 28rem on narrower desktops. From a host
+     about 86rem wide, it fits the longest dimension description and the attribution on one line. */
+  grid-template-columns: minmax(22rem, clamp(28rem, 36%, 35rem)) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   grid-template-areas: 'content stage';
   gap: clamp(1.5rem, 3cqw, 4rem);
   width: 100%;
-  height: 100%;
+  /* An element can't query its own width, so pages set the graph-height hook rather than the host's height, which
+     would also bind the compact layout. 36rem fits the introduction and the selected card. */
+  height: t.public-slot(graph-height, 100%);
   min-height: 36rem;
-  padding: clamp(1.5rem, 3cqw, 3rem);
+  padding: clamp(1.5rem, 3cqw, 3rem) 0;
   overflow: visible;
   background: t.slot(surface);
 }
@@ -32,7 +36,7 @@
   grid-template-rows: minmax(0, 1fr) auto;
   min-width: 0;
   min-height: 0;
-  container-type: size;
+  container: mhu-cube-stage / size;
   place-items: center;
 }
 /* The frame, blocks, and label anchors share a drawing area shaped like the camera's frame (--_area-ratio, set by
@@ -53,6 +57,7 @@
     'min(100cqw, calc((100cqh - #{t.slot(gutter-y)}) / #{t.slot(area-ratio, 1)} + #{t.slot(gutter-x)}))'
   );
   position: relative;
+  justify-self: end;
   width: t.slot(plot-width);
   height: calc((t.slot(plot-width) - t.slot(gutter-x)) * t.slot(area-ratio, 1) + t.slot(gutter-y));
 }

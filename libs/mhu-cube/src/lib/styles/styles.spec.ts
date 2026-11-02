@@ -221,7 +221,7 @@ describe('mhu-cube styles', () => {
   });
 
   it('desktop content precedes the visualization and selected details use a card', () => {
-    expect(styles).toMatch(/grid-template-columns: minmax\(22rem, clamp\(28rem, 31%, 35rem\)\) minmax\(0, 1fr\)/);
+    expect(styles).toMatch(/grid-template-columns: minmax\(22rem, clamp\(28rem, 36%, 35rem\)\) minmax\(0, 1fr\)/);
     expect(styles).toMatch(/grid-template-rows: minmax\(0, 1fr\)/);
     expect(styles).toMatch(/grid-template-areas: "content stage"/);
     expect(styles).toMatch(
@@ -250,14 +250,43 @@ describe('mhu-cube styles', () => {
     );
   });
 
-  it('component spacing follows the host width rather than the browser window', () => {
+  it('component spacing follows the host width and leaves the inline gutters to the page', () => {
     expect(styles).toMatch(
-      /\.mhu-cube \{[\s\S]*?gap: clamp\(1\.5rem, 3cqw, 4rem\);[\s\S]*?padding: clamp\(1\.5rem, 3cqw, 3rem\);/,
+      /\.mhu-cube \{[\s\S]*?gap: clamp\(1\.5rem, 3cqw, 4rem\);[\s\S]*?padding: clamp\(1\.5rem, 3cqw, 3rem\) 0;/,
     );
     expect(styles).toMatch(
-      /@container mhu-cube-host \(max-width: 64rem\)[\s\S]*?padding: clamp\(1\.5rem, 4cqw, 2\.5rem\) 0 0;/,
+      /@container mhu-cube-host \(max-width: 64rem\)[\s\S]*?padding: clamp\(1\.5rem, 4cqw, 2\.5rem\) 0;/,
     );
     expect(styles).not.toMatch(/\dvw/);
+  });
+
+  it('the graph takes its height from the public hook and its plot meets the right edge', () => {
+    expect(styles).toMatch(/\.mhu-cube \{[^}]*height: var\(--mhu-cube-graph-height, 100%\);[^}]*min-height: 36rem;/);
+    // The compact layout ignores the hook, so a page can set it without repeating the 64rem breakpoint.
+    expect(styles).toMatch(/@container mhu-cube-host \(max-width: 64rem\) \{ \.mhu-cube \{[^}]*height: auto;/);
+    expect(styles).toMatch(/\.mhu-cube__stage \{[^}]*container: mhu-cube-stage ?\/ ?size;/);
+    expect(styles).toMatch(/\.mhu-cube__plot \{[^}]*justify-self: end;/);
+  });
+
+  it('large plots step the axis labels up one type role and widen their gutters to fit', () => {
+    const [, width, height, rules = ''] =
+      styles.match(
+        /@container mhu-cube-stage \(min-width: ([\d.]+)rem\) and \(min-height: ([\d.]+)rem\) \{([\s\S]*?\}) \}/,
+      ) ?? [];
+    const gutter = (stylesheet: string, side: string) =>
+      Number(stylesheet.match(new RegExp(`\\.mhu-cube__plot \\{[^}]*--_gutter-${side}: ([\\d.]+)rem`))?.[1]);
+
+    // The labels grow only once the stage fits a 40rem drawing area inside the larger gutters.
+    expect(Number(width)).toBe(40 + gutter(rules, 'left') + gutter(rules, 'right'));
+    expect(Number(height)).toBe(40 + gutter(rules, 'top') + gutter(rules, 'bottom'));
+    ['top', 'right', 'bottom', 'left'].forEach((side) => {
+      expect(gutter(rules, side)).toBeGreaterThanOrEqual(gutter(styles, side));
+    });
+    expect(rules).toMatch(/\.mhu-cube__axis-title \{[^}]*--mat-sys-title-medium-size, 1rem[^}]*font-weight: 600;/);
+    expect(rules).toMatch(/\.mhu-cube__axis-value \{[^}]*--mat-sys-body-medium-size, 0\.875rem/);
+    expect(rules).toMatch(
+      /\.mhu-cube__axis-title--space, \.mhu-cube__axis-title--organ \{ translate: calc\(var\(--axis-normal-x, 0\) \* 0\.25rem\) calc\(var\(--axis-normal-y, 0\) \* 0\.25rem\); \}/,
+    );
   });
 
   it('desktop guidance uses a compact dimension key and tighter details spacing', () => {

@@ -1,11 +1,46 @@
+@use 'sass:map';
+@use 'tokens' as t;
 @use 'typography' as *;
+
+/// The drawing area's size, in both directions, from which the axis labels step up one type role.
+$_large-plot: 40rem;
+/// Gutters for the larger labels. The time title needs more room on the left, the taller organ row more below, and
+/// the space title's longer push a little more on the right.
+$_large-gutters: (
+  top: 0.5rem,
+  right: 6.5rem,
+  bottom: 3.75rem,
+  left: 7rem,
+);
+$_large-stage-width: $_large-plot + map.get($_large-gutters, left) + map.get($_large-gutters, right);
+$_large-stage-height: $_large-plot + map.get($_large-gutters, top) + map.get($_large-gutters, bottom);
+
+/* The stage loses its size containment in the compact layout, so this never applies there. */
+@container mhu-cube-stage (min-width: #{$_large-stage-width}) and (min-height: #{$_large-stage-height}) {
+  .mhu-cube__plot {
+    @each $side, $size in $_large-gutters {
+      @include t.set(gutter-#{$side}, $size);
+    }
+  }
+  .mhu-cube__axis-title {
+    @include typescale(title-medium, 600);
+  }
+  .mhu-cube__axis-value {
+    @include typescale(body-medium);
+  }
+  /* The floor titles' inline offsets clear base-size values, so they move a further 0.25rem along their normal. */
+  .mhu-cube__axis-title--space,
+  .mhu-cube__axis-title--organ {
+    translate: calc(t.custom-slot(axis-normal-x, 0) * 0.25rem) calc(t.custom-slot(axis-normal-y, 0) * 0.25rem);
+  }
+}
 
 @container mhu-cube-host (max-width: 64rem) {
   .mhu-cube {
     display: flex;
     min-height: 0;
     height: auto;
-    padding: clamp(1.5rem, 4cqw, 2.5rem) 0 0;
+    padding: clamp(1.5rem, 4cqw, 2.5rem) 0;
     overflow: visible;
     flex-direction: column;
   }

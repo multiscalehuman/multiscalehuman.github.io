@@ -1,14 +1,14 @@
 // Copy assertions read the configured content, so editing it needs no test changes.
 import { MHU_CUBE_INTRO_CONTENT } from '../../src/lib/content/intro-content';
 import { assertAxisLabelsClear } from '../geometry';
-import { assert, test, type HarnessContext } from '../runner';
+import { assert, nextLayout, test, type HarnessContext } from '../runner';
 
 /**
- * Checks the introduction, control semantics, axis labels, and light DOM rendering.
+ * Checks the introduction, control semantics, axis labels, sizing, and light DOM rendering.
  * @param context - The shared component and its data.
  * @returns A promise that resolves after every check has run.
  */
-export async function structureSuite({ component, positionedCount }: HarnessContext) {
+export async function structureSuite({ component, fixture, positionedCount }: HarnessContext) {
   await test('desktop introduction explains the visualization with semantic dimensions', () => {
     const intro = component.querySelectorAll('.mhu-cube__intro');
     assert(intro.length === 1, 'The component should render one shared introduction.');
@@ -112,6 +112,86 @@ export async function structureSuite({ component, positionedCount }: HarnessCont
 
   await test('axis labels never overlap each other or the frame and stay inside the component', () => {
     assertAxisLabelsClear(component);
+  });
+
+  await test('the introduction and the plot reach the host edges, so they line up with the page content', async () => {
+    if (!fixture) {
+      throw new Error('Fixture container is missing.');
+    }
+    const intro = component.querySelector('.mhu-cube__content')?.getBoundingClientRect();
+    assert(
+      intro && Math.abs(intro.left - component.getBoundingClientRect().left) < 0.5,
+      "The introduction should start at the host's left edge.",
+    );
+    // A wide, short component leaves the plot spare width, which belongs between the introduction and the plot.
+    fixture.style.width = '72rem';
+    await nextLayout();
+    try {
+      const stage = component.querySelector('.mhu-cube__stage')?.getBoundingClientRect();
+      const plot = component.querySelector('.mhu-cube__plot')?.getBoundingClientRect();
+      assert(
+        stage && plot && plot.width < stage.width - 1,
+        'A short component should leave spare width beside the plot.',
+      );
+      assert(
+        Math.abs(plot.right - component.getBoundingClientRect().right) < 0.5,
+        "The plot should end at the host's right edge.",
+      );
+    } finally {
+      fixture.style.width = '';
+      await nextLayout();
+    }
+  });
+
+  await test('the graph fills the public height hook and the compact cards ignore it', async () => {
+    if (!fixture) {
+      throw new Error('Fixture container is missing.');
+    }
+    const graph = component.querySelector<HTMLElement>('.mhu-cube');
+    const list = component.querySelector<HTMLElement>('.mhu-cube__list');
+    assert(graph && list, 'The component layout is missing.');
+    const hookHeight = 40 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    component.style.setProperty('--mhu-cube-graph-height', '40rem');
+    await nextLayout();
+    try {
+      assert(
+        Math.abs(graph.getBoundingClientRect().height - hookHeight) < 1 &&
+          Math.abs(component.getBoundingClientRect().height - hookHeight) < 1,
+        'The graph and its host should be as tall as the hook.',
+      );
+      fixture.style.width = '64rem';
+      await nextLayout();
+      const host = component.getBoundingClientRect();
+      assert(
+        Math.abs(host.height - graph.getBoundingClientRect().height) < 1 &&
+          host.bottom >= list.getBoundingClientRect().bottom - 0.5,
+        'At 64rem the cards should set the height and stay inside the host.',
+      );
+    } finally {
+      component.style.removeProperty('--mhu-cube-graph-height');
+      fixture.style.width = '';
+      await nextLayout();
+    }
+  });
+
+  await test('large plots step the axis labels up one type size and keep them clear', async () => {
+    if (!fixture) {
+      throw new Error('Fixture container is missing.');
+    }
+    const value = component.querySelector<HTMLElement>('.mhu-cube__axis-value');
+    const size = () => (value ? parseFloat(getComputedStyle(value).fontSize) : NaN);
+    const baseSize = size();
+    component.style.setProperty('--mhu-cube-graph-height', '60rem');
+    fixture.style.width = '95rem';
+    await nextLayout();
+    try {
+      assert(size() > baseSize, 'Axis values should step up a type size on a large plot.');
+      assertAxisLabelsClear(component);
+    } finally {
+      component.style.removeProperty('--mhu-cube-graph-height');
+      fixture.style.width = '';
+      await nextLayout();
+    }
   });
 
   await test('the plot faces the organs with their labels in one row below the front edge', () => {

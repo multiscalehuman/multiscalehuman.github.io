@@ -9,7 +9,7 @@ When its container is wider than `64rem`, the component keeps its introduction v
 - The element is a framework-neutral custom element with no runtime dependencies. It doesn't import Angular, so it can also be used outside the portal.
 - The element renders into the light DOM, so the page includes its stylesheet and the site's own stylesheets can restyle its parts. See [Styles](#styles).
 - Vitest specs run in jsdom and cover validation, projection, the details transition, the copy rules, the stylesheet rules, and the element's rendering, accessibility, keyboard, and event behavior. The workspace requires 85% coverage.
-- jsdom has no layout, so geometry, computed styles, hit testing, and responsive behavior are checked by a [manual browser harness](#development). It isn't run in CI. One harness check currently fails: the harness renders with system fonts instead of Roboto, which makes the “Time (years)” title slightly wider than its `6rem` gutter.
+- jsdom has no layout, so geometry, computed styles, hit testing, and responsive behavior are checked by a [manual browser harness](#development). It isn't run in CI. The harness doesn't load Roboto, so on machines without it installed, the fallback font can make the “Time (years)” title slightly wider than its `6rem` gutter and fail the axis label check.
 - The portal shows sample datasets with placeholder metadata links until dataset metadata pages exist.
 
 ## Library contents
@@ -154,7 +154,9 @@ export class MhuCubeGraph {
 
 Call `defineMhuCube()` only in the browser when the application uses server rendering.
 
-The destination page owns external spacing. This matches the proposed Angular Material page gutters without special component configuration:
+## Layout and sizing
+
+The page owns the gutters and any space around the element. The component owns its height and the space inside it, above and below its content:
 
 ```css
 .dataset-page {
@@ -170,11 +172,23 @@ The destination page owns external spacing. This matches the proposed Angular Ma
 mhu-cube {
   display: block;
   width: 100%;
-  height: calc(100dvh - var(--app-header-height));
+  --mhu-cube-graph-height: calc(100svh - var(--app-header-height));
 }
 ```
 
-The component responds to its available container width rather than the browser viewport, so page gutters and Angular layout containers are accounted for automatically. On compact layouts its height becomes content-driven.
+- **Edges:** The component has no inline padding, so the introduction starts at the element's left edge and the plot ends at its right edge. To line them up with a page header or hero, give the element the same content box. On the portal home page, the hero's content and the graph's section share a `95rem` cap and the hero's gutters: `1.5rem`, or `2.5rem` from `960px`.
+- **Height:** `--mhu-cube-graph-height` sets the graph's height and defaults to `100%` of the element, so pages that size the element itself still work. The compact layout ignores it and is as tall as its cards. Prefer the hook to a fixed element height: an element can't query its own width, so a fixed height would also bind the compact layout, and its cards would overflow. The portal sets it to `100svh`, so the graph fills one screen, and pads the graph's section above and below by the same `1.5rem` or `2.5rem` as its gutters, so that white space sits outside the screen.
+- **Breakpoint:** The component responds to its own width rather than the browser window, so page gutters and layout containers are accounted for automatically. The graph needs more than `64rem`, 1024px at the default font size. At `64rem` and below, the dataset cards replace it. With the portal's `2.5rem` gutters, the graph needs a window wider than `69rem` (1104px).
+- **Legibility:** The plot scales with its column, but text doesn't. Text uses Material type roles and the label gutters are in `rem`, so labels keep their size and room at any plot size and follow browser zoom. Once the stage fits a drawing area of about `40rem` on each side, axis values step up from `body-small` to `body-medium`, axis titles from `label-large` to `title-medium`, and the gutters widen to fit. The graph is never shorter than `36rem`, so the introduction and the selected dataset card always fit.
+
+### Limitations
+
+- The plot keeps the frame's proportions, so it fills its column's height or its width, never both. Spare width opens between the introduction and the plot, which keeps to the right edge, and spare height is split above and below it.
+- The plot's box meets the right edge, but its rightmost visible content is the space labels' text, which ends inside a fixed gutter. Only the left edge lines up exactly with text above it.
+- Below `36rem` of height, the graph stays `36rem` tall and the page scrolls, rather than shrinking text or clipping the introduction.
+- `svh` is the viewport's height with mobile browser toolbars showing, so when they retract, a thin band of the next section shows below the graph. `dvh` would track the toolbars, but it would resize the plot while the page scrolls.
+- The breakpoint and gutters are in `rem`, so browser zoom and larger default font sizes switch to the cards in wider windows. At 125% zoom, the portal shows cards in windows up to about 1380px wide.
+- The compact layout is as tall as its cards rather than one screen.
 
 ## Public API
 
@@ -263,7 +277,7 @@ const item: MhuCubeItem = {
 - Faint floor guides run from every space and organ label across the floor. Each block casts its footprint onto the floor where its two guides cross, with dashed drop lines from its bottom corners, so a floating block can be traced back to its labels.
 - The camera keeps the floor shallow, so depth moves a block up the screen far less than time does and heights read close to the time labels across the whole plot.
 - Even so, a block's depth shifts it slightly against the time ticks. Hovering, keyboard focus, or selection reveals a bracket on the time axis for the dataset's exact start and end, plus level lines tracing those heights from the block to the axis. Single ages show a single level line and a dot.
-- The plot is as large as its column allows. The frame fills a drawing area with the frame's own proportions, and labels hang into fixed `rem` gutters around that area, so they keep their room at any size. Whichever of the column's height or width runs out first sets the size; the other dimension keeps the leftover space, centered.
+- The plot is as large as its column allows. The frame fills a drawing area with the frame's own proportions, and labels hang into fixed `rem` gutters around that area, so they keep their room at any size. Whichever of the column's height or width runs out first sets the size. The plot keeps to the column's right edge, so leftover width opens between it and the introduction, and leftover height is split above and below it.
 - Axis labels are placed from the frame itself. Each value label hangs from its axis position, offset straight out from the frame, and the space and organ titles sit in a second row beyond them. Labels stay clear of the frame and each other for values up to about `4rem` wide; longer space or organ names may need shorter display labels.
 - Keyboard order, reading order, and compact-card order go alphabetically by organ, then by space, then by time, matching the dataset titles.
 
@@ -364,13 +378,13 @@ The component intentionally has no quantitative color scale. Block height encode
 
 ### Typography
 
-The component consumes Angular Material system typography properties when the host defines them and uses matching Material 3 fallbacks otherwise. Every eyebrow, such as “Explore” above the heading and “Selected dataset” on the details card, uses one eyebrow style, `.mhu-cube__eyebrow`: `typescale(label-medium, 600)`, so `label-medium` with the approved 600 weight, uppercase, in the primary color. The desktop introduction uses `headline-large` for the heading, `body-large` for the dimension key, and `body-medium` for the attribution. Its lead paragraph matches AtlasNG's content paragraph (`ang-content-paragraph`): `body-large` scaled by `--ang-content-paragraph-size-multiplier` and `--ang-content-paragraph-line-height-multiplier`, 17/16 by default, so 17px on a 25.5px line with the Multiscale Human theme. The compact introduction uses `headline-medium` for the heading and `body-large` for its description. Introduction headings use their role-specific weight tokens with an approved 600-weight fallback, while dimension-key headers, eyebrows, and axis titles use the approved 600-weight treatment. Other roles defer to their M3 weight tokens, while the selected-dataset heading and stat terms retain their approved 500-weight treatment. Compact card titles, facts, and metadata labels use the card design's 600 weight. The desktop intro and selected-card column does not create an independent scroll region.
+The component consumes Angular Material system typography properties when the host defines them and uses matching Material 3 fallbacks otherwise. Every eyebrow, such as “Explore” above the heading and “Selected dataset” on the details card, uses one eyebrow style, `.mhu-cube__eyebrow`: `typescale(label-medium, 600)`, so `label-medium` with the approved 600 weight, uppercase, in the primary color. The desktop introduction uses `headline-large` for the heading, `body-large` for the dimension key, and `body-medium` for the attribution. Its lead paragraph matches AtlasNG's content paragraph (`ang-content-paragraph`): `body-large` scaled by `--ang-content-paragraph-size-multiplier` and `--ang-content-paragraph-line-height-multiplier`, 17/16 by default, so 17px on a 25.5px line with the Multiscale Human theme. The compact introduction uses `headline-medium` for the heading and `body-large` for its description. Axis values use `body-small` and axis titles `label-large`, stepping up to `body-medium` and `title-medium` on large plots (see [Layout and sizing](#layout-and-sizing)). Introduction headings use their role-specific weight tokens with an approved 600-weight fallback, while dimension-key headers, eyebrows, and axis titles use the approved 600-weight treatment. Other roles defer to their M3 weight tokens, while the selected-dataset heading and stat terms retain their approved 500-weight treatment. Compact card titles, facts, and metadata labels use the card design's 600 weight. The desktop intro and selected-card column does not create an independent scroll region.
 
 The host application owns font loading; the portal loads Roboto. Fonts are not runtime dependencies of the web component.
 
 ### Intro copy
 
-The introduction copy is managed in `MHU_CUBE_INTRO_CONTENT` in `src/lib/content/intro-content.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the sample data, so update both when the data changes.
+The introduction copy is managed in `MHU_CUBE_INTRO_CONTENT` in `src/lib/content/intro-content.ts`. `heading` appears beside the desktop canvas and stays on one line, so keep it to about 28 characters at the default type size. `compactHeading` replaces it at `64rem` and below and may wrap, and `compactDescription` follows it as a one-sentence lead above the dataset cards. Above `64rem`, a compact, divider-separated dimension key with visual column headings explains space, time, and organ and includes selection guidance. The content column fits the longest description, time's, and the attribution on one line once the component is about `86rem` wide, and wraps them on narrower graphs, so keep new descriptions and the attribution no longer. Selecting a block replaces the dimension key and its headings with a closable dataset card in the same left-column position; closing it restores the key and returns focus to the selected block. The Metacube acknowledgment remains anchored to the bottom of the desktop content column in either state. At `64rem` and below, visualization-specific content is removed from the layout and accessibility tree, leaving the eyebrow, compact heading, and compact description above the dataset cards. The desktop and compact descriptions both name the number of datasets and teams in the sample data, so update both when the data changes.
 
 The dimension key and dataset cards use semantic definition lists with subtle row separators. The selected desktop card uses the container surface; compact cards are described under [Dataset cards](#dataset-cards). The sample dataset titles use a consistent organ, space, and time sequence, like the metadata page titles, so datasets sharing a cell stay distinguishable; the component itself continues to display whatever label the host supplies.
 
@@ -402,7 +416,7 @@ Run the portal to see the component with the sample datasets:
 npx nx serve portal
 ```
 
-Open `http://localhost:4200`. Narrow the window below `64rem` to see the dataset cards, and use the browser's device emulation to try the touch interaction.
+Open `http://localhost:4200`. Narrow the window to 1104px or less, the component's `64rem` plus the page gutters, to see the dataset cards, and use the browser's device emulation to try the touch interaction.
 
 The sample datasets live in [`apps/portal/src/app/datasets/sample-datasets.ts`](../../apps/portal/src/app/datasets/sample-datasets.ts), and their square images are in `apps/portal/public/assets/datasets/`. They plot donor age from 0 to 100 years and display the space categories as `100 µm` and `100 mm`. These are sample data rather than hard-coded component defaults, and they use those values consistently in the axes, dataset headings, metadata, and accessible descriptions. The two Liver · 100 µm datasets (age 45 and ages 7–47) demonstrate lanes, and the infant Thymus dataset demonstrates a time label, the inward shift at the axis floor, a card image, and two corresponding authors. A single author is labeled “Corresponding author” and several “Corresponding authors”, and `compactMetadata` is set to both names. `hoverMetadata` is set to space, time, organ, and sex. So the selected dataset card shows everything, the hover card leaves out the authors, and the compact cards show only the authors.
 
@@ -420,7 +434,7 @@ jsdom can't check layout, so after changing the element, card, SVG, or style mod
 npx nx harness mhu-cube
 ```
 
-Open the URL it prints. A passing harness changes the document title to `PASS — MHU cube browser tests`. Check keyboard use, zoom, light/dark themes, forced colors, widths on both sides of `64rem`, and the compact cards with both a mouse and a touch screen. Because hit testing relies on SVG `pointer-events`, also confirm clicks and hover cards in Firefox and Safari, and that lane blocks just above `64rem` remain comfortable pointer targets.
+Open the URL it prints. A passing harness changes the document title to `PASS — MHU cube browser tests`. Check keyboard use, zoom, light/dark themes, forced colors, widths on both sides of `64rem`, heights on both sides of `36rem`, and the compact cards with both a mouse and a touch screen. Because hit testing relies on SVG `pointer-events`, also confirm clicks and hover cards in Firefox and Safari, and that lane blocks just above `64rem` remain comfortable pointer targets.
 
 ## Open questions
 

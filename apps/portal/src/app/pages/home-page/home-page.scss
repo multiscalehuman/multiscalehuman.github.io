@@ -1,25 +1,24 @@
+@use '@atlasng/design-system' as ds;
+
 :host {
   display: block;
   container: home-page / inline-size;
 
+  // The same width cap and gutters as the hero's content, so the cube's edges line up with the hero's text.
   .space-time-organ-graph {
     box-sizing: border-box;
     max-width: 100rem;
-    min-height: 40rem;
     margin: 0 auto;
-    padding: 2.5rem;
+    padding: 1.5rem;
     overflow-x: clip;
-    container: space-time-organ-graph / inline-size;
 
-    // The query measures the section's content box, which is <mhu-cube>'s width, so this matches the cube's own
-    // 64rem breakpoint. Below it, the cube swaps the graph for dataset cards that set their own height.
-    // The cube fills one screen, less the section's padding.
-    @container space-time-organ-graph (min-width: 64rem) {
-      mhu-cube {
-        height: calc(100vh - 5rem);
-        height: calc(100svh - 5rem);
-        min-height: 35rem;
-      }
+    @include ds.breakpoint(medium) {
+      padding: 2.5rem;
+    }
+
+    // The dataset cards that replace the graph at 64rem and below ignore this hook.
+    mhu-cube {
+      --mhu-cube-graph-height: 100svh;
     }
   }
 }
