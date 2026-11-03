@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   CUSTOM_ELEMENTS_SCHEMA,
   DestroyRef,
   DOCUMENT,
@@ -62,6 +63,14 @@ export class HraEui {
   /** The visitor's cookie and analytics permissions from the portal's cookie banner. */
   protected readonly permissionsManager = inject(AnalyticsPermissionsManager);
 
+  /** A computed property that returns the visitor's analytics preferences. */
+  protected readonly analytics = computed(() => {
+    const permissions = this.permissionsManager.permissions();
+    return Object.fromEntries(
+      Object.values(AnalyticsEventCategory).map((category) => [category, permissions.isCategoryEnabled(category)]),
+    );
+  });
+
   /**
    * Keeps the HRA privacy preferences in sync with the portal's permissions, adds the EUI's stylesheet and script to
    * the page, and removes the stylesheet when the EUI is removed.
@@ -82,13 +91,8 @@ export class HraEui {
    * respects the visitor's choices. If saving fails, saves preferences that allow only necessary analytics, so the EUI still skips its banner.
    */
   protected saveHraPrivacyPreferences(): void {
-    const permissions = this.permissionsManager.permissions();
-    const preferences = Object.fromEntries(
-      Object.values(AnalyticsEventCategory).map((category) => [category, permissions.isCategoryEnabled(category)]),
-    );
-
     try {
-      this.document.defaultView?.localStorage.setItem(HRA_PRIVACY_PREFERENCES_KEY, JSON.stringify(preferences));
+      this.document.defaultView?.localStorage.setItem(HRA_PRIVACY_PREFERENCES_KEY, JSON.stringify(this.analytics()));
     } catch {
       try {
         this.document.defaultView?.localStorage.setItem(
