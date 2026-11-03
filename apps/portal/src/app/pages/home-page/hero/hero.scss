@@ -19,8 +19,10 @@ $_text-color: map.get(theme.$primary-palette, secondary, 100);
   }
 }
 
+// cifar.ca renders the same banner at 80% over the same background color.
 .illustration {
   object-fit: cover;
+  opacity: 0.8;
 }
 
 @media (prefers-reduced-motion: no-preference) {
