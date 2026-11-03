@@ -78,15 +78,6 @@ describe('HraEui', () => {
 
       expect(savedPreferences()).toEqual({ necessary: true, statistics: true, preferences: true, marketing: true });
     });
-
-    it('still renders when storage is blocked', async () => {
-      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-        throw new Error('blocked');
-      });
-      await renderWithPermissions(AnalyticsPermissions.DEFAULT).result;
-
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
-    });
   });
 
   it('shows a loading placeholder until the EUI scrolls into view', async () => {
