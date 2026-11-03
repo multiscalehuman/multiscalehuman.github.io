@@ -58,13 +58,123 @@ ang-footer {
   }
 }
 
-// The EUI colors some form field labels with the fixed primary roles, which keep their light-theme values in the
-// dark theme, so they're remapped to the themed label color. Its Spatial Search dialogs render outside <ccf-eui>.
+/// Maps each token name to `initial`, so Material falls back to its default value, which AtlasNG uses.
+/// @param {List} $tokens - Component token names, such as `filled-container-color`.
+/// @returns {Map} The token overrides.
+@function _defaults($tokens) {
+  $overrides: ();
+  @each $token in $tokens {
+    $overrides: map.set($overrides, $token, initial);
+  }
+  @return $overrides;
+}
+
+// The EUI restyles Material form fields, flyouts, menus, and tooltips with HRA colors, including fixed roles that stay
+// dark in the dark theme. These rules reset every color it sets back to the Material defaults. Its menus, tooltips,
+// and form field flyouts open as popovers inside <ccf-eui>, and its dialogs open in its overlay container.
 ccf-eui,
-.spatial-search-config,
-.spatial-search-ui {
-  --mat-sys-primary-fixed: #{ds.sys-slot(on-surface-variant)};
-  --mat-sys-on-primary-fixed: #{ds.sys-slot(on-surface-variant)};
+.cdk-overlay-container.hra-app {
+  // Field tokens are reset on the text field wrapper, inside the hosts where the EUI sets them. Labels take the
+  // floating label's color instead of a fixed role.
+  .mat-mdc-text-field-wrapper {
+    --mat-sys-primary-fixed: currentColor;
+    --mat-sys-on-primary-fixed: currentColor;
+
+    @include mat.form-field-overrides(
+      _defaults(
+        (
+          disabled-input-text-placeholder-color,
+          enabled-select-arrow-color,
+          filled-active-indicator-color,
+          filled-container-color,
+          filled-disabled-active-indicator-color,
+          filled-disabled-container-color,
+          filled-disabled-input-text-color,
+          filled-disabled-label-text-color,
+          filled-focus-active-indicator-color,
+          filled-focus-label-text-color,
+          filled-hover-active-indicator-color,
+          filled-hover-label-text-color,
+          filled-input-text-color,
+          filled-input-text-placeholder-color,
+          filled-label-text-color,
+          focus-select-arrow-color,
+          outlined-focus-label-text-color,
+          outlined-label-text-color
+        )
+      )
+    );
+
+    @include mat.select-overrides(
+      _defaults(
+        (
+          disabled-arrow-color,
+          disabled-trigger-text-color,
+          enabled-arrow-color,
+          focused-arrow-color,
+          placeholder-text-color
+        )
+      )
+    );
+  }
+
+  .mat-mdc-select-panel {
+    @include mat.select-overrides(_defaults((panel-background-color)));
+  }
+
+  .mat-mdc-autocomplete-panel {
+    @include mat.autocomplete-overrides(_defaults((background-color)));
+  }
+
+  .mat-mdc-option {
+    @include mat.option-overrides(
+      _defaults(
+        (
+          focus-state-layer-color,
+          hover-state-layer-color,
+          label-text-color,
+          selected-state-label-text-color,
+          selected-state-layer-color
+        )
+      )
+    );
+  }
+
+  .mat-mdc-menu-panel {
+    @include mat.menu-overrides(
+      _defaults(
+        (
+          container-color,
+          item-focus-state-layer-color,
+          item-hover-state-layer-color,
+          item-icon-color,
+          item-label-text-color
+        )
+      )
+    );
+  }
+
+  .mat-mdc-tooltip-surface {
+    @include mat.tooltip-overrides(_defaults((container-color, supporting-text-color)));
+  }
+
+  // The BMI and Age slider flyout sets its background directly, so it takes the Material panel color.
+  .dual-slider-panel {
+    background-color: ds.sys-slot(surface-container);
+  }
+
+  // The EUI sets these with !important, so the Material defaults need it too.
+  .mat-mdc-option.dropdown-option.mdc-list-item--selected {
+    background-color: ds.sys-slot(secondary-container) !important;
+  }
+
+  .mat-mdc-menu-panel .mat-mdc-menu-item.cdk-keyboard-focused {
+    background-color: color-mix(
+      in srgb,
+      #{ds.sys-slot(on-surface)} calc(#{ds.sys-slot(focus-state-layer-opacity)} * 100%),
+      transparent
+    ) !important;
+  }
 }
 
 // The Spatial Search position readout sits on the 3D scene, which is black in both themes, so it keeps its
