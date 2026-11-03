@@ -58,6 +58,21 @@ ang-footer {
   }
 }
 
+// The EUI colors some form field labels with the fixed primary roles, which keep their light-theme values in the
+// dark theme, so they're remapped to the themed label color. Its Spatial Search dialogs render outside <ccf-eui>.
+ccf-eui,
+.spatial-search-config,
+.spatial-search-ui {
+  --mat-sys-primary-fixed: #{ds.sys-slot(on-surface-variant)};
+  --mat-sys-on-primary-fixed: #{ds.sys-slot(on-surface-variant)};
+}
+
+// The Spatial Search position readout sits on the 3D scene, which is black in both themes, so it keeps its
+// light-theme color.
+.spatial-search-ui ccf-xyz-position {
+  color-scheme: light;
+}
+
 body {
   margin: 0;
   min-width: 20rem;
