@@ -65,10 +65,7 @@
           "component": "CellDistanceExplorer",
           "config": {
             "nodes": "assets/datasets/zandstra-thymus-codex-cde.csv",
-            "nodeTargetSelector": "Endothelial cells",
-            "title": "Thymus, 100 µm, 4–5 months",
-            "organ": "Thymus",
-            "technology": "CODEX"
+            "nodeTargetSelector": "Endothelial cells"
           }
         }
       ]

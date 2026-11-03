@@ -38,10 +38,7 @@
           "component": "CellDistanceExplorer",
           "config": {
             "nodes": "assets/datasets/bader-liver-xenium-cde.csv",
-            "nodeTargetSelector": "LSEC",
-            "title": "Liver, 100 µm, 7–47 years",
-            "organ": "Liver",
-            "technology": "Xenium"
+            "nodeTargetSelector": "LSEC"
           }
         }
       ]

@@ -9,11 +9,6 @@ const stringSchema = createSchema<string, ConfigValue>((value) =>
   typeof value === 'string' ? { value } : { issues: [{ message: 'Expected a string.' }] },
 );
 
-/** Schema accepting a string config value, or no value. */
-const optionalStringSchema = createSchema<string | undefined, ConfigValue>((value) =>
-  value === undefined || typeof value === 'string' ? { value } : { issues: [{ message: 'Expected a string.' }] },
-);
-
 /** Schema accepting a positive number config value, or no value. */
 const optionalPositiveNumberSchema = createSchema<number | undefined, ConfigValue>((value) =>
   value === undefined || (typeof value === 'number' && value > 0)
@@ -47,19 +42,12 @@ export const CITE_DEFINITION = {
 
 /**
  * `CellDistanceExplorer`: the HRA Cell Distance Explorer. Config: `nodes` (nodes CSV URL relative to the app's base
- * URL), `nodeTargetSelector` (exact anchor cell type), and optionally `title`, `organ`, and `technology` (dataset
- * metadata shown in the CDE).
+ * URL) and `nodeTargetSelector` (exact anchor cell type).
  */
 export const CELL_DISTANCE_EXPLORER_DEFINITION = {
   name: 'CellDistanceExplorer',
   component: () => import('./cell-distance-explorer/cell-distance-explorer').then((m) => m.CellDistanceExplorer),
-  config: {
-    nodes: stringSchema,
-    nodeTargetSelector: stringSchema,
-    title: optionalStringSchema,
-    organ: optionalStringSchema,
-    technology: optionalStringSchema,
-  },
+  config: { nodes: stringSchema, nodeTargetSelector: stringSchema },
 } satisfies ContentDefinition;
 
 /**

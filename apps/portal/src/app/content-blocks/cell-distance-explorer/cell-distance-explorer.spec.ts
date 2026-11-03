@@ -40,6 +40,32 @@ describe('CellDistanceExplorer', () => {
     expect(scripts[0]).toHaveAttribute('type', 'module');
   });
 
+  it('removes the CDE stylesheet with the last CDE, keeping the script', async () => {
+    const { fixture, rerender } = await render(
+      `<mhu-cell-distance-explorer nodes="a.csv" nodeTargetSelector="A" />
+       @if (showSecond) {
+         <mhu-cell-distance-explorer nodes="b.csv" nodeTargetSelector="B" />
+       }`,
+      { imports: [CellDistanceExplorer], componentProperties: { showSecond: true } },
+    );
+
+    await rerender({ componentProperties: { showSecond: false } });
+    expect(cdeTags().stylesheets).toHaveLength(1);
+
+    fixture.destroy();
+    expect(cdeTags().stylesheets).toHaveLength(0);
+    expect(cdeTags().scripts).toHaveLength(1);
+  });
+
+  it('renders the screen size notice', async () => {
+    await render(CellDistanceExplorer, { inputs: INPUTS });
+
+    expect(screen.getByRole('note')).toHaveTextContent('Larger screen recommended');
+    expect(screen.getByRole('note')).toHaveTextContent(
+      'For the best experience, use a desktop browser window at least 1400px wide.',
+    );
+  });
+
   it('shows a loading placeholder until the CDE scrolls into view', async () => {
     const { container } = await render(CellDistanceExplorer, { inputs: INPUTS });
 

@@ -9,7 +9,6 @@
 $_colors: (
   on-surface: map.get(theme.$primary-palette, neutral, 10),
   on-surface-variant: map.get(theme.$primary-palette, neutral-variant, 30),
-  primary: map.get(theme.$primary-palette, 40),
   outline-variant: map.get(theme.$primary-palette, neutral-variant, 80),
 );
 
@@ -28,9 +27,21 @@ $_colors: (
 }
 
 :host {
-  height: 48rem;
-  border: 1px solid _color(outline-variant);
-  overflow: auto;
+  display: block;
+
+  .screen-size-notice {
+    margin-bottom: 2rem;
+
+    @media (min-width: 1400px) {
+      display: none;
+    }
+  }
+
+  .frame {
+    height: 48rem;
+    border: 1px solid _color(outline-variant);
+    overflow: auto;
+  }
 
   ::ng-deep cde-visualization {
     --scrollbar-thumb-color: #{_color(on-surface-variant)};
@@ -51,19 +62,7 @@ $_colors: (
     }
 
     cde-metadata {
-      .metadata-row {
-        gap: 0.5rem !important;
-      }
-
-      .metadata-row-label {
-        font: _type(body-medium) !important;
-        color: _color(on-surface) !important;
-      }
-
-      .metadata-row-value {
-        font: _type(body-medium) !important;
-        color: _color(primary) !important;
-      }
+      display: none;
     }
 
     cde-cell-types {

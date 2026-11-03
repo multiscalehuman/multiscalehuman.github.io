@@ -1,5 +1,11 @@
-@defer (on viewport) {
-  <cde-visualization [nodes]="nodesUrl()" [nodeTargetSelector]="nodeTargetSelector()" [metadata]="metadata()" />
-} @placeholder {
-  <div>Loading...</div>
-}
+<ang-notice class="screen-size-notice" tagline="Larger screen recommended">
+  For the best experience, use a desktop browser window at least 1400px wide.
+</ang-notice>
+
+<div class="frame">
+  @defer (on viewport) {
+    <cde-visualization [nodes]="nodesUrl()" [nodeTargetSelector]="nodeTargetSelector()" />
+  } @placeholder {
+    <div>Loading...</div>
+  }
+</div>
