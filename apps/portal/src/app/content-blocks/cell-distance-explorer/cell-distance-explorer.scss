@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use '@atlasng/design-system' as ds;
 @use '../../../styles/theme';
 
 // The CDE's stylesheet sets its own theme tokens on the CDE's root, so the portal's tokens resolve to HRA values in
@@ -9,7 +10,6 @@
 $_colors: (
   on-surface: map.get(theme.$primary-palette, neutral, 10),
   on-surface-variant: map.get(theme.$primary-palette, neutral-variant, 30),
-  outline-variant: map.get(theme.$primary-palette, neutral-variant, 80),
 );
 
 /// Returns a portal color by system role.
@@ -39,7 +39,7 @@ $_colors: (
 
   .frame {
     height: 48rem;
-    border: 1px solid _color(outline-variant);
+    border: 1px solid ds.sys-slot(outline);
     overflow: auto;
   }
 
