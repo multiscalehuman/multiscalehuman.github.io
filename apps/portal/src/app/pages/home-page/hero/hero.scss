@@ -73,11 +73,23 @@ $_text-color: map.get(theme.$primary-palette, secondary, 100);
 
 .title {
   margin: 0 0 0.75rem;
-  font: ds.sys-slot(display-large);
-  letter-spacing: ds.sys-slot(display-large-tracking);
+  font: ds.sys-slot(display-small);
+  letter-spacing: ds.sys-slot(display-small-tracking);
+
+  @include ds.breakpoint(small) {
+    font-size: ds.sys-slot(display-large-size);
+    line-height: ds.sys-slot(display-large-line-height);
+    letter-spacing: ds.sys-slot(display-large-tracking);
+  }
 }
 
 .tagline {
   margin: 0;
-  font: ds.sys-slot(title-large);
+  font: ds.sys-slot(title-medium);
+  letter-spacing: ds.sys-slot(title-medium-tracking);
+
+  @include ds.breakpoint(small) {
+    font: ds.sys-slot(title-large);
+    letter-spacing: ds.sys-slot(title-large-tracking);
+  }
 }
