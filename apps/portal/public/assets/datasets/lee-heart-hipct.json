@@ -17,27 +17,27 @@
       ]
     },
     {
-      "title": "Registration Within the Human Reference Atlas",
-      "anchor": "registration-within-the-human-reference-atlas",
+      "title": "3D Visualizations From the Human Organ Atlas",
+      "anchor": "3d-visualizations-from-the-human-organ-atlas",
       "content": [
         {
           "component": "ContentParagraph",
           "content": [
-            "Registered into the Human Reference Atlas and shown in the ",
-            {
-              "component": "TextLink",
-              "config": {
-                "href": "https://hubmapconsortium.github.io/hra-registrations/hoa-heart-walsh-2025/"
-              },
-              "content": "Exploration User Interface"
-            },
-            ". Explore the complete scan in the ",
+            "Rendered from the complete scan in the ",
             {
               "component": "TextLink",
               "config": {
                 "href": "https://human-organ-atlas.esrf.fr/"
               },
               "content": "Human Organ Atlas"
+            },
+            " to visualize the heart’s blood vessel network in 3D. The heart is also registered into the Human Reference Atlas and can be explored in the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://hubmapconsortium.github.io/hra-registrations/hoa-heart-walsh-2025/"
+              },
+              "content": "Exploration User Interface"
             },
             "."
           ]
@@ -46,7 +46,7 @@
           "component": "Image",
           "config": {
             "src": "assets/datasets/lee-heart-hipct-hoa.png",
-            "alt": "Blood vessel network of a heart from a 63-year-old male donor, beside a 3D rendering of the heart's HiP-CT scan, from the Human Organ Atlas"
+            "alt": "Blood vessel network of a heart from a 63-year-old male donor, beside a 3D rendering of the heart’s HiP-CT scan, from the Human Organ Atlas"
           }
         }
       ]
