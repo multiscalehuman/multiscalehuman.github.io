@@ -26,7 +26,7 @@ const HERO_CRUMBS: BreadcrumbItem[] = [
   providers: [
     {
       provide: IMAGE_LOADER,
-      useValue: ({ src, width }: ImageLoaderConfig) => `${src}-${width ?? 2880}.webp`,
+      useValue: ({ src, width }: ImageLoaderConfig) => `${src}-${width ?? 2000}.webp`,
     },
   ],
 })
