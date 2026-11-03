@@ -1,4 +1,15 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, DOCUMENT, inject, input, Renderer2 } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DestroyRef,
+  DOCUMENT,
+  effect,
+  inject,
+  input,
+  Renderer2,
+} from '@angular/core';
+import { AnalyticsEventCategory } from '@atlasng/analytics/events';
+import { AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
 
 /** ID of the EUI's `<script>` element, used to add the script only once. */
 const EUI_SCRIPT_ID = 'ccf-eui-script';
@@ -6,8 +17,11 @@ const EUI_SCRIPT_ID = 'ccf-eui-script';
 /** ID of the EUI's stylesheet `<link>` element, shared by all instances. */
 const EUI_STYLESHEET_ID = 'ccf-eui-stylesheet';
 
-/** Number of EUI instances on the page, so the last one to go can remove the stylesheet. */
-let euiCount = 0;
+/** HRA privacy preferences that allow only necessary analytics, saved so the EUI skips its own consent banner. */
+const HRA_NECESSARY_ONLY_PREFERENCES = { necessary: true, statistics: false, preferences: false, marketing: false };
+
+/** localStorage key where the EUI keeps the visitor's HRA privacy preferences. */
+const HRA_PRIVACY_PREFERENCES_KEY = '__hra-analytics-privacy-preferences';
 
 /** Organs the MHU datasets cover, as the UBERON IRIs the EUI uses for organ IDs: heart, both kidneys, liver, thymus, skin. */
 export const MHU_ORGAN_IRIS: string[] = [
@@ -20,12 +34,9 @@ export const MHU_ORGAN_IRIS: string[] = [
 ];
 
 /**
- * The HRA Exploration User Interface (`<ccf-eui>`). The first instance adds the EUI's stylesheet and script from the
- * HRA CDN to the page. The stylesheet is global; the portal's `:root` theme tokens outrank the ones it sets on `html`,
- * so the EUI picks up the portal's colors and type. It also sets Material component tokens on `html`, which would
- * restyle the portal's own components, so the last instance removes it. The script stays, since it only defines the
- * custom element.
- * `baseHref` points the EUI's relative asset URLs at the CDN, since a `<base>` element would break the portal's routing.
+ * Loads the HRA EUI assets from the CDN and syncs its cookie preferences with the portal. The global stylesheet is
+ * removed on destroy because it sets Material tokens on `html`; the script stays to keep `<ccf-eui>` registered.
+ * `baseHref` resolves relative asset URLs without changing portal routing.
  */
 @Component({
   selector: 'mhu-hra-eui',
@@ -44,20 +55,50 @@ export class HraEui {
   /** Organs selected when the EUI starts. */
   protected readonly selectedOrgans = MHU_ORGAN_IRIS;
 
+  /** The `document` object, used to add the EUI's stylesheet and script to the page. */
   protected readonly document = inject(DOCUMENT);
+  /** The `Renderer2` service, used to add and remove the EUI's stylesheet. */
   protected readonly renderer = inject(Renderer2);
+  /** The visitor's cookie and analytics permissions from the portal's cookie banner. */
+  protected readonly permissionsManager = inject(AnalyticsPermissionsManager);
 
-  /** Adds the EUI's stylesheet and script to the page, and removes the stylesheet with the last instance. */
+  /**
+   * Keeps the HRA privacy preferences in sync with the portal's permissions, adds the EUI's stylesheet and script to
+   * the page, and removes the stylesheet when the EUI is removed.
+   */
   constructor() {
+    effect(() => {
+      this.saveHraPrivacyPreferences();
+    });
     this.addEuiAssets();
-    euiCount++;
 
     inject(DestroyRef).onDestroy(() => {
-      euiCount--;
-      if (euiCount === 0) {
-        this.removeEuiStylesheet();
-      }
+      this.removeEuiStylesheet();
     });
+  }
+
+  /**
+   * Saves the portal's analytics permissions as the HRA privacy preferences, so the EUI skips its consent banner and
+   * respects the visitor's choices. If saving fails, saves preferences that allow only necessary analytics, so the EUI still skips its banner.
+   */
+  protected saveHraPrivacyPreferences(): void {
+    const permissions = this.permissionsManager.permissions();
+    const preferences = Object.fromEntries(
+      Object.values(AnalyticsEventCategory).map((category) => [category, permissions.isCategoryEnabled(category)]),
+    );
+
+    try {
+      this.document.defaultView?.localStorage.setItem(HRA_PRIVACY_PREFERENCES_KEY, JSON.stringify(preferences));
+    } catch {
+      try {
+        this.document.defaultView?.localStorage.setItem(
+          HRA_PRIVACY_PREFERENCES_KEY,
+          JSON.stringify(HRA_NECESSARY_ONLY_PREFERENCES),
+        );
+      } catch (error) {
+        console.warn('Unable to save HRA privacy preferences.', error);
+      }
+    }
   }
 
   /** Adds the EUI stylesheet and script if they are not already on the page. */
