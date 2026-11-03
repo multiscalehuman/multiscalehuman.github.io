@@ -16,9 +16,10 @@
       padding: 2.5rem;
     }
 
-    // The dataset cards that replace the graph at 64rem and below ignore this hook.
+    // Capped at the EUI's max height, so tall screens don't stretch the graph. The dataset cards that replace the
+    // graph at 64rem and below ignore this hook.
     mhu-cube {
-      --mhu-cube-graph-height: 100svh;
+      --mhu-cube-graph-height: min(100svh, 67.5rem);
     }
   }
 }
