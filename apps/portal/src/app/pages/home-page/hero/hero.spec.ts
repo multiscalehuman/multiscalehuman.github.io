@@ -45,9 +45,9 @@ describe('Hero', () => {
     const illustration = screen.getByRole('presentation');
 
     expect(illustration).toHaveAttribute('alt', '');
-    expect(illustration.getAttribute('src')).toMatch(/hero-2880\.webp$/);
+    expect(illustration.getAttribute('src')).toMatch(/hero-2000\.webp$/);
     expect(illustration).toHaveAttribute('sizes', 'max(100vw, 2050px)');
     expect(illustration.getAttribute('srcset')).toContain('assets/images/hero-640.webp 640w');
-    expect(illustration.getAttribute('srcset')).toContain('assets/images/hero-2880.webp 2880w');
+    expect(illustration.getAttribute('srcset')).toContain('assets/images/hero-2000.webp 2000w');
   });
 });
