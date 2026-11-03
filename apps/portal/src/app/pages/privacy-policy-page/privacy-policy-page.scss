@@ -27,6 +27,12 @@
   gap: 0.75rem;
 }
 
+.effective-date {
+  margin: 0;
+  font: ds.sys-slot(label-large);
+  color: ds.sys-slot(on-surface-variant);
+}
+
 .toc {
   grid-area: toc;
   align-self: start;

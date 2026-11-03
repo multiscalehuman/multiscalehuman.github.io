@@ -8,7 +8,7 @@ import { TextLink } from '@atlasng/design-system/links/text-link';
 import { TableOfContents, TableOfContentsItem } from '@atlasng/design-system/table-of-contents';
 
 /** Trail from the portal homepage to this page. */
-const CRUMBS: BreadcrumbItem[] = [{ name: 'Home', command: '/' }, { name: 'Privacy Policy' }];
+const CRUMBS: BreadcrumbItem[] = [{ name: 'Multiscale Human Data Portal', command: '/' }, { name: 'Privacy Policy' }];
 
 /**
  * Sections of the privacy policy, in page order. The template takes each section's title from here, so the
