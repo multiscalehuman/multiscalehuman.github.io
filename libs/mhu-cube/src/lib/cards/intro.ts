@@ -36,11 +36,13 @@ export function createIntro(details: HTMLElement): HTMLElement {
         ),
       ),
       details,
-      h('p', { className: 'mhu-cube__intro-attribution' }, [
-        attribution.beforeLink,
-        h('a', { attrs: { href: attribution.href }, text: attribution.linkText }),
-        attribution.afterLink,
-      ]),
+      h(
+        'p',
+        { className: 'mhu-cube__intro-attribution' },
+        attribution.map((part) =>
+          typeof part === 'string' ? part : h('a', { attrs: { href: part.href }, text: part.text }),
+        ),
+      ),
     ]),
   ]);
 }

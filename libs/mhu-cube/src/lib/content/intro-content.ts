@@ -26,11 +26,12 @@ export const MHU_CUBE_INTRO_CONTENT: MhuCubeIntroContent = {
         description: 'Tissue source, listed alphabetically',
       },
     ],
-    attribution: {
-      beforeLink: 'Visualization inspired by ',
-      linkText: 'Metacube',
-      afterLink: ' from the Chair for Clinical Bioinformatics.',
-      href: 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube',
-    },
+    attribution: [
+      'Visualization inspired by ',
+      { text: 'Metacube', href: 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube' },
+      ' from the Chair for Clinical Bioinformatics at ',
+      { text: 'Saarland University', href: 'https://www.ccb.uni-saarland.de/' },
+      ' in Germany.',
+    ],
   },
 };

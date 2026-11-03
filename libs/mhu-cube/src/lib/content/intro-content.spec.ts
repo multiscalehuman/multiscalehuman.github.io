@@ -18,11 +18,10 @@ function listStrings(value: unknown, path = 'MHU_CUBE_INTRO_CONTENT'): [string, 
 
 describe('MHU_CUBE_INTRO_CONTENT', () => {
   it('every copy string has text and single spacing', () => {
-    const { beforeLink, linkText, afterLink } = MHU_CUBE_INTRO_CONTENT.visualization.attribution;
-    const strings: [string, string][] = [
-      ...listStrings(MHU_CUBE_INTRO_CONTENT),
-      ['attribution sentence', `${beforeLink}${linkText}${afterLink}`],
-    ];
+    const sentence = MHU_CUBE_INTRO_CONTENT.visualization.attribution
+      .map((part) => (typeof part === 'string' ? part : part.text))
+      .join('');
+    const strings: [string, string][] = [...listStrings(MHU_CUBE_INTRO_CONTENT), ['attribution sentence', sentence]];
 
     strings.forEach(([path, text]) => {
       expect(text.trim(), `${path} is empty.`).toBeTruthy();

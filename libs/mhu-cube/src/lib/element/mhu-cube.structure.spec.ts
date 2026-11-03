@@ -35,11 +35,19 @@ describe('MhuCube', () => {
       );
       copy.dimensionHeadings.forEach((heading) => expect(within(intro).getByText(heading)).toBeInTheDocument());
 
-      const attribution = screen.getByRole('link', { name: copy.attribution.linkText });
-      expect(attribution).toHaveAttribute('href', 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube');
-      expect(attribution.parentElement).toHaveTextContent(
-        `${copy.attribution.beforeLink}${copy.attribution.linkText}${copy.attribution.afterLink}`,
+      const metacube = screen.getByRole('link', { name: 'Metacube' });
+      expect(metacube).toHaveAttribute('href', 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube');
+      expect(metacube.parentElement).toHaveTextContent(
+        copy.attribution.map((part) => (typeof part === 'string' ? part : part.text)).join(''),
       );
+      copy.attribution.forEach((part) => {
+        if (typeof part !== 'string') {
+          expect(within(metacube.parentElement as HTMLElement).getByRole('link', { name: part.text })).toHaveAttribute(
+            'href',
+            part.href,
+          );
+        }
+      });
     });
 
     it('renders into the light DOM inside a labelled region', async () => {

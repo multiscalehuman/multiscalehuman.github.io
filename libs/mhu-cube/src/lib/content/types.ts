@@ -4,13 +4,14 @@ export interface MhuCubeDimensionContent {
   description: string;
 }
 
-/** The visualization credit: a sentence whose middle is a link. */
-export interface MhuCubeAttributionContent {
-  beforeLink: string;
-  linkText: string;
-  afterLink: string;
+/** A link within a copy sentence. */
+export interface MhuCubeLinkContent {
+  text: string;
   href: string;
 }
+
+/** The visualization credit: a sentence of text and links, in reading order. */
+export type MhuCubeAttributionContent = (string | MhuCubeLinkContent)[];
 
 /** Desktop guidance beside the visualization: its description, dimension key, and credit. */
 export interface MhuCubeVisualizationContent {

@@ -61,16 +61,24 @@ export async function structureSuite({ component, fixture, positionedCount }: Ha
       terms.join(',') === copy.dimensions.map((dimension) => dimension.term).join(','),
       'Visualization dimensions should use semantic terms.',
     );
-    const attribution = visualization.querySelector<HTMLAnchorElement>('.mhu-cube__intro-attribution a');
-    // The attribution destination is a requirement rather than editable copy, so it stays literal.
+    const attribution = visualization.querySelector<HTMLElement>('.mhu-cube__intro-attribution');
+    const links = [...(attribution?.querySelectorAll('a') ?? [])];
+    // The Metacube destination is a requirement rather than editable copy, so it stays literal.
     assert(
-      attribution?.getAttribute('href') === 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube',
+      links.some(
+        (link) => link.getAttribute('href') === 'https://github.com/Chair-for-Clinical-Bioinformatics/metacube',
+      ),
       'Visualization attribution is missing.',
     );
     assert(
-      attribution?.parentElement?.textContent ===
-        `${copy.attribution.beforeLink}${copy.attribution.linkText}${copy.attribution.afterLink}`,
+      attribution?.textContent ===
+        copy.attribution.map((part) => (typeof part === 'string' ? part : part.text)).join(''),
       'Visualization attribution should credit the Metacube source.',
+    );
+    assert(
+      links.map((link) => link.getAttribute('href')).join(',') ===
+        copy.attribution.flatMap((part) => (typeof part === 'string' ? [] : [part.href])).join(','),
+      'Visualization attribution links should match the copy.',
     );
   });
 

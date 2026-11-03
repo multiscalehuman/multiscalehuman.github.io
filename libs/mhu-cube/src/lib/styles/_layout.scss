@@ -4,8 +4,7 @@
    owns the inline gutters. */
 .mhu-cube {
   display: grid;
-  /* The content column widens with the host up to 35rem, keeping its earlier 28rem on narrower desktops. From a host
-     about 86rem wide, it fits the longest dimension description and the attribution on one line. */
+  /* From a host about 86rem wide, this column fits the longest dimension description on one line. */
   grid-template-columns: minmax(22rem, clamp(28rem, 36%, 35rem)) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   grid-template-areas: 'content stage';
