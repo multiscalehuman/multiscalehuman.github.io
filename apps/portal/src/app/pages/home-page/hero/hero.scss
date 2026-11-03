@@ -74,6 +74,7 @@ $_text-color: map.get(theme.$primary-palette, secondary, 100);
 .title {
   margin: 0 0 0.75rem;
   font: ds.sys-slot(display-small);
+  font-weight: 700;
   letter-spacing: ds.sys-slot(display-small-tracking);
 
   @include ds.breakpoint(small) {
