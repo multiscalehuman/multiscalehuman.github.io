@@ -2,7 +2,7 @@
   "organ": "Heart",
   "space": "100 mm",
   "time": "63 years",
-  "description": "Complete scan at 19.85 µm voxel size performed by HiP-CT on the beamline BM18 of the heart from the body donor LADAF-2021-17 using quarter-acquisition protocol.",
+  "description": "Complete scan at 19.85 µm voxel size performed by Hierarchical Phase-Contrast Tomography (HiP-CT) on the beamline BM18 of the heart from the body donor LADAF-2021-17 using quarter-acquisition protocol.",
   "sections": [
     {
       "title": "Data Overview",
@@ -13,6 +13,41 @@
           "content": [
             "Complete scan at 19.85 µm voxel size performed by HiP-CT on the beamline BM18 of the heart from the body donor LADAF-2021-17 using quarter-acquisition protocol."
           ]
+        }
+      ]
+    },
+    {
+      "title": "Registration Within the Human Reference Atlas",
+      "anchor": "registration-within-the-human-reference-atlas",
+      "content": [
+        {
+          "component": "ContentParagraph",
+          "content": [
+            "Registered into the Human Reference Atlas and shown in the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://hubmapconsortium.github.io/hra-registrations/hoa-heart-walsh-2025/"
+              },
+              "content": "Exploration User Interface"
+            },
+            ". Explore the complete scan in the ",
+            {
+              "component": "TextLink",
+              "config": {
+                "href": "https://human-organ-atlas.esrf.fr/"
+              },
+              "content": "Human Organ Atlas"
+            },
+            "."
+          ]
+        },
+        {
+          "component": "Image",
+          "config": {
+            "src": "assets/datasets/lee-heart-hipct-hoa.png",
+            "alt": "Blood vessel network of a heart from a 63-year-old male donor, beside a 3D rendering of the heart's HiP-CT scan, from the Human Organ Atlas"
+          }
         }
       ]
     },
