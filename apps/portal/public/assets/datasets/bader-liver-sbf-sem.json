@@ -65,14 +65,38 @@
             {
               "component": "ListItem",
               "content": [
-                "Cheng Xing, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:cheng.xing@mail.utoronto.ca"
+                    "href": "https://orcid.org/0000-0002-7959-6403"
                   },
-                  "content": "cheng.xing@mail.utoronto.ca"
+                  "content": "Cheng Xing"
                 }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0185-8861"
+                  },
+                  "content": "Gary D. Bader"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-8977-498X"
+                  },
+                  "content": "Andreas Bueckle"
+                },
+                " (for VR)"
               ]
             }
           ]

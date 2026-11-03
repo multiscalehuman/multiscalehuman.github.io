@@ -61,26 +61,24 @@
             {
               "component": "ListItem",
               "content": [
-                "Claire L. Walsh, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:c.walsh.11@ucl.ac.uk"
+                    "href": "https://orcid.org/0000-0003-3769-3392"
                   },
-                  "content": "c.walsh.11@ucl.ac.uk"
+                  "content": "Claire L. Walsh"
                 }
               ]
             },
             {
               "component": "ListItem",
               "content": [
-                "Peter D. Lee, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:peter.lee@ucl.ac.uk"
+                    "href": "https://orcid.org/0000-0002-3898-8881"
                   },
-                  "content": "peter.lee@ucl.ac.uk"
+                  "content": "Peter D. Lee"
                 }
               ]
             }
