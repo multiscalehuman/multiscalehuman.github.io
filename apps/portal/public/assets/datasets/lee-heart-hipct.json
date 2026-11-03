@@ -2,7 +2,7 @@
   "organ": "Heart",
   "space": "100 mm",
   "time": "63 years",
-  "description": "Complete scan at 19.85 µm voxel size performed by Hierarchical Phase-Contrast Tomography (HiP-CT) on the beamline BM18 of the heart from the body donor LADAF-2021-17 using quarter-acquisition protocol.",
+  "description": "Complete Hierarchical Phase-Contrast Tomography (HiP-CT) scan of the heart from a 63-year-old male donor.",
   "sections": [
     {
       "title": "Data Overview",
@@ -11,7 +11,7 @@
         {
           "component": "ContentParagraph",
           "content": [
-            "Complete scan at 19.85 µm voxel size performed by HiP-CT on the beamline BM18 of the heart from the body donor LADAF-2021-17 using quarter-acquisition protocol."
+            "The scan captures the whole heart at 19.85 µm voxel size. It was taken on beamline BM18 at the European Synchrotron Radiation Facility (ESRF), using the quarter-acquisition protocol, from body donor LADAF-2021-17."
           ]
         }
       ]
