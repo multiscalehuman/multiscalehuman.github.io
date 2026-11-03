@@ -27,6 +27,18 @@
   }
 
   @include ds.defaults;
+  @include ds.text-link-overrides(
+    (
+      color: ds.sys-slot(primary),
+    )
+  );
+  // The cookie banner colors its privacy policy link with its own token, which outranks the text link color.
+  // TODO: remove once cns-iu/AtlasNG#242 is fixed
+  @include ds.cookie-banner-overrides(
+    (
+      privacy-policy-color: ds.text-link-slot(color),
+    )
+  );
 }
 
 // In the Figma design the footer sits on the page surface, not on surface-variant.
