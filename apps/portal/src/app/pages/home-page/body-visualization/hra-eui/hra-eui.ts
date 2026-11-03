@@ -1,7 +1,13 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DOCUMENT, inject, input, Renderer2 } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, DOCUMENT, inject, input, Renderer2 } from '@angular/core';
 
-/** ID of the EUI's `<script>` element, used to add the stylesheet and script only once. */
+/** ID of the EUI's `<script>` element, used to add the script only once. */
 const EUI_SCRIPT_ID = 'ccf-eui-script';
+
+/** ID of the EUI's stylesheet `<link>` element, shared by all instances. */
+const EUI_STYLESHEET_ID = 'ccf-eui-stylesheet';
+
+/** Number of EUI instances on the page, so the last one to go can remove the stylesheet. */
+let euiCount = 0;
 
 /** Organs the MHU datasets cover, as the UBERON IRIs the EUI uses for organ IDs: heart, both kidneys, liver, thymus, skin. */
 export const MHU_ORGAN_IRIS: string[] = [
@@ -16,7 +22,9 @@ export const MHU_ORGAN_IRIS: string[] = [
 /**
  * The HRA Exploration User Interface (`<ccf-eui>`). The first instance adds the EUI's stylesheet and script from the
  * HRA CDN to the page. The stylesheet is global; the portal's `:root` theme tokens outrank the ones it sets on `html`,
- * so the EUI picks up the portal's colors and type.
+ * so the EUI picks up the portal's colors and type. It also sets Material component tokens on `html`, which would
+ * restyle the portal's own components, so the last instance removes it. The script stays, since it only defines the
+ * custom element.
  * `baseHref` points the EUI's relative asset URLs at the CDN, since a `<base>` element would break the portal's routing.
  */
 @Component({
@@ -39,24 +47,43 @@ export class HraEui {
   protected readonly document = inject(DOCUMENT);
   protected readonly renderer = inject(Renderer2);
 
-  /** Adds the EUI's stylesheet and script to the page the first time the EUI is shown. */
+  /** Adds the EUI's stylesheet and script to the page, and removes the stylesheet with the last instance. */
   constructor() {
     this.addEuiAssets();
+    euiCount++;
+
+    inject(DestroyRef).onDestroy(() => {
+      euiCount--;
+      if (euiCount === 0) {
+        this.removeEuiStylesheet();
+      }
+    });
   }
 
-  /** Adds the EUI stylesheet and script if they have not already been added. */
+  /** Adds the EUI stylesheet and script if they are not already on the page. */
   protected addEuiAssets(): void {
-    if (!this.document.getElementById(EUI_SCRIPT_ID)) {
+    if (!this.document.getElementById(EUI_STYLESHEET_ID)) {
       const stylesheet = this.renderer.createElement('link');
+      this.renderer.setAttribute(stylesheet, 'id', EUI_STYLESHEET_ID);
       this.renderer.setAttribute(stylesheet, 'rel', 'stylesheet');
       this.renderer.setAttribute(stylesheet, 'href', `${this.baseHref}styles.css`);
       this.renderer.appendChild(this.document.head, stylesheet);
+    }
 
+    if (!this.document.getElementById(EUI_SCRIPT_ID)) {
       const script = this.renderer.createElement('script');
       this.renderer.setAttribute(script, 'id', EUI_SCRIPT_ID);
       this.renderer.setAttribute(script, 'type', 'module');
       this.renderer.setAttribute(script, 'src', `${this.baseHref}wc.js`);
       this.renderer.appendChild(this.document.head, script);
+    }
+  }
+
+  /** Removes the EUI stylesheet from the page, if present. */
+  protected removeEuiStylesheet(): void {
+    const stylesheet = this.document.getElementById(EUI_STYLESHEET_ID);
+    if (stylesheet) {
+      this.renderer.removeChild(this.document.head, stylesheet);
     }
   }
 }
