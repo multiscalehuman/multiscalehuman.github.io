@@ -61,27 +61,38 @@
             {
               "component": "ListItem",
               "content": [
-                "Michela Noseda, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:m.noseda@imperial.ac.uk"
+                    "href": "https://orcid.org/0000-0002-9553-5029"
                   },
-                  "content": "m.noseda@imperial.ac.uk"
+                  "content": "Michela Noseda"
                 }
               ]
             },
             {
               "component": "ListItem",
               "content": [
-                "Sarah A. Teichmann, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:sat1003@cam.ac.uk"
+                    "href": "https://orcid.org/0000-0002-6294-6366"
                   },
-                  "content": "sat1003@cam.ac.uk"
+                  "content": "Sarah A. Teichmann"
                 }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0002-8977-498X"
+                  },
+                  "content": "Andreas Bueckle"
+                },
+                " (for VR)"
               ]
             }
           ]
