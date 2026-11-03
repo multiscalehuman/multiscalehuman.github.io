@@ -53,13 +53,24 @@
             {
               "component": "ListItem",
               "content": [
-                "Rachel D. Edgar, ",
                 {
                   "component": "TextLink",
                   "config": {
-                    "href": "mailto:r.edgar@utoronto.ca"
+                    "href": "https://orcid.org/0000-0001-5507-6078"
                   },
-                  "content": "r.edgar@utoronto.ca"
+                  "content": "Rachel D. Edgar"
+                }
+              ]
+            },
+            {
+              "component": "ListItem",
+              "content": [
+                {
+                  "component": "TextLink",
+                  "config": {
+                    "href": "https://orcid.org/0000-0003-0185-8861"
+                  },
+                  "content": "Gary D. Bader"
                 }
               ]
             }

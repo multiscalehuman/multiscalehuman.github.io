@@ -76,7 +76,7 @@ export const SAMPLE_DATASETS: MhuCubeItem[] = [
     'bader-liver-sbf-sem',
     { time: { start: 45, end: 45 }, space: SPACE.hundredMicrons, organ: 'Liver' },
     'Male',
-    ['Cheng Xing'],
+    ['Cheng Xing', 'Gary D. Bader'],
   ),
   createDataset(
     'lee-kidney-hipct-63',
@@ -112,6 +112,6 @@ export const SAMPLE_DATASETS: MhuCubeItem[] = [
     'bader-liver-xenium',
     { time: { start: 7, end: 47 }, space: SPACE.hundredMicrons, organ: 'Liver' },
     'Multiple',
-    ['Rachel D. Edgar'],
+    ['Rachel D. Edgar', 'Gary D. Bader'],
   ),
 ];
