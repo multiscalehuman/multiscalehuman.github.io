@@ -98,7 +98,7 @@ export const SAMPLE_DATASETS: MhuCubeItem[] = [
   ),
   createDataset(
     'teichmann-heart-hra-pop',
-    { time: { start: 40, end: 70, label: '~40–70 years' }, space: SPACE.hundredMicrons, organ: 'Heart' },
+    { time: { start: 40, end: 70, label: '~40–70 years' }, space: SPACE.hundredMillimeters, organ: 'Heart' },
     'Multiple',
     ['Michela Noseda', 'Sarah A. Teichmann'],
   ),
