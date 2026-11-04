@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   CUSTOM_ELEMENTS_SCHEMA,
   DestroyRef,
   DOCUMENT,
@@ -61,12 +60,6 @@ export class HraEui {
   protected readonly permissionsManager = inject(AnalyticsPermissionsManager);
   /** The `localStorage` object, used to save the visitor's HRA privacy preferences. */
   readonly #localStorage = inject(SAFE_LOCAL_STORAGE);
-
-  /** A computed property that returns the visitor's analytics preferences. */
-  protected readonly analytics = computed(() => {
-    const permissions = this.permissionsManager.permissions();
-    return permissions.toJSON();
-  });
 
   /**
    * Keeps the HRA privacy preferences in sync with the portal's permissions, adds the EUI's stylesheet and script to
