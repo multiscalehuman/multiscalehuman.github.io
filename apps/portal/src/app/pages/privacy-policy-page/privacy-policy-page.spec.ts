@@ -14,7 +14,14 @@ describe('PrivacyPolicyPage', () => {
   it('links the breadcrumb trail back to the homepage', () => {
     const breadcrumbs = screen.getByRole('navigation', { name: 'Breadcrumb' });
 
-    expect(within(breadcrumbs).getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
+    expect(within(breadcrumbs).getByRole('link', { name: 'Multiscale Human Data Portal' })).toHaveAttribute(
+      'href',
+      '/',
+    );
+  });
+
+  it('shows the effective date under the title', () => {
+    expect(screen.getByText('October 28, 2026')).toHaveAttribute('datetime', '2026-10-28');
   });
 
   it.each(PRIVACY_POLICY_SECTIONS)('renders the $tagline section heading', ({ tagline, level, anchor }) => {

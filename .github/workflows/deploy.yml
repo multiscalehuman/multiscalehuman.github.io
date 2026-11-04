@@ -34,10 +34,17 @@ jobs:
       - run: npx nx build portal --configuration=production
 
       # GitHub Pages serves 404.html for unknown paths, so a copy of index.html lets the Angular router handle deep links.
+      # Known routes also get their own copy, so Pages serves them with a 200 status instead of a 404.
       - name: Prepare SPA fallback
         run: |
-          cp dist/apps/portal/browser/index.html dist/apps/portal/browser/404.html
-          touch dist/apps/portal/browser/.nojekyll
+          out=dist/apps/portal/browser
+          cp "$out/index.html" "$out/404.html"
+          cp "$out/index.html" "$out/privacy-policy.html"
+          mkdir -p "$out/dataset"
+          for dataset in "$out"/assets/datasets/*.json; do
+            cp "$out/index.html" "$out/dataset/$(basename "$dataset" .json).html"
+          done
+          touch "$out/.nojekyll"
 
       - uses: actions/upload-pages-artifact@v4
         with:

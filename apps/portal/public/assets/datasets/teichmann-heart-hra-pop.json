@@ -1,6 +1,6 @@
 {
   "organ": "Heart",
-  "space": "100 µm",
+  "space": "100 mm",
   "time": "~40–70 years",
   "description": "HRA Cell Type Populations (HRApop) visualized in VR.",
   "sections": [
@@ -180,5 +180,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-30"
+  "lastUpdated": "2026-11-04"
 }

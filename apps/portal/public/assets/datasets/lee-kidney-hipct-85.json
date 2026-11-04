@@ -103,11 +103,11 @@
             {
               "component": "TextLink",
               "config": {
-                "href": "https://doi.org/10.15151/ESRF-DC-1773965419"
+                "href": "https://doi.org/10.15151/ESRF-DC-2222696314"
               },
-              "content": "Complete Scan at 25.14 µm of the Left Kidney of the Body Donor LADAF-2021-17"
+              "content": "Overview at 15.77um of the kidney of donor LADAF-2022-13, scanned at ESRF on beamline BM18"
             },
-            ".” Dataset. European Synchrotron Radiation Facility, 2024. doi:10.15151/ESRF-DC-1773965419."
+            ".” Dataset. European Synchrotron Radiation Facility, 2024. doi:10.15151/ESRF-DC-2222696314."
           ]
         },
         {
@@ -162,5 +162,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-30"
+  "lastUpdated": "2026-11-04"
 }
