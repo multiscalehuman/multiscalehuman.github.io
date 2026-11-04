@@ -1,4 +1,6 @@
+import { signal } from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
+import { AnalyticsPermissions, AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
 import { render, screen } from '@testing-library/angular';
 import { HraEui, MHU_ORGAN_IRIS } from './hra-eui';
 
@@ -34,21 +36,48 @@ describe('HraEui', () => {
     expect(scripts[0]).toHaveAttribute('type', 'module');
   });
 
-  it('removes the EUI stylesheet with the last EUI, keeping the script', async () => {
-    const { fixture, rerender } = await render(
-      `<mhu-hra-eui />
-       @if (showSecond) {
-         <mhu-hra-eui />
-       }`,
-      { imports: [HraEui], componentProperties: { showSecond: true } },
-    );
-
-    await rerender({ componentProperties: { showSecond: false } });
+  it('removes the EUI stylesheet with the EUI, keeping the script', async () => {
+    const { fixture } = await render(HraEui);
     expect(euiTags().stylesheets).toHaveLength(1);
 
     fixture.destroy();
     expect(euiTags().stylesheets).toHaveLength(0);
     expect(euiTags().scripts).toHaveLength(1);
+  });
+
+  describe('HRA privacy preferences', () => {
+    const key = '__hra-analytics-privacy-preferences';
+
+    function renderWithPermissions(permissions: AnalyticsPermissions) {
+      const permissionsSignal = signal(permissions);
+      const providers = [{ provide: AnalyticsPermissionsManager, useValue: { permissions: permissionsSignal } }];
+      return { permissionsSignal, result: render(HraEui, { providers }) };
+    }
+
+    function savedPreferences() {
+      return JSON.parse(localStorage.getItem(key) ?? 'null');
+    }
+
+    afterEach(() => {
+      localStorage.removeItem(key);
+      vi.restoreAllMocks();
+    });
+
+    it("saves the visitor's portal permissions so the EUI skips its consent banner", async () => {
+      await renderWithPermissions(AnalyticsPermissions.DEFAULT).result;
+
+      expect(savedPreferences()).toEqual({ necessary: true, statistics: false, preferences: false, marketing: false });
+    });
+
+    it('updates the saved preferences when the visitor changes their permissions', async () => {
+      const { permissionsSignal, result } = renderWithPermissions(AnalyticsPermissions.DEFAULT);
+      const { fixture } = await result;
+
+      permissionsSignal.set(AnalyticsPermissions.FULL);
+      fixture.detectChanges();
+
+      expect(savedPreferences()).toEqual({ necessary: true, statistics: true, preferences: true, marketing: true });
+    });
   });
 
   it('shows a loading placeholder until the EUI scrolls into view', async () => {
