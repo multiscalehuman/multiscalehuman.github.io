@@ -9,17 +9,14 @@ import {
   input,
   Renderer2,
 } from '@angular/core';
-import { AnalyticsEventCategory } from '@atlasng/analytics/events';
-import { AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
+import { AnalyticsPermissions, AnalyticsPermissionsManager } from '@atlasng/analytics/permissions';
+import { SAFE_LOCAL_STORAGE } from '@atlasng/core';
 
 /** ID of the EUI's `<script>` element, used to add the script only once. */
 const EUI_SCRIPT_ID = 'ccf-eui-script';
 
 /** ID of the EUI's stylesheet `<link>` element, shared by all instances. */
 const EUI_STYLESHEET_ID = 'ccf-eui-stylesheet';
-
-/** HRA privacy preferences that allow only necessary analytics, saved so the EUI skips its own consent banner. */
-const HRA_NECESSARY_ONLY_PREFERENCES = { necessary: true, statistics: false, preferences: false, marketing: false };
 
 /** localStorage key where the EUI keeps the visitor's HRA privacy preferences. */
 const HRA_PRIVACY_PREFERENCES_KEY = '__hra-analytics-privacy-preferences';
@@ -62,13 +59,13 @@ export class HraEui {
   protected readonly renderer = inject(Renderer2);
   /** The visitor's cookie and analytics permissions from the portal's cookie banner. */
   protected readonly permissionsManager = inject(AnalyticsPermissionsManager);
+  /** The `localStorage` object, used to save the visitor's HRA privacy preferences. */
+  readonly #localStorage = inject(SAFE_LOCAL_STORAGE);
 
   /** A computed property that returns the visitor's analytics preferences. */
   protected readonly analytics = computed(() => {
     const permissions = this.permissionsManager.permissions();
-    return Object.fromEntries(
-      Object.values(AnalyticsEventCategory).map((category) => [category, permissions.isCategoryEnabled(category)]),
-    );
+    return permissions.toJSON();
   });
 
   /**
@@ -77,7 +74,8 @@ export class HraEui {
    */
   constructor() {
     effect(() => {
-      this.saveHraPrivacyPreferences();
+      const permissions = this.permissionsManager.permissions();
+      this.saveHraPrivacyPreferences(permissions);
     });
     this.addEuiAssets();
 
@@ -87,22 +85,11 @@ export class HraEui {
   }
 
   /**
-   * Saves the portal's analytics permissions as the HRA privacy preferences, so the EUI skips its consent banner and
-   * respects the visitor's choices. If saving fails, saves preferences that allow only necessary analytics, so the EUI still skips its banner.
+   * Sets the HRA privacy preferences in localStorage to match the portal's analytics permissions. The EUI reads these
+   * preferences to skip its own consent banner and use the portal's permissions instead.
    */
-  protected saveHraPrivacyPreferences(): void {
-    try {
-      this.document.defaultView?.localStorage.setItem(HRA_PRIVACY_PREFERENCES_KEY, JSON.stringify(this.analytics()));
-    } catch {
-      try {
-        this.document.defaultView?.localStorage.setItem(
-          HRA_PRIVACY_PREFERENCES_KEY,
-          JSON.stringify(HRA_NECESSARY_ONLY_PREFERENCES),
-        );
-      } catch (error) {
-        console.warn('Unable to save HRA privacy preferences.', error);
-      }
-    }
+  protected saveHraPrivacyPreferences(permissions: AnalyticsPermissions): void {
+    this.#localStorage.setItem(HRA_PRIVACY_PREFERENCES_KEY, JSON.stringify(permissions));
   }
 
   /** Adds the EUI stylesheet and script if they are not already on the page. */
